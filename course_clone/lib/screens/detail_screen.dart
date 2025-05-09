@@ -262,5 +262,189 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
         ),
       ],
     );
+    return Scaffold(
+      backgroundColor: AppColor.appBgColor,
+      appBar: AppBar(
+        title: Text('Detail'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.network(widget.course.image),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    widget.course.name,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // Add your action here
+                  },
+                  icon: Icon(Icons.bookmark, color: AppColor.primary),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildAttributes(),
+                  SizedBox(height: 8),
+                  _getAttribute(
+                    Icons.timer,
+                    AppColor.primary,
+                    '15 Minutes reading',
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.course.description,
+                        style: const TextStyle(fontSize: 16),
+                        maxLines: aboutExpand ? null : 2,
+                        overflow: aboutExpand ? null : TextOverflow.ellipsis,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            aboutExpand = !aboutExpand;
+                          });
+                        },
+                        child: Text(
+                          aboutExpand ? 'Show less' : 'Show more',
+                          style: TextStyle(
+                            color: AppColor.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Course Content',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.course.content!.length,
+                    itemBuilder: (context, index) {
+                      return ExpansionTile(
+                        title: Text(
+                          widget.course.content![index].title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        children:
+                            widget.course.content![index].subContent
+                                .map(
+                                  (content) => ListTile(
+                                    title: Text(content),
+
+                                    // leading: Icon(Icons.play_circle_outline),
+                                  ),
+                                )
+                                .toList(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Add your action here
+            //   },
+            //   child: const Text('Enroll Now'),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAttributes() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        _getAttribute(
+          Icons.play_circle_outlined,
+          AppColor.labelColor,
+          widget.course.session,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(
+          Icons.schedule_rounded,
+          AppColor.labelColor,
+          widget.course.duration,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(Icons.star, AppColor.yellow, widget.course.review),
+        const SizedBox(width: 12),
+      ],
+    );
+  }
+
+  _getAttribute(IconData icon, Color color, String info) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: color),
+        const SizedBox(width: 3),
+        Text(
+          info,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColor.labelColor, fontSize: 13),
+        ),
+      ],
+    );
   }
 }

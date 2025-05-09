@@ -1,3 +1,4 @@
+import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 import 'constant.dart';
 import 'package:course_clone/models/profile_model.dart';
