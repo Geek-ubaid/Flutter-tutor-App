@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/category_box.dart';
@@ -6,6 +7,7 @@ import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -146,7 +148,13 @@ class _HomePageState extends State<HomePage> {
       ),
       items: List.generate(
         features.length,
-        (index) => FeatureItem(data: features[index]),
+        (index) => FeatureItem(
+          data: features[index],
+          onTap: () {
+            //! This is how to update the state of the controller
+            Get.find<FavoritesController>().addToCart(features[index]);
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 class RecommendItem extends StatelessWidget {
   const RecommendItem({super.key, required this.data, this.onTap});
 
-  final data;
+  final Course data;
   final GestureTapCallback? onTap;
 
   @override
@@ -30,7 +31,7 @@ class RecommendItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CustomImage(data["image"], radius: 15, height: 80),
+            CustomImage(data.image, radius: 15, height: 80),
             const SizedBox(width: 10),
             _buildInfo(),
           ],
@@ -44,7 +45,7 @@ class RecommendItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          data["name"],
+          data.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -55,7 +56,7 @@ class RecommendItem extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          data["price"],
+          data.price,
           style: TextStyle(fontSize: 14, color: AppColor.textColor),
         ),
         const SizedBox(height: 15),
@@ -70,14 +71,14 @@ class RecommendItem extends StatelessWidget {
         Icon(Icons.schedule_rounded, color: AppColor.labelColor, size: 14),
         const SizedBox(width: 2),
         Text(
-          data["duration"],
+          data.duration,
           style: TextStyle(fontSize: 12, color: AppColor.labelColor),
         ),
         const SizedBox(width: 20),
         Icon(Icons.star, color: AppColor.orange, size: 14),
         const SizedBox(width: 2),
         Text(
-          data["review"],
+          data.review,
           style: TextStyle(fontSize: 12, color: AppColor.labelColor),
         ),
       ],

@@ -1,4 +1,6 @@
+import 'package:course_clone/state_holeder_bindings.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'screens/root_app.dart';
 import 'theme/color.dart';
 
@@ -11,8 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: StateHoldersBindings(),
       title: 'Online Course App',
       theme: ThemeData(primaryColor: AppColor.primary),
       home: const RootApp(),

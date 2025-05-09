@@ -1,9 +1,12 @@
+import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/custom_image.dart';
+import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:course_clone/widgets/setting_box.dart';
 import 'package:course_clone/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -54,11 +57,26 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 20),
           _buildRecord(),
           const SizedBox(height: 20),
-          _buildSection1(),
-          const SizedBox(height: 20),
-          _buildSection2(),
-          const SizedBox(height: 20),
+          // _buildSection1(),
+          // const SizedBox(height: 20),
+          // _buildSection2(),
+          // const SizedBox(height: 20),
           _buildSection3(),
+          //! This is how to update the UI when the data changes
+          GetBuilder<FavoritesController>(
+            builder: (controller) {
+              return ListView.separated(
+                shrinkWrap: true,
+                itemCount: controller.favoriteCourses.length,
+                separatorBuilder:
+                    (context, index) => const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  final course = controller.favoriteCourses[index];
+                  return RecommendItem(data: course);
+                },
+              );
+            },
+          ),
         ],
       ),
     );

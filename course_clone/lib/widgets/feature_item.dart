@@ -1,3 +1,4 @@
+import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class FeatureItem extends StatelessWidget {
     this.onTap,
   });
 
-  final data;
+  final Course data;
   final double width;
   final double height;
   final GestureTapCallback? onTap;
@@ -20,7 +21,7 @@ class FeatureItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {},
       child: Container(
         width: width,
         height: height,
@@ -41,13 +42,21 @@ class FeatureItem extends StatelessWidget {
         child: Stack(
           children: [
             CustomImage(
-              data["image"],
+              data.image,
               width: double.infinity,
               height: 190,
               radius: 15,
             ),
             Positioned(top: 170, right: 15, child: _buildPrice()),
             Positioned(top: 210, child: _buildInfo()),
+            Positioned(
+              bottom: 10,
+              right: 0,
+              child: IconButton(
+                onPressed: onTap,
+                icon: Icon(Icons.shopping_cart, color: Colors.green, size: 20),
+              ),
+            ),
           ],
         ),
       ),
@@ -62,7 +71,7 @@ class FeatureItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data["name"],
+            data.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -94,7 +103,7 @@ class FeatureItem extends StatelessWidget {
         ],
       ),
       child: Text(
-        data["price"],
+        data.price,
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
       ),
     );
@@ -107,16 +116,16 @@ class FeatureItem extends StatelessWidget {
         _getAttribute(
           Icons.play_circle_outlined,
           AppColor.labelColor,
-          data["session"],
+          data.session,
         ),
-        const SizedBox(width: 12),
+        // const SizedBox(width: 12),
         _getAttribute(
           Icons.schedule_rounded,
           AppColor.labelColor,
-          data["duration"],
+          data.duration,
         ),
-        const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, data["review"]),
+        // const SizedBox(width: 12),
+        _getAttribute(Icons.star, AppColor.yellow, data.review),
       ],
     );
   }
