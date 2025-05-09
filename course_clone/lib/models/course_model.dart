@@ -1,3 +1,5 @@
+import 'package:course_clone/models/course_content_model.dart';
+
 import '../utils/constant.dart';
 
 class Course {
@@ -13,7 +15,7 @@ class Course {
   final int lessons;
   final double rating;
   final String readingTime;
-  
+
   Course({
     required this.id,
     required this.name,
