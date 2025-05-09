@@ -4,6 +4,8 @@ import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
+import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/utils/features_dummy_data.dart';
