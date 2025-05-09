@@ -1,5 +1,4 @@
 import 'package:course_clone/screens/account.dart';
-import 'package:course_clone/screens/chat.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/constant.dart';
 import 'package:course_clone/widgets/bottombar_item.dart';
@@ -21,21 +20,21 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
       "active_icon": "assets/icons/home.svg",
       "page": HomePage(),
     },
-    {
-      "icon": "assets/icons/search.svg",
-      "active_icon": "assets/icons/search.svg",
-      "page": Container(),
-    },
-    {
-      "icon": "assets/icons/play.svg",
-      "active_icon": "assets/icons/play.svg",
-      "page": Container(),
-    },
-    {
-      "icon": "assets/icons/chat.svg",
-      "active_icon": "assets/icons/chat.svg",
-      "page": ChatPage(),
-    },
+    // {
+    //   "icon": "assets/icons/search.svg",
+    //   "active_icon": "assets/icons/search.svg",
+    //   "page": Container(),
+    // },
+    // {
+    //   "icon": "assets/icons/play.svg",
+    //   "active_icon": "assets/icons/play.svg",
+    //   "page": Container(),
+    // },
+    // {
+    //   "icon": "assets/icons/chat.svg",
+    //   "active_icon": "assets/icons/chat.svg",
+    //   "page": ChatPage(),
+    // },
     {
       "icon": "assets/icons/profile.svg",
       "active_icon": "assets/icons/profile.svg",
@@ -121,7 +120,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
       child: Padding(
         padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
             _barItems.length,
             (index) => BottomBarItem(

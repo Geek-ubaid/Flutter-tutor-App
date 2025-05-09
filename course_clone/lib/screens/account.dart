@@ -113,10 +113,13 @@ class _AccountPageState extends State<AccountPage> {
       ),
       child: Column(
         children: [
-          SettingItem(
-            title: "Setting",
-            leadingIcon: "assets/icons/setting.svg",
-            bgIconColor: AppColor.blue,
+          InkWell(
+            onTap: () {},
+            child: SettingItem(
+              title: "Setting",
+              leadingIcon: "assets/icons/setting.svg",
+              bgIconColor: AppColor.blue,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 45),

@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
