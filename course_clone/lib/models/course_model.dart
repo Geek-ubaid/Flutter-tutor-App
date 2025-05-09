@@ -1,3 +1,5 @@
+import 'package:course_clone/models/course_content_model.dart';
+
 class Course {
   final int id;
   final String name;
@@ -8,8 +10,10 @@ class Course {
   final String review;
   final bool isFavorited;
   final String description;
+  final List<CourseContentModel>? content;
 
   Course({
+    this.content,
     required this.id,
     required this.name,
     required this.image,
@@ -32,6 +36,7 @@ class Course {
       review: json['review'],
       isFavorited: json['is_favorited'],
       description: json['description'],
+      content: json['content'],
     );
   }
 

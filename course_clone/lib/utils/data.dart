@@ -1,3 +1,4 @@
+import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 
 var profile = {
@@ -138,73 +139,6 @@ List<Course> courses = [
   ),
 ];
 
-List<Course> features = [
-  Course(
-    id: 100,
-    name: "UI/UX Design",
-    image:
-        "https://images.unsplash.com/photo-1596638787647-904d822d751e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    price: "\$110.00",
-    duration: "10 hours",
-    session: "6 lessons",
-    review: "4.5",
-    isFavorited: false,
-    description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
-  ),
-  Course(
-    id: 101,
-    name: "Programming",
-    image:
-        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    price: "\$155.00",
-    duration: "20 hours",
-    session: "12 lessons",
-    review: "5",
-    isFavorited: true,
-    description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
-  ),
-  Course(
-    id: 102,
-    name: "English Writing",
-    image:
-        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    price: "\$65.00",
-    duration: "12 hours",
-    session: "4 lessons",
-    review: "4.5",
-    isFavorited: false,
-    description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
-  ),
-  Course(
-    id: 103,
-    name: "Photography",
-    image:
-        "https://images.unsplash.com/photo-1472393365320-db77a5abbecc?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    price: "\$80.00",
-    duration: "4 hours",
-    session: "3 lessons",
-    review: "4.5",
-    isFavorited: false,
-    description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
-  ),
-  Course(
-    id: 104,
-    name: "Guitar Class",
-    image:
-        "https://images.unsplash.com/photo-1549298240-0d8e60513026?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    price: "\$125.00",
-    duration: "12 hours",
-    session: "4 lessons",
-    review: "5",
-    isFavorited: false,
-    description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available.",
-  ),
-];
 List<Course> recommends = [
   Course(
     id: 105,

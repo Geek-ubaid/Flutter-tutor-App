@@ -1,5 +1,7 @@
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
+import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_image.dart';
@@ -21,7 +23,14 @@ class FeatureItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPageScreen(course: data),
+          ),
+        );
+      },
       child: Container(
         width: width,
         height: height,
@@ -47,7 +56,7 @@ class FeatureItem extends StatelessWidget {
               height: 190,
               radius: 15,
             ),
-            Positioned(top: 170, right: 15, child: _buildPrice()),
+            // Positioned(top: 170, right: 15, child: _buildPrice()),
             Positioned(top: 210, child: _buildInfo()),
             Positioned(
               bottom: 10,

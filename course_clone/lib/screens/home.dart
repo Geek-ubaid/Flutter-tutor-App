@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
+import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
 import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
