@@ -31,17 +31,13 @@ class NotificationBox extends StatelessWidget {
   }
 
   Widget _buildIconNotified() {
-    return Container();
-    // return Badge(
-    //   badgeColor: AppColor.actionColor,
-    //   padding: EdgeInsets.all(3),
-    //   position: BadgePosition.topEnd(top: -7, end: 0),
-    //   badgeContent: Text(
-    //     '',
-    //     style: TextStyle(color: Colors.white),
-    //   ),
-    //   child: _buildIcon(),
-    // );
+    // return Container();
+    return Badge(
+      backgroundColor: AppColor.actionColor,
+      padding: EdgeInsets.all(3),
+      textStyle: TextStyle(color: Colors.white),
+      child: _buildIcon(),
+    );
   }
 
   Widget _buildIcon() {

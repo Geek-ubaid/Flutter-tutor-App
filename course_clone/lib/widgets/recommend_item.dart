@@ -2,6 +2,8 @@ import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class RecommendItem extends StatelessWidget {
   const RecommendItem({super.key, required this.data, this.onTap});
@@ -14,9 +16,9 @@ class RecommendItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(right: 10),
-        padding: EdgeInsets.all(10),
-        width: 300,
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        padding: const EdgeInsets.all(10),
+        width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
@@ -25,22 +27,22 @@ class RecommendItem extends StatelessWidget {
               color: Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 1,
-              offset: Offset(1, 1), // changes position of shadow
+              offset: const Offset(1, 1),
             ),
           ],
         ),
         child: Row(
           children: [
-            CustomImage(data.image, radius: 15, height: 80),
+            SvgPicture.asset(data.thumbnailUrl, height: 60, width: 60),
             const SizedBox(width: 10),
-            _buildInfo(),
+            Expanded(child: _buildInfo(context)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfo() {
+  Widget _buildInfo(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,39 +50,32 @@ class RecommendItem extends StatelessWidget {
           data.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: AppColor.textColor,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 4),
         Text(
-          data.price,
-          style: TextStyle(fontSize: 14, color: AppColor.textColor),
-        ),
-        const SizedBox(height: 15),
-        _buildDurationAndRate(),
-      ],
-    );
-  }
-
-  Widget _buildDurationAndRate() {
-    return Row(
-      children: [
-        Icon(Icons.schedule_rounded, color: AppColor.labelColor, size: 14),
-        const SizedBox(width: 2),
-        Text(
-          data.duration,
+          "May 7", // Format: e.g. "May 10, 2025"
           style: TextStyle(fontSize: 12, color: AppColor.labelColor),
         ),
-        const SizedBox(width: 20),
-        Icon(Icons.star, color: AppColor.orange, size: 14),
-        const SizedBox(width: 2),
-        Text(
-          data.review,
-          style: TextStyle(fontSize: 12, color: AppColor.labelColor),
-        ),
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            Icon(Icons.favorite, color: Colors.redAccent, size: 14),
+            const SizedBox(width: 4),
+            Text("3", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+            const SizedBox(width: 16),
+            Icon(Icons.label, color: AppColor.labelColor, size: 14),
+            const SizedBox(width: 4),
+            Text(data.topic, style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+            const Spacer(),
+            Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
+            const SizedBox(width: 4),
+            Text("3 min", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+          ],
+        )
       ],
     );
   }

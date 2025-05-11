@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recommended",
+                  "Daily Read",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          _buildRecommended(),
+          _buildAll(),
         ],
       ),
     );
@@ -147,28 +147,28 @@ class _HomePageState extends State<HomePage> {
         viewportFraction: .75,
       ),
       items: List.generate(
-        features.length,
+        courses.length,
         (index) => FeatureItem(
-          data: features[index],
+          data: courses[index],
           onTap: () {
             //! This is how to update the state of the controller
-            Get.find<FavoritesController>().addToCart(features[index]);
+            // Get.find<FavoritesController>().addToCart(features[index]);
           },
         ),
       ),
     );
   }
 
-  _buildRecommended() {
+  _buildAll(){
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-      scrollDirection: Axis.horizontal,
-      child: Row(
+      scrollDirection: Axis.vertical,
+      child: Column(
         children: List.generate(
-          recommends.length,
+          courses.length,
           (index) => Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: RecommendItem(data: recommends[index]),
+            padding: const EdgeInsets.only(bottom: 20),
+            child: RecommendItem(data: courses[index]),
           ),
         ),
       ),

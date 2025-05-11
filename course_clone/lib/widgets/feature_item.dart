@@ -1,6 +1,7 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'custom_image.dart';
 
@@ -41,22 +42,12 @@ class FeatureItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            CustomImage(
-              data.image,
-              width: double.infinity,
-              height: 190,
-              radius: 15,
+            SvgPicture.asset(
+                data.thumbnailUrl,
+                height: 190, width: double.infinity
             ),
             Positioned(top: 170, right: 15, child: _buildPrice()),
             Positioned(top: 210, child: _buildInfo()),
-            Positioned(
-              bottom: 10,
-              right: 0,
-              child: IconButton(
-                onPressed: onTap,
-                icon: Icon(Icons.shopping_cart, color: Colors.green, size: 20),
-              ),
-            ),
           ],
         ),
       ),
@@ -102,10 +93,7 @@ class FeatureItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        data.price,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-      ),
+      child: Icon(Icons.favorite, size: 20, color: Colors.white)
     );
   }
 
@@ -116,16 +104,16 @@ class FeatureItem extends StatelessWidget {
         _getAttribute(
           Icons.play_circle_outlined,
           AppColor.labelColor,
-          data.session,
+          "234",
         ),
         // const SizedBox(width: 12),
         _getAttribute(
           Icons.schedule_rounded,
           AppColor.labelColor,
-          data.duration,
+          "asd",
         ),
         // const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, data.review),
+        _getAttribute(Icons.star, AppColor.yellow, "asd"),
       ],
     );
   }
