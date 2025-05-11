@@ -57,26 +57,33 @@ class RecommendItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          "May 7", // Format: e.g. "May 10, 2025"
+          "May 7", // Consider using formatted date later
           style: TextStyle(fontSize: 12, color: AppColor.labelColor),
         ),
         const SizedBox(height: 4),
-        Row(
+        // Wrap instead of Row to avoid overflow
+        Wrap(
+          spacing: 8,
+          runSpacing: 4,
           children: [
-            Icon(Icons.favorite, color: Colors.redAccent, size: 14),
-            const SizedBox(width: 4),
-            Text("3", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
-            const SizedBox(width: 16),
-            Icon(Icons.label, color: AppColor.labelColor, size: 14),
-            const SizedBox(width: 4),
-            Text(data.topic, style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
-            const Spacer(),
-            Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
-            const SizedBox(width: 4),
-            Text("3 min", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+            _infoItem(Icons.favorite, "3"),
+            _infoItem(Icons.label, data.topic),
+            _infoItem(Icons.access_time, "3 min"),
           ],
-        )
+        ),
       ],
     );
   }
+
+  Widget _infoItem(IconData icon, String label) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: AppColor.labelColor, size: 14),
+        const SizedBox(width: 4),
+        Text(label, style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+      ],
+    );
+  }
+
 }
