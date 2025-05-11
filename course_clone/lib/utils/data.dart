@@ -1,5 +1,6 @@
 import 'package:course_clone/models/course_model.dart';
 import 'constant.dart';
+import 'package:course_clone/models/profile_model.dart';
 
 final profile = Profile(
   name: "Jeno",
