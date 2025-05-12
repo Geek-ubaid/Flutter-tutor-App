@@ -4,9 +4,10 @@ import 'package:course_clone/models/profile_model.dart';
 import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/states/profile_controller.dart';
+import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/services/firestore_api.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
-import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
 import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
@@ -14,6 +15,7 @@ import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/screens/search_screen.dart';
 
+import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

@@ -85,3 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-tutor-app-e8851.firebasestorage.app',
     measurementId: 'G-MF609BPMTX',
   );
+}

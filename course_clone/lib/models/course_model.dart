@@ -56,6 +56,54 @@ class Course {
       'subtopic': subtopic,
       'thumbnail_url': thumbnailUrl,
       'date_published': datePublished.toIso8601String(),
+}
+
+
+class CourseV2 {
+  final int id;
+  final String name;
+  final String image;
+  final String price;
+  final String duration;
+  final String session;
+  final String review;
+  final bool isFavorited;
+  final String description;
+  final List<CourseContentModel>? content;
+
+  CourseV2({
+    this.content,
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.price,
+    required this.duration,
+    required this.session,
+    required this.review,
+    required this.isFavorited,
+    required this.description,
+  });
+
+  factory CourseV2.fromJson(Map<String, dynamic> json) {
+    return CourseV2(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      price: json['price'],
+      duration: json['duration'],
+      session: json['session'],
+      review: json['review'],
+      isFavorited: json['is_favorited'],
+      description: json['description'],
+      content: json['content'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
       'price': price,
       'lessons': lessons,
       'rating': rating,
