@@ -25,12 +25,13 @@ class FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailPageScreen(course: data),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailPageScreen(course: data),
+        //   ),
+        // );
+        Get.to(() => DetailPageScreen(course: data));
       },
       child: Container(
         width: width,

@@ -2,6 +2,7 @@ import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/screens/video_screen.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DetailPageScreen extends StatefulWidget {
   final Course course;
@@ -23,7 +24,8 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -81,14 +83,20 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => VideoPlayerPage(
-                                    videoLink:
-                                        'https://www.youtube.com/watch?v=EcnqFasHf18',
-                                  ),
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder:
+                          //         (context) => VideoPlayerPage(
+                          //           videoLink:
+                          //               'https://www.youtube.com/watch?v=EcnqFasHf18',
+                          //         ),
+                          //   ),
+                          // );
+                          Get.to(
+                            () => VideoPlayerPage(
+                              videoLink:
+                                  'https://www.youtube.com/watch?v=EcnqFasHf18',
                             ),
                           );
                         },
