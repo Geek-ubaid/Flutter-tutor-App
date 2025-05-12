@@ -1,12 +1,12 @@
 import 'package:course_clone/models/course_model.dart';
 import 'constant.dart';
 
-var profile = {
-  "name": "Jeno",
-  "image": "https://avatars.githubusercontent.com/u/86506519?v=4",
-  "email": "sangvaleap.vanny@gmail.com",
-};
-
+final profile = Profile(
+  name: "Jeno",
+  image: "https://avatars.githubusercontent.com/u/86506519?v=4",
+  email: "sangvaleap.vanny@gmail.com",
+  favoriteCourses: [],
+);
 List categories = [
   {
     "name": "All",
