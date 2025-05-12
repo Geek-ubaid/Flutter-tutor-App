@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:course_clone/models/profile_model.dart';
 import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/utils/features_dummy_data.dart';
@@ -52,9 +54,13 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                profile["name"]!,
-                style: TextStyle(color: AppColor.labelColor, fontSize: 14),
+              GetBuilder<ProfileController>(
+                builder: (controller) {
+                  return Text(
+                    controller.name,
+                    style: TextStyle(color: AppColor.labelColor, fontSize: 14),
+                  );
+                },
               ),
               const SizedBox(height: 5),
               Text(

@@ -1,4 +1,5 @@
 import 'package:course_clone/states/make_favorite_controller.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:get/get.dart';
 
 class StateHoldersBindings extends Bindings {
@@ -6,5 +7,6 @@ class StateHoldersBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(FavoritesController());
+    Get.put(ProfileController());
   }
 }

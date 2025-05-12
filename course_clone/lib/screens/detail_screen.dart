@@ -1,5 +1,6 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/screens/video_screen.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,9 +54,29 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                 ),
                 IconButton(
                   onPressed: () {
-                    // Add your action here
+                    final controller = Get.find<ProfileController>();
+                    if (controller.bookmarkedCourses.any(
+                      (course) => course.id == widget.course.id,
+                    )) {
+                      controller.bookmarkedCourses.removeWhere(
+                        (course) => course.id == widget.course.id,
+                      );
+                    } else {
+                      controller.addCourseToFav(widget.course);
+                    }
+                    controller.update();
                   },
-                  icon: Icon(Icons.bookmark, color: AppColor.primary),
+                  icon: GetBuilder<ProfileController>(
+                    builder: (controller) {
+                      bool bookmarked = controller.bookmarkedCourses.any(
+                        (course) => course.id == widget.course.id,
+                      );
+                      return Icon(
+                        bookmarked ? Icons.bookmark : Icons.bookmark_outline,
+                        color: AppColor.primary,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
