@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:course_clone/states/make_favorite_controller.dart';
+import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/services/firestore_api.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/category_box.dart';
@@ -7,7 +8,7 @@ import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +20,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final courses = Provider.of<List<Course>>(context);
+
+    courses.forEach((course) {
+      print("file");
+      print(course.id);
+    });
+
+    return StreamProvider<List<Course>>.value(
+        initialData: [],
+        value: DatabaseService().fetchCourses,
+        child: Scaffold(
       backgroundColor: AppColor.appBgColor,
       body: CustomScrollView(
         slivers: [
@@ -32,13 +43,13 @@ class _HomePageState extends State<HomePage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _buildBody(),
+              (context, index) => _buildBody(courses),
               childCount: 1,
             ),
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildAppBar() {
@@ -71,7 +82,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody() {
+  _buildBody(List<Course> courses) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -90,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          _buildFeatured(),
+          _buildFeatured(courses),
           const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -112,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          _buildAll(),
+          _buildAll(courses),
         ],
       ),
     );
@@ -138,7 +149,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildFeatured() {
+  _buildFeatured(List<Course> courses) {
     return CarouselSlider(
       options: CarouselOptions(
         height: 290,
@@ -159,7 +170,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildAll(){
+  _buildAll(List<Course> courses){
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
       scrollDirection: Axis.vertical,

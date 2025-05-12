@@ -7,6 +7,7 @@ class Course {
   final List<String> subtopic;
   final String thumbnailUrl;
   final DateTime datePublished;
+  final String readingTime;
 
   Course({
     required this.id,
@@ -17,31 +18,21 @@ class Course {
     required this.subtopic,
     required this.thumbnailUrl,
     required this.datePublished,
+    required this.readingTime
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      url: json['url'],
-      topic: json['topic'],
-      subtopic: json['subtopic'],
-      thumbnailUrl: json['thumbnail_url'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      url: json['url'] ?? '',
+      topic: json['topic'] ?? 'all',
+      subtopic: json['subtopic'] ?? [''],
+      thumbnailUrl: json['thumbnail_url'] ?? '',
       datePublished: DateTime.parse(json['date_published']),
+      readingTime: json['reading_time'] ?? ''
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'url': url,
-      'topic': topic,
-      'subtopic': subtopic,
-      'thumbnail_url': thumbnailUrl,
-      'date_published': datePublished.toIso8601String(),
-    };
-  }
 }
