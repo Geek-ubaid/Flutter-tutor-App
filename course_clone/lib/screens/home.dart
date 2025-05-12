@@ -18,9 +18,6 @@ import 'package:course_clone/screens/search_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
-import 'package:course_clone/screens/search_screen.dart';
-
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
