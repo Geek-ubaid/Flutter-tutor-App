@@ -7,6 +7,9 @@ import 'package:course_clone/widgets/setting_box.dart';
 import 'package:course_clone/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_screen.dart';
+
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -198,6 +201,29 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
+  // Widget _buildSection3() {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(horizontal: 15),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(5),
+  //       color: AppColor.cardColor,
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: AppColor.shadowColor.withOpacity(0.1),
+  //           spreadRadius: 1,
+  //           blurRadius: 1,
+  //           offset: Offset(0, 1), // changes position of shadow
+  //         ),
+  //       ],
+  //     ),
+  //     child: SettingItem(
+  //       title: "Log Out",
+  //       leadingIcon: "assets/icons/logout.svg",
+  //       bgIconColor: AppColor.darker,
+  //     ),
+  //   );
+  // }
+
   Widget _buildSection3() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -209,7 +235,7 @@ class _AccountPageState extends State<AccountPage> {
             color: AppColor.shadowColor.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(0, 1), // changes position of shadow
+            offset: Offset(0, 1),
           ),
         ],
       ),
@@ -217,7 +243,17 @@ class _AccountPageState extends State<AccountPage> {
         title: "Log Out",
         leadingIcon: "assets/icons/logout.svg",
         bgIconColor: AppColor.darker,
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          if (!mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => LoginScreen()),
+          );
+        },
       ),
     );
   }
+
+
 }

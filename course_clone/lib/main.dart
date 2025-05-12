@@ -1,10 +1,20 @@
 import 'package:course_clone/state_holeder_bindings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'screens/login_screen.dart';
 import 'screens/root_app.dart';
 import 'theme/color.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -18,7 +28,26 @@ class MyApp extends StatelessWidget {
       initialBinding: StateHoldersBindings(),
       title: 'Online Course App',
       theme: ThemeData(primaryColor: AppColor.primary),
-      home: const RootApp(),
+      home: AuthGate(),
+    );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        // 判断是否已登录
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
+        } else if (snapshot.hasData) {
+          return const RootApp(); // 已登录跳转主页
+        } else {
+          return LoginScreen(); // 未登录跳转登录页
+        }
+      },
     );
   }
 }
