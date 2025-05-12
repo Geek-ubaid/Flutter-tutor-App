@@ -8,6 +8,9 @@ import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:course_clone/screens/search_screen.dart';
+
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -116,10 +119,19 @@ class _HomePageState extends State<HomePage> {
                     color: AppColor.textColor,
                   ),
                 ),
-                Text(
-                  "See all",
-                  style: TextStyle(fontSize: 14, color: AppColor.darker),
-                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                  },
+                  child: Text(
+                    "See all",
+                    style: TextStyle(fontSize: 14, color: AppColor.darker),
+                  ),
+                )
+
               ],
             ),
           ),

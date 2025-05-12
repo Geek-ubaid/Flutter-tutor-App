@@ -7,8 +7,11 @@ class Course {
   final List<String> subtopic;
   final String thumbnailUrl;
   final DateTime datePublished;
+  final double price;
+  final int lessons;
+  final double rating;
   final String readingTime;
-
+  
   Course({
     required this.id,
     required this.name,
@@ -18,6 +21,9 @@ class Course {
     required this.subtopic,
     required this.thumbnailUrl,
     required this.datePublished,
+    this.price = 0.0,
+    this.lessons = 0,
+    this.rating = 0.0,
     required this.readingTime
   });
 
@@ -33,6 +39,24 @@ class Course {
       datePublished: DateTime.parse(json['date_published']),
       readingTime: json['reading_time'] ?? ''
     );
+  }
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'url': url,
+      'topic': topic,
+      'subtopic': subtopic,
+      'thumbnail_url': thumbnailUrl,
+      'date_published': datePublished.toIso8601String(),
+      'price': price,
+      'lessons': lessons,
+      'duration': duration,
+      'rating': rating,
+    };
   }
 
 }
