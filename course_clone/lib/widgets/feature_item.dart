@@ -3,6 +3,7 @@ import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'custom_image.dart';
 
@@ -24,12 +25,13 @@ class FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailPageScreen(course: data),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailPageScreen(course: data),
+        //   ),
+        // );
+        Get.to(() => DetailPageScreen(course: data));
       },
       child: Hero(
         tag: data.image,

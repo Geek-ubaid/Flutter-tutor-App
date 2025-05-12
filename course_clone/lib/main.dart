@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: StateHoldersBindings(),
-      title: 'Online Course App',
+      title: 'Online Flutter Tutoring App',
       theme: ThemeData(primaryColor: AppColor.primary),
       home: const RootApp(),
     );

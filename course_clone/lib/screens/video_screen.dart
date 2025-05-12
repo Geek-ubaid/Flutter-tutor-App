@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoPlayerPage extends StatefulWidget {
@@ -61,19 +62,25 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
               Stack(
                 children: [
                   player,
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                  Positioned(
+                    top: 40,
+                    left: 10,
+                    child: InkWell(
+                      onTap: () {
+                        Get.back();
                       },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColor.orange,
-                        size: 20,
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColor.orange,
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
