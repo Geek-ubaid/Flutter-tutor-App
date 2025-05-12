@@ -9,10 +9,9 @@ class Course {
   final DateTime datePublished;
   final double price;
   final int lessons;
-  final String duration;
   final double rating;
-
-
+  final String readingTime;
+  
   Course({
     required this.id,
     required this.name,
@@ -24,25 +23,21 @@ class Course {
     required this.datePublished,
     this.price = 0.0,
     this.lessons = 0,
-    this.duration = "0 hours",
     this.rating = 0.0,
-
+    required this.readingTime
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      url: json['url'],
-      topic: json['topic'],
-      subtopic: List<String>.from(json['subtopic']),
-      thumbnailUrl: json['thumbnail_url'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      url: json['url'] ?? '',
+      topic: json['topic'] ?? 'all',
+      subtopic: json['subtopic'] ?? [''],
+      thumbnailUrl: json['thumbnail_url'] ?? '',
       datePublished: DateTime.parse(json['date_published']),
-      price: (json['price'] ?? 0.0).toDouble(),
-      lessons: json['lessons'] ?? 0,
-      duration: json['duration'] ?? '0 hours',
-      rating: (json['rating'] ?? 0.0).toDouble(),
+      readingTime: json['reading_time'] ?? ''
     );
   }
 

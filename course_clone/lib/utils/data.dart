@@ -28,8 +28,8 @@ List<Course> courses = [
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
     price: 110.0,
     lessons: 1,
-    duration: '10 hours',
     rating: 4.5,
+    readingTime: "3 mins"
   ),
   Course(
     id: "XyeQYFIPnq8YCUhpGgqC",
@@ -42,8 +42,8 @@ List<Course> courses = [
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
     price: 95.0,
     lessons: 3,
-    duration: '5 hours',
     rating: 4.2,
+    readingTime: "3 mins"
   ),
   Course(
     id: "eOM8s3d09qDqawjKNR9f",
@@ -56,8 +56,8 @@ List<Course> courses = [
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
     price: 80.0,
     lessons: 3,
-    duration: '9 hours',
     rating: 3.9,
+    readingTime: "3 mins"
   ),
   Course(
     id: "foGQ5CYuibXWBKDMwPq8",
@@ -72,6 +72,7 @@ List<Course> courses = [
     lessons: 8,
     duration: '4 hours',
     rating: 4.9,
+    readingTime: "3 mins"
   ),
 ];
 

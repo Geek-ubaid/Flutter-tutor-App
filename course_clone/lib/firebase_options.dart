@@ -19,6 +19,7 @@ class DefaultFirebaseOptions {
     if (kIsWeb) {
       return web;
     }
+    print(defaultTargetPlatform);
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -85,4 +86,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-tutor-app-e8851.firebasestorage.app',
     measurementId: 'G-MF609BPMTX',
   );
+
 }
