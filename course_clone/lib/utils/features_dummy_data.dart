@@ -1,6 +1,7 @@
 import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 
+
 List<CourseV2> features = [
   CourseV2(
     id: 109,
@@ -35,6 +36,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
+
   CourseV2(
     id: 100,
     name: "UI/UX Design",
@@ -102,6 +104,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
+
   CourseV2(
     id: 102,
     name: "English Writing",
@@ -135,6 +138,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
+
   CourseV2(
     id: 103,
     name: "Photography",
@@ -168,6 +172,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
+
   CourseV2(
     id: 104,
     name: "Guitar Class",

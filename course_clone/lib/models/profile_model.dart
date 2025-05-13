@@ -6,7 +6,12 @@ class Profile {
   final String email;
   List<Course> favoriteCourses = [];
 
-  Profile({required this.name, required this.image, required this.email});
+  Profile({
+    required this.name,
+    required this.image,
+    required this.email,
+    required this.favoriteCourses,
+  });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
     name: json["name"] ?? "",
