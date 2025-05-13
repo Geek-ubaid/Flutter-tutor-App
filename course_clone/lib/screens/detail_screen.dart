@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailPageScreen extends StatefulWidget {
-  final CourseV2 course;
+  final Course course;
   const DetailPageScreen({super.key, required this.course});
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  State<DetailPageScreen> createState() => _DetailPageScreenState();
 }
 
 class _DetailPageScreenState extends State<DetailPageScreen> {
@@ -412,40 +412,4 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
     );
   }
 
-  Widget _buildAttributes() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _getAttribute(
-          Icons.play_circle_outlined,
-          AppColor.labelColor,
-          widget.course.session,
-        ),
-        const SizedBox(width: 12),
-        _getAttribute(
-          Icons.schedule_rounded,
-          AppColor.labelColor,
-          widget.course.duration,
-        ),
-        const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, widget.course.review),
-        const SizedBox(width: 12),
-      ],
-    );
-  }
-
-  _getAttribute(IconData icon, Color color, String info) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: color),
-        const SizedBox(width: 3),
-        Text(
-          info,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: AppColor.labelColor, fontSize: 13),
-        ),
-      ],
-    );
-  }
 }

@@ -1,8 +1,8 @@
 // lib/screens/home.dart
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
 import 'package:course_clone/models/profile_model.dart';
 import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
@@ -12,15 +12,17 @@ import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
 import 'package:course_clone/widgets/notification_box.dart';
-
-/// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
-typedef Pepsi = HomePage;
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/screens/search_screen.dart';
+import 'package:provider/provider.dart';
 
-import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
+import '../models/course_model.dart';
+import '../widgets/feature_item.dart';
+
+/// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
+typedef Pepsi = HomePage;
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,6 +31,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String? nickname;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNickname();
+  }
+
+  Future<void> fetchNickname() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final doc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      if (doc.exists) {
+        setState(() {
+          nickname = doc.data()?["nickname"] ?? "";
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -65,7 +88,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                profile.name ?? '',
+                nickname ?? '',
                 style: TextStyle(color: AppColor.labelColor, fontSize: 14),
               ),
               const SizedBox(height: 5),
@@ -82,7 +105,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   _buildBody(List<Course> courses) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -91,7 +113,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           _buildCategories(),
           const SizedBox(height: 15),
-
           // Featured carousel
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
@@ -100,15 +121,6 @@ class _HomePageState extends State<HomePage> {
                     color: AppColor.textColor,
                     fontSize: 24,
                     fontWeight: FontWeight.w600)),
-          ),
-          const SizedBox(height: 10),
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 180,
-              enlargeCenterPage: true,
-              viewportFraction: .7,
-            ),
-            items: topics.map(_buildTopicCard).toList(),
           ),
           _buildFeatured(courses),
           const SizedBox(height: 15),
@@ -167,37 +179,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildFeatured(List<Course> courses) {
+  Widget _buildFeatured(List<Course> courses) {
     return CarouselSlider(
       options: CarouselOptions(
         height: 290,
         enlargeCenterPage: true,
         disableCenter: true,
-        viewportFraction: .75,
+        viewportFraction: 0.75,
       ),
-      items: List.generate(
-        courses.length,
-        (index) => FeatureItem(
-          data: courses[index],
-          onTap: () {
-            //! This is how to update the state of the controller
-            // Get.find<FavoritesController>().addToCart(features[index]);
+      items: courses.map((course) {
+        return Builder(
+          builder: (BuildContext context) {
+            return FeatureItem(
+              data: course,
+              onTap: () {
+                // You can update your controller logic here
+                // Get.find<FavoritesController>().addToCart(course);
+              },
+            );
           },
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // topic image
-            ClipRRect(
-              borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(16)),
-              child: Image.network(
-                topic['image'] as String,
-                height: 100,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
+        );
+      }).toList(),
+    );
+  }
 
   _buildAll(List<Course> courses){
     return SingleChildScrollView(
@@ -206,7 +210,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: List.generate(
           courses.length,
-          (index) => Padding(
+              (index) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: RecommendItem(data: courses[index]),
           ),
