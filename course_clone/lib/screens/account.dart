@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 class AccountPage extends StatefulWidget {
@@ -85,18 +87,47 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
+  // Widget _buildProfile() {
+  //   return Column(
+  //     children: [
+  //       CustomImage(profile["image"]!, width: 70, height: 70, radius: 20),
+  //       const SizedBox(height: 10),
+  //       Text(
+  //         profile["name"]!,
+  //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   Widget _buildProfile() {
-    return Column(
-      children: [
-        CustomImage(profile["image"]!, width: 70, height: 70, radius: 20),
-        const SizedBox(height: 10),
-        Text(
-          profile["name"]!,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-      ],
+    return FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get(),
+      builder: (context, snapshot) {
+        String nickname = "";
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            snapshot.data!.exists) {
+          nickname = snapshot.data!.get('nickname') ?? '';
+        }
+
+        return Column(
+          children: [
+            CustomImage(profile["image"]!, width: 70, height: 70, radius: 20),
+            const SizedBox(height: 10),
+            Text(
+              nickname,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
+          ],
+        );
+      },
     );
   }
+
 
   Widget _buildRecord() {
     return Row(
@@ -201,28 +232,6 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  // Widget _buildSection3() {
-  //   return Container(
-  //     padding: const EdgeInsets.symmetric(horizontal: 15),
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(5),
-  //       color: AppColor.cardColor,
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: AppColor.shadowColor.withOpacity(0.1),
-  //           spreadRadius: 1,
-  //           blurRadius: 1,
-  //           offset: Offset(0, 1), // changes position of shadow
-  //         ),
-  //       ],
-  //     ),
-  //     child: SettingItem(
-  //       title: "Log Out",
-  //       leadingIcon: "assets/icons/logout.svg",
-  //       bgIconColor: AppColor.darker,
-  //     ),
-  //   );
-  // }
 
   Widget _buildSection3() {
     return Container(
