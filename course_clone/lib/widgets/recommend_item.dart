@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 class RecommendItem extends StatelessWidget {
-  const RecommendItem({super.key, required this.data, this.onTap});
+  const RecommendItem({super.key, required this.course, this.onTap});
 
-  final Topic data;
+  final Course course;
   final GestureTapCallback? onTap;
 
   @override
@@ -34,7 +32,7 @@ class RecommendItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SvgPicture.asset(data.thumbnailUrl, height: 60, width: 60),
+            SvgPicture.asset(course.thumbnailUrl, height: 60, width: 60),
             const SizedBox(width: 10),
             Expanded(child: _buildInfo(context)),
           ],
@@ -49,7 +47,7 @@ class RecommendItem extends StatelessWidget {
       children: [
         // Title
         Text(
-          data.name,
+          course.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -75,15 +73,19 @@ class RecommendItem extends StatelessWidget {
             const SizedBox(width: 16),
             Icon(Icons.label, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
-            Text(
-              'data.topic',
-              style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+            Expanded(
+              child: Text(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                course.topic,
+                style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+              ),
             ),
             const Spacer(),
             Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
             Text(
-              'data.readingTime',
+              course.readingTime,
               style: TextStyle(fontSize: 12, color: AppColor.labelColor),
             ),
           ],

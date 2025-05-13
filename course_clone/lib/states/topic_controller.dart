@@ -1,27 +1,40 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/services/firestore_api.dart';
 import 'package:course_clone/utils/convert_course_topics.dart';
-import 'package:course_clone/utils/data.dart';
 import 'package:get/get.dart';
 
 class TopicController extends GetxController {
+  DatabaseService databaseService = DatabaseService();
   bool _loadingState = false;
-  List<Topic> topics = [];
+  List<Topic> _topics = [];
+  List<Course> _allCourses = [];
 
   bool get loadingState => _loadingState;
-  List<Topic> get getTopics => topics;
+  List<Course> get getCourses => _allCourses;
+  List<Topic> get getTopics => _topics;
+
+  void toggleCourseLike(String courseId) {
+    final courseIndex = _allCourses.indexWhere(
+      (course) => course.id == courseId,
+    );
+    if (courseIndex != -1) {
+      _allCourses[courseIndex].isLiked = !_allCourses[courseIndex].isLiked;
+      update();
+    }
+  }
 
   void fetchTopics() async {
     _loadingState = true;
     update();
     try {
-      await Future.delayed(const Duration(seconds: 3));
-      final allCourses = courses;
+      final allCourses = await databaseService.fetchCourses.first;
+      _allCourses = allCourses;
       final List<Topic> top = groupIntoTopics(
         allCourses: allCourses,
         converters: converter,
       );
-      topics = top;
+      _topics = top;
     } catch (e) {
       // Handle error
     } finally {

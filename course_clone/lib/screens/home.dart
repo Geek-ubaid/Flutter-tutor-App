@@ -1,6 +1,9 @@
 // lib/screens/home.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
+import 'package:course_clone/screens/web_view_screen.dart';
+import 'package:course_clone/states/topic_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -11,6 +14,7 @@ import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:course_clone/screens/search_screen.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../models/course_model.dart';
 import '../states/course_controller.dart';
@@ -139,7 +143,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          _buildFeatured(topic),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              if (controller.loadingState) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return _buildFeatured(controller.getTopics.take(4).toList());
+            },
+          ),
           const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -154,22 +165,41 @@ class _HomePageState extends State<HomePage> {
                     color: AppColor.textColor,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                GetBuilder<TopicController>(
+                  builder: (controller) {
+                    return TextButton(
+                      onPressed: () {
+                        if (controller.loadingState) return;
+                        Get.to(
+                          () => SearchScreen(courses: controller.getCourses),
+                        );
+                      },
+                      child: Text(
+                        "See all",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color:
+                              controller.loadingState
+                                  ? Colors.grey
+                                  : AppColor.darker,
+                        ),
+                      ),
                     );
                   },
-                  child: Text(
-                    "See all",
-                    style: TextStyle(fontSize: 14, color: AppColor.darker),
-                  ),
                 ),
               ],
             ),
           ),
-          _buildAll(topic),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              if (controller.loadingState) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return _buildAll(
+                controller.getCourses.take(3).toList()..shuffle(),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -196,7 +226,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFeatured(List<Topic> courses) {
+  Widget _buildFeatured(List<Topic> topics) {
     return CarouselSlider(
       options: CarouselOptions(
         height: 290,
@@ -205,14 +235,13 @@ class _HomePageState extends State<HomePage> {
         viewportFraction: 0.75,
       ),
       items:
-          courses.map((course) {
+          topics.map((topic) {
             return Builder(
               builder: (BuildContext context) {
                 return FeatureItem(
-                  data: course,
+                  data: topic,
                   onTap: () {
-                    // You can update your controller logic here
-                    // Get.find<FavoritesController>().addToCart(course);
+                    Get.to(() => DetailPageScreen(topic: topic));
                   },
                 );
               },
@@ -221,7 +250,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildAll(List<Topic> courses) {
+  _buildAll(List<Course> courses) {
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
       scrollDirection: Axis.vertical,
@@ -230,7 +259,17 @@ class _HomePageState extends State<HomePage> {
           courses.length,
           (index) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: RecommendItem(data: limitedCourses[index]),
+            child: RecommendItem(
+              course: courses[index],
+              onTap: () {
+                Get.to(
+                  () => WebViewScreen(
+                    url: courses[index].url,
+                    title: courses[index].name,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

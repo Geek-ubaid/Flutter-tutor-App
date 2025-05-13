@@ -15,6 +15,7 @@ class Converter {
 }
 
 List<Converter> converter = [
+  /*
   Converter(
     description:
         'Flutter is a toolkit created by Google that lets developers build apps for mobile, web, and desktop using the same code. It uses the Dart programming language and comes with ready-to-use widgets for designing user interfaces. Flutter’s special feature, hot reload, allows developers to see changes instantly as they code, making development faster. Let us check few basic topics about Flutter.',
@@ -33,31 +34,35 @@ List<Converter> converter = [
         'https://blog.amaarahmad.com/wp-content/uploads/2024/09/Amaar-Ahmad-3.png',
     videoUrl: 'https://www.youtube.com/watch?v=1xipg02Wu8s&ab_channel=Fireship',
   ),
-  /*
+  */
   Converter(
     description:
         'Flutter is a toolkit created by Google that lets developers build apps for mobile, web, and desktop using the same code. It uses the Dart programming language and comes with ready-to-use widgets for designing user interfaces. Flutter’s special feature, hot reload, allows developers to see changes instantly as they code, making development faster. Let us check few basic topics about Flutter.',
     numOfLessons: 5,
     topicName: 'Flutter – Basics',
-    image: 'https://blog.amaarahmad.com/wp-content/uploads/2024/09/Amaar-Ahmad-3.png',
+    image:
+        'https://elearning.spectrumfilmschool.com/wp-content/uploads/2023/06/Flutter.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=1xipg02Wu8s&ab_channel=Fireship',
-
   ),
   Converter(
     description:
         'In this section, you will explore Flutter widgets, which are pre-built elements used to construct user interfaces in Flutter applications. Widgets in Flutter are versatile and customizable, ranging from basic components like buttons and text fields to complex layouts and animations. Flutter provides a rich library of built-in widgets that developers can use directly or customize to suit specific design requirements.',
     numOfLessons: 15,
     topicName: 'Flutter – Widgets',
-    image: 'https://magecomp.com/blog/wp-content/uploads/2024/10/Flutter-Card-Widget-20241114-055849.webp',
-    videoUrl: 'https://www.youtube.com/watch?v=wE7khGHVkYY&ab_channel=GoogleforDevelopers',
+    image:
+        'https://magecomp.com/blog/wp-content/uploads/2024/10/Flutter-Card-Widget-20241114-055849.webp',
+    videoUrl:
+        'https://www.youtube.com/watch?v=wE7khGHVkYY&ab_channel=GoogleforDevelopers',
   ),
   Converter(
     description:
         'Flutter provides a variety of widgets like buttons, text fields, and sliders that you can customize and arrange to create your app’s user interface. In this section, you will explore Flutter’s UI components, which are ready-made elements used to build the look and feel of your app.',
     numOfLessons: 16,
     topicName: 'Flutter – UI Components',
-    image: 'https://camo.githubusercontent.com/b03ea78430bf60d91faf3cf3a70aeb693b812025953c533e56965e16ec527fb4/68747470733a2f2f63646e2e73616e6974792e696f2f696d616765732f733778627639627a2f70726f64756374696f6e2f313536326434646165386463303334353665646361383938653839633066333961653038366138662d3136303078313030302e706e673f773d3132303026683d373530266175746f3d666f726d617426666d3d77656270',
-    videoUrl: 'https://www.youtube.com/watch?v=sEID7kTP_hE&ab_channel=AstroDevs',
+    image:
+        'https://camo.githubusercontent.com/b03ea78430bf60d91faf3cf3a70aeb693b812025953c533e56965e16ec527fb4/68747470733a2f2f63646e2e73616e6974792e696f2f696d616765732f733778627639627a2f70726f64756374696f6e2f313536326434646165386463303334353665646361383938653839633066333961653038366138662d3136303078313030302e706e673f773d3132303026683d373530266175746f3d666f726d617426666d3d77656270',
+    videoUrl:
+        'https://www.youtube.com/watch?v=sEID7kTP_hE&ab_channel=AstroDevs',
   ),
   Converter(
     description:
@@ -65,7 +70,8 @@ List<Converter> converter = [
     numOfLessons: 17,
     topicName: 'Flutter – Design & Animations',
     image: 'https://miro.medium.com/v2/0*3gfofc4RSKXpHA5a.png',
-    videoUrl: 'https://www.youtube.com/watch?v=b4ii9QoHfY8&list=PL6yRaaP0WPkW3kwAerPeRqGBvJfO8O4S7&ab_channel=VandadNahavandipoor',
+    videoUrl:
+        'https://www.youtube.com/watch?v=b4ii9QoHfY8&list=PL6yRaaP0WPkW3kwAerPeRqGBvJfO8O4S7&ab_channel=VandadNahavandipoor',
   ),
   Converter(
     description:
@@ -99,13 +105,12 @@ List<Converter> converter = [
     image: 'assets/images/flutter.png',
     videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
   ),
-  Converter(
-    description:
-        'In this section, you will explore various Flutter app projects that showcase its versatility and capabilities. You’ll discover examples ranging from simple to complex applications built using Flutter’s user-friendly widgets and robust development tools.',
-    numOfLessons: 6,
-    topicName: 'Flutter App Projects',
-    image: 'assets/images/flutter.png',
-    videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
-  ),
-  */
+  // Converter(
+  //   description:
+  //       'In this section, you will explore various Flutter app projects that showcase its versatility and capabilities. You’ll discover examples ranging from simple to complex applications built using Flutter’s user-friendly widgets and robust development tools.',
+  //   numOfLessons: 6,
+  //   topicName: 'Flutter App Projects',
+  //   image: 'assets/images/flutter.png',
+  //   videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
+  // ),
 ];

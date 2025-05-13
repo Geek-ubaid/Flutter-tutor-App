@@ -1,3 +1,4 @@
+import 'package:course_clone/models/single_article_model.dart';
 import 'package:get/get.dart';
 
 import '../models/course_model.dart';

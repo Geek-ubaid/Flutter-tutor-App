@@ -1,6 +1,7 @@
 import 'package:course_clone/states/course_controller.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/states/profile_controller.dart';
+import 'package:course_clone/states/progress_tracker_controller.dart';
 import 'package:course_clone/states/topic_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,5 +13,6 @@ class StateHoldersBindings extends Bindings {
     Get.put(ProfileController());
     Get.put(CourseController());
     Get.put(TopicController());
+    Get.put(ProgressTrackerContoller());
   }
 }

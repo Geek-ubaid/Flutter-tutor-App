@@ -5,7 +5,6 @@ import 'package:course_clone/utils/constant.dart';
 import 'package:course_clone/widgets/bottombar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/course_model.dart';
 import '../services/firestore_api.dart';
 import 'home.dart';
 

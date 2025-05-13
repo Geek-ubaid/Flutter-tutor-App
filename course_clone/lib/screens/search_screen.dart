@@ -1,15 +1,14 @@
 import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:course_clone/utils/data.dart';
-import 'package:course_clone/models/course_model.dart';
-import 'package:course_clone/screens/course_detail_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class SearchScreen extends StatefulWidget {
-  final String? initialFilter;
-  const SearchScreen({super.key, this.initialFilter});
+  const SearchScreen({super.key, required this.courses});
+  final List<Course> courses;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -30,8 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
 
     // Unique topics + 'All'
-    final allTopics = categories.map((c) => c['identifier']).toSet().toList();
-    allTopics.remove('all');
+    final allTopics = widget.courses.map((c) => c.topic).toSet().toList();
     filters = ['All', ...allTopics];
     if (widget.initialFilter != null &&
         filters.contains(widget.initialFilter)) {
@@ -164,7 +162,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildCourseList() {
     final filteredCourses =
-        courses.where((course) {
+        widget.courses.where((course) {
           final matchesFilter =
               selectedFilter == 'All' ||
               course.topic.toLowerCase() == selectedFilter.toLowerCase();
@@ -226,7 +224,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 12),
-                        height: 140,
+                        height: 100,
                         width: 340,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -278,34 +276,24 @@ class _SearchScreenState extends State<SearchScreen> {
                 Positioned(
                   right: 16,
                   bottom: 16,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (isSaved) {
-                          savedCourseIds.remove(course.id);
-                        } else {
-                          savedCourseIds.add(course.id);
-                        }
-                      });
+                  child: IconButton(
+                    onPressed: () {
+                      final ctrl = Get.find<ProfileController>();
+                      ctrl.toggleBookmark(course);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        isSaved ? Icons.bookmark : Icons.bookmark_border,
-                        color: AppColor.primary,
-                        size: 20,
-                      ),
+                    // tie this builder to the same id you used in update()
+                    // so only this icon rebuilds
+                    icon: GetBuilder<ProfileController>(
+                      id: course.id,
+                      builder: (ctrl) {
+                        final bookmarked = ctrl.bookmarkedCourses.any(
+                          (c) => c.id == course.id,
+                        );
+                        return Icon(
+                          bookmarked ? Icons.bookmark : Icons.bookmark_outline,
+                          color: AppColor.primary,
+                        );
+                      },
                     ),
                   ),
                 ),

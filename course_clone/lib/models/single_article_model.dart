@@ -1,5 +1,3 @@
-import '../utils/constant.dart';
-
 class Course {
   final String id;
   final String name;
@@ -13,6 +11,8 @@ class Course {
   final int lessons;
   final double rating;
   final String readingTime;
+  bool isLiked;
+  bool isFinished;
 
   Course({
     required this.id,
@@ -27,6 +27,8 @@ class Course {
     this.lessons = 0,
     this.rating = 0.0,
     required this.readingTime,
+    this.isLiked = false,
+    this.isFinished = false,
   });
 
   factory Course.fromJson(Map<String, dynamic> json, String id) {
@@ -35,8 +37,8 @@ class Course {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       url: json['url'] ?? '',
-      topic: "TopicExtension.fromString(json['topic'] ?? '').label",
-      subtopic: json['subtopic'] ?? [''],
+      topic: json['topic'] ?? '',
+      subtopic: json['subtopic'] ?? [],
       thumbnailUrl: "assets/icons/category/file.svg",
       datePublished: DateTime.parse(json['date_published']),
       readingTime: json['reading_time'] ?? '',

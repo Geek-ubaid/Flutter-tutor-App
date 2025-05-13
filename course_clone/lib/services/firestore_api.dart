@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_clone/models/single_article_model.dart';
 
-import '../models/course_model.dart';
-
 class DatabaseService {
   final CollectionReference blogsCollection = FirebaseFirestore.instance
       .collection('blogs');

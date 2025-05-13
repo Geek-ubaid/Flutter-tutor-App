@@ -1,4 +1,3 @@
-import 'package:course_clone/screens/login_screen.dart';
 import 'package:course_clone/state_holeder_bindings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -32,6 +29,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -43,7 +42,7 @@ class AuthGate extends StatelessWidget {
         } else if (snapshot.hasData) {
           return const RootApp(); // 已登录跳转主页
         } else {
-          return LoginScreen(); // 未登录跳转登录页
+          return RootApp(); // 未登录跳转登录页
         }
       },
     );

@@ -1,5 +1,6 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/models/profile_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
@@ -10,14 +11,21 @@ class ProfileController extends GetxController {
     favoriteCourses: [],
   );
 
-  Profile get profile => _profile;
-  String get name => _profile.name;
-  String get image => _profile.image;
-  String get email => _profile.email;
-  List<Topic> get bookmarkedCourses => _profile.favoriteCourses;
+  List<Course> get bookmarkedCourses => _profile.favoriteCourses;
+  int get bookmarkedCoursesCount => _profile.favoriteCourses.length;
 
-  void addCourseToFav(Topic course) {
-    _profile.favoriteCourses.add(course);
-    update();
+  /// Toggle in/out and notify listeners.
+  void toggleBookmark(Course course) {
+    final exists = _profile.favoriteCourses.any((c) => c.id == course.id);
+
+    if (exists) {
+      _profile.favoriteCourses.removeWhere((c) => c.id == course.id);
+    } else {
+      _profile.favoriteCourses.add(course);
+    }
+
+    // If you give each card a GetBuilder id,
+    // you can pass [course.id] here to rebuild only that one.
+    update([course.id, bookmarkedCoursesCount]);
   }
 }

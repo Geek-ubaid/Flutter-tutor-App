@@ -1,4 +1,6 @@
+import 'package:course_clone/screens/web_view_screen.dart';
 import 'package:course_clone/states/profile_controller.dart';
+import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,9 @@ class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.appBgColor,
       appBar: AppBar(
+        backgroundColor: AppColor.appBgColor,
         title: const Text('Bookmarks'),
         centerTitle: true,
         leading: IconButton(
@@ -51,7 +55,14 @@ class BookmarkScreen extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
               final course = controller.bookmarkedCourses[index];
-              return RecommendItem(data: course);
+              return RecommendItem(
+                course: course,
+                onTap: () {
+                  Get.to(
+                    () => WebViewScreen(url: course.url, title: course.name),
+                  );
+                },
+              );
             },
           );
         },

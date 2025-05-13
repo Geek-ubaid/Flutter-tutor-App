@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:course_clone/screens/progress_screen.dart';
 import 'package:course_clone/screens/detail_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:course_clone/screens/progress_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/states/topic_controller.dart';
@@ -68,19 +67,6 @@ class _AccountPageState extends State<AccountPage> {
           // _buildSection2(),
           // const SizedBox(height: 20),
           _buildSection3(),
-          //! This is how to update the UI when the data changes
-          GetBuilder<FavoritesController>(
-            builder:
-                (controller) => ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.favoriteCourses.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
-                  itemBuilder:
-                      (_, i) =>
-                          RecommendItem(data: controller.favoriteCourses[i]),
-                ),
-          ),
         ],
       ),
     );
@@ -138,10 +124,7 @@ class _AccountPageState extends State<AccountPage> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const ProgressScreen()),
-            );
+            Get.to(() => ProgressScreen());
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
@@ -191,6 +174,7 @@ class _AccountPageState extends State<AccountPage> {
           padding: const EdgeInsets.only(left: 45),
           child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
         ),
+
         const SizedBox(height: 10),
 
         // Bookmark section
@@ -204,8 +188,8 @@ class _AccountPageState extends State<AccountPage> {
               leadingIcon: "assets/icons/bookmark.svg",
               bgIconColor: AppColor.primary,
               itemCount:
-                  controller.bookmarkedCourses.isNotEmpty
-                      ? controller.bookmarkedCourses.length
+                  controller.bookmarkedCoursesCount > 0
+                      ? controller.bookmarkedCoursesCount
                       : null,
             );
           },

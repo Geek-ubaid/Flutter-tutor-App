@@ -1,10 +1,11 @@
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 
 class Profile {
   final String name;
   final String image;
   final String email;
-  List<Topic> favoriteCourses = [];
+  List<Course> favoriteCourses = [];
 
   Profile({
     required this.name,
