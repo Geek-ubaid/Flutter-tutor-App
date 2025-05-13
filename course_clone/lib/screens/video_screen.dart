@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
 
@@ -16,17 +14,13 @@ class VideoPlayerPage extends StatefulWidget {
 }
 
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
-  late YoutubePlayerController _controller;
+  late final YoutubePlayerController _controller;
 
-  late YoutubeMetaData _videoMetaData;
-  bool isPaused = false;
-  late String currentPlayingVideoLink;
-  String videoTitle = '';
   @override
   void initState() {
     super.initState();
-    _videoMetaData = const YoutubeMetaData();
-    currentPlayingVideoLink = widget.videoLink;
+
+    // 1️⃣ Create controller with params
     _controller = YoutubePlayerController(
       params: const YoutubePlayerParams(
         showControls: true,
@@ -36,12 +30,15 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
       ),
     );
 
-    _controller.setFullScreenListener((isFullScreen) {
-      log('${isFullScreen ? 'Entered' : 'Exited'} Fullscreen.');
-    });
+    // 2️⃣ Extract video ID and load it
     final id = YoutubePlayerController.convertUrlToId(widget.videoLink);
-    assert(id != null, 'Invalid YouTube link');
+    assert(id != null, 'Invalid YouTube link: ${widget.videoLink}');
     _controller.loadVideoById(videoId: id!);
+
+    // 3️⃣ Optional: listen for fullscreen changes
+    _controller.setFullScreenListener((isFullScreen) {
+      debugPrint(isFullScreen ? 'Entered Fullscreen.' : 'Exited Fullscreen.');
+    });
   }
 
   @override
@@ -55,160 +52,152 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     return YoutubePlayerScaffold(
       backgroundColor: AppColor.appBgColor,
       controller: _controller,
-      builder: (context, player) {
-        return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  player,
-                  Positioned(
-                    top: 40,
-                    left: 10,
-                    child: InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColor.orange,
-                          size: 20,
+      builder:
+          (context, player) => Scaffold(
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ▶️ Video player with back button overlay
+                Stack(
+                  children: [
+                    player,
+                    Positioned(
+                      top: 40,
+                      left: 10,
+                      child: InkWell(
+                        onTap: () => Get.back(),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                            color: AppColor.orange,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                // ℹ️ Metadata pills
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: YoutubeValueBuilder(
+                    controller: _controller,
+                    builder: (context, value) {
+                      final title = value.metaData.title;
+                      final author = value.metaData.author;
+                      final duration = value.metaData.duration;
+
+                      Widget pill(IconData icon, String label, String text) {
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.grey.shade900,
+                                Colors.grey.shade800,
+                                Colors.grey.shade700,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: Colors.white24,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  icon,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  '$label: ${text.isEmpty ? 'Loading…' : text}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+
+                      return Column(
+                        children: [
+                          pill(Icons.title, 'Title', title),
+                          const SizedBox(height: 8),
+                          pill(Icons.person, 'Author', author),
+                          const SizedBox(height: 8),
+                          pill(
+                            Icons.schedule,
+                            'Duration',
+                            '${duration.inMinutes} Minutes',
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                ],
-              ),
-              SizedBox(height: 12),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: YoutubeValueBuilder(
-                  controller: _controller,
-                  builder: (context, value) {
-                    final String title = value.metaData.title;
-                    final String author = value.metaData.author;
-                    final Duration duration = value.metaData.duration;
-
-                    return Column(
-                      children: [
-                        videoInfo(context, title, 'Title'),
-                        SizedBox(height: 8),
-                        videoInfo(context, author, 'Author'),
-                        SizedBox(height: 8),
-
-                        videoInfo(
-                          context,
-                          '${duration.inMinutes.toString()} Minutes',
-                          'Duration',
-                        ),
-                      ],
-                    );
-                  },
                 ),
-              ),
-              const SizedBox(height: 16),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                color: Colors.black45,
-                margin: EdgeInsets.symmetric(horizontal: 0),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                const SizedBox(height: 16),
+
+                // 📚 Tutor hint card
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade900,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: Row(
                     children: [
-                      Icon(Icons.book, color: AppColor.orange),
+                      const Icon(Icons.book, color: Colors.white70),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          "🔖 Before you continue, please read the GetX State Management section in your tutor guide.",
+                          "🔖 Before you continue, read the GetX State Management section in your guide.",
                           style: TextStyle(color: Colors.white70, fontSize: 14),
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Open"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () => Get.back(),
+                        child: const Text('Open'),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget videoInfo(BuildContext context, String value, String label) {
-    // pick an icon based on the field
-    IconData icon;
-    switch (label) {
-      case 'Title':
-        icon = Icons.title;
-        break;
-      case 'Author':
-        icon = Icons.person;
-        break;
-      case 'Duration':
-        icon = Icons.schedule;
-        break;
-      default:
-        icon = Icons.info;
-    }
-
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: const LinearGradient(
-            colors: [AppColor.primary, Color.fromARGB(255, 179, 111, 108)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        child: Row(
-          children: [
-            Icon(icon, color: Colors.white),
-            const SizedBox(width: 12),
-            Text(
-              '$label:',
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+                const SizedBox(height: 24),
+              ],
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                value.isEmpty ? 'Loading…' : value,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }
