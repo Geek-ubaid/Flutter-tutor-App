@@ -3,6 +3,7 @@ import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'custom_image.dart';
 
@@ -24,49 +25,57 @@ class FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailPageScreen(course: data),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailPageScreen(course: data),
+        //   ),
+        // );
+        Get.to(() => DetailPageScreen(course: data));
       },
-      child: Container(
-        width: width,
-        height: height,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: AppColor.shadowColor.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(1, 1), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            CustomImage(
-              data.image,
-              width: double.infinity,
-              height: 190,
-              radius: 15,
-            ),
-            // Positioned(top: 170, right: 15, child: _buildPrice()),
-            Positioned(top: 210, child: _buildInfo()),
-            Positioned(
-              bottom: 10,
-              right: 0,
-              child: IconButton(
-                onPressed: onTap,
-                icon: Icon(Icons.shopping_cart, color: Colors.green, size: 20),
+      child: Hero(
+        tag: data.image,
+        child: Container(
+          width: width,
+          height: height,
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.symmetric(vertical: 5),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: AppColor.shadowColor.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: Offset(1, 1), // changes position of shadow
               ),
-            ),
-          ],
+            ],
+          ),
+          child: Stack(
+            children: [
+              CustomImage(
+                data.image,
+                width: double.infinity,
+                height: 190,
+                radius: 15,
+              ),
+              // Positioned(top: 170, right: 15, child: _buildPrice()),
+              Positioned(top: 210, child: _buildInfo()),
+              Positioned(
+                bottom: 10,
+                right: 0,
+                child: IconButton(
+                  onPressed: onTap,
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Colors.green,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
