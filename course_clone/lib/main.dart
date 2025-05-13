@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'screens/root_app.dart';
 import 'theme/color.dart';
+import 'package:course_clone/screens/progress_screen.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialBinding: StateHoldersBindings(),
       title: 'Online Course App',
       theme: ThemeData(primaryColor: AppColor.primary),
-      home: const RootApp(),
+      home: const ProgressScreen(),
     );
   }
 }
