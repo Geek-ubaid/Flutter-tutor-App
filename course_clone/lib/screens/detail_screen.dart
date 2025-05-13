@@ -221,13 +221,13 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                         children: [
                           ListTile(
                             onTap: () {
-                              Get.to(
-                                () => WebViewScreen(
-                                  url:
-                                      "https://www.geeksforgeeks.org/flutter-an-introduction-to-the-open-source-sdk-by-google/",
-                                  title: widget.course.content![index].title,
-                                ),
-                              );
+                              // Get.to(
+                              //   () => WebViewScreen(
+                              //     url:
+                              //         "https://www.geeksforgeeks.org/flutter-an-introduction-to-the-open-source-sdk-by-google/",
+                              //     title: widget.course.content![index].title,
+                              //   ),
+                              // );
                             },
                             leading: Container(
                               width: 40,
