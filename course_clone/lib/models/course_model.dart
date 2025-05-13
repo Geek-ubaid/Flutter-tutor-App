@@ -34,15 +34,17 @@ class Course {
 
   factory Course.fromJson(Map<String, dynamic> json, String id) {
     return Course(
-      id: id,
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      url: json['url'] ?? '',
-      topic: TopicExtension.fromString(json['topic'] ?? '').label,
-      subtopic: json['subtopic'] ?? [''],
-      thumbnailUrl: "assets/icons/category/file.svg",
-      datePublished: DateTime.parse(json['date_published']),
-      readingTime: json['reading_time'] ?? ''
+        id: id,
+        name: json['name'] ?? '',
+        description: json['description'] ?? '',
+        url: json['url'] ?? '',
+        topic: TopicExtension
+            .fromString(json['topic'] ?? '')
+            .label,
+        subtopic: json['subtopic'] ?? [''],
+        thumbnailUrl: "assets/icons/category/file.svg",
+        datePublished: DateTime.parse(json['date_published']),
+        readingTime: json['reading_time'] ?? ''
     );
   }
 
@@ -57,6 +59,8 @@ class Course {
       'subtopic': subtopic,
       'thumbnail_url': thumbnailUrl,
       'date_published': datePublished.toIso8601String(),
+    };
+  }
 }
 
 

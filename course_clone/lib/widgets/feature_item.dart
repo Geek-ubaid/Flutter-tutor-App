@@ -31,7 +31,7 @@ class FeatureItem extends StatelessWidget {
         //     builder: (context) => DetailPageScreen(course: data),
         //   ),
         // );
-        Get.to(() => DetailPageScreen(course: data));
+        // Get.to(() => DetailPageScreen(course: data));
       },
       child: Container(
         width: width,
