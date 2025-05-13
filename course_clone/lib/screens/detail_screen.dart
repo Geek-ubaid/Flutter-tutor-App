@@ -1,3 +1,4 @@
+
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/screens/video_screen.dart';
 import 'package:course_clone/states/profile_controller.dart';
@@ -10,7 +11,7 @@ class DetailPageScreen extends StatefulWidget {
   const DetailPageScreen({super.key, required this.course});
 
   @override
-  State<DetailPageScreen> createState() => _DetailPageScreenState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailPageScreenState extends State<DetailPageScreen> {

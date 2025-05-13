@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 

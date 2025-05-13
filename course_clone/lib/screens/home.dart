@@ -1,4 +1,8 @@
+// lib/screens/home.dart
+
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:course_clone/models/profile_model.dart';
 import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
@@ -7,8 +11,10 @@ import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
-import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
+
+/// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
+typedef Pepsi = HomePage;
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/screens/search_screen.dart';
@@ -18,14 +24,14 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
     List<Course> courses = Provider.of<List<Course>>(context);
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
@@ -34,8 +40,8 @@ class _HomePageState extends State<HomePage> {
           SliverAppBar(
             backgroundColor: AppColor.appBarColor,
             pinned: true,
-            snap: true,
             floating: true,
+            snap: true,
             title: _buildAppBar(),
           ),
           SliverList(
@@ -53,9 +59,9 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Greeting + name
         Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -63,21 +69,19 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: AppColor.labelColor, fontSize: 14),
               ),
               const SizedBox(height: 5),
-              Text(
-                "Good Morning!",
-                style: TextStyle(
-                  color: AppColor.textColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
+              Text("Good Morning!",
+                  style: TextStyle(
+                      color: AppColor.textColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18)),
             ],
           ),
         ),
-        NotificationBox(notifiedNumber: 1),
+        const NotificationBox(notifiedNumber: 1),
       ],
     );
   }
+
 
   _buildBody(List<Course> courses) {
     return SingleChildScrollView(
@@ -87,16 +91,24 @@ class _HomePageState extends State<HomePage> {
         children: [
           _buildCategories(),
           const SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: Text(
-              "Featured",
-              style: TextStyle(
-                color: AppColor.textColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 24,
-              ),
+
+          // Featured carousel
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Text("Featured Topics",
+                style: TextStyle(
+                    color: AppColor.textColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600)),
+          ),
+          const SizedBox(height: 10),
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 180,
+              enlargeCenterPage: true,
+              viewportFraction: .7,
             ),
+            items: topics.map(_buildTopicCard).toList(),
           ),
           _buildFeatured(courses),
           const SizedBox(height: 15),
@@ -135,22 +147,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildCategories() {
+  Widget _buildCategories() {
     return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(15, 10, 0, 10),
+      padding: const EdgeInsets.fromLTRB(15, 10, 0, 10),
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(
-          categories.length,
-          (index) => Padding(
+        children: categories.map((cat) {
+          return Padding(
             padding: const EdgeInsets.only(right: 15),
             child: CategoryBox(
-              selectedColor: Colors.white,
-              data: categories[index],
-              onTap: null,
+              data: cat,
+              onTap: () {
+                // TODO: implement filtering
+              },
             ),
-          ),
-        ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -172,9 +184,20 @@ class _HomePageState extends State<HomePage> {
             // Get.find<FavoritesController>().addToCart(features[index]);
           },
         ),
-      ),
-    );
-  }
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // topic image
+            ClipRRect(
+              borderRadius:
+              const BorderRadius.vertical(top: Radius.circular(16)),
+              child: Image.network(
+                topic['image'] as String,
+                height: 100,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
 
   _buildAll(List<Course> courses){
     return SingleChildScrollView(

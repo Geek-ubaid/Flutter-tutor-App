@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       initialBinding: StateHoldersBindings(),
       title: 'Online Flutter Tutoring App',
       theme: ThemeData(primaryColor: AppColor.primary),
-      home: const RootApp(),
+      home: const ProgressScreen(),
     );
   }
 }
