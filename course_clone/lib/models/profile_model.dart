@@ -4,7 +4,7 @@ class Profile {
   final String name;
   final String image;
   final String email;
-  List<Course> favoriteCourses = [];
+  List<Topic> favoriteCourses = [];
 
   Profile({
     required this.name,
@@ -19,7 +19,7 @@ class Profile {
     email: json["email"] ?? "",
     favoriteCourses:
         (json["favoriteCourses"] ?? [] as List<dynamic>?)
-            ?.map((e) => CourseV2.fromJson(e))
+            ?.map((e) => Topic.fromJson(e))
             .toList(),
   );
 

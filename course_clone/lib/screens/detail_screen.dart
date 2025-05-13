@@ -2,13 +2,14 @@ import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/screens/video_screen.dart';
 import 'package:course_clone/screens/web_view_screen.dart';
 import 'package:course_clone/states/profile_controller.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailPageScreen extends StatefulWidget {
-  final Course course;
-  const DetailPageScreen({super.key, required this.course});
+  final Topic topic;
+  const DetailPageScreen({super.key, required this.topic});
 
   @override
   State<DetailPageScreen> createState() => _DetailPageScreenState();
@@ -38,10 +39,10 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
             Hero(
               tag:
                   widget
-                      .course
-                      .thumbnailUrl, // Ensure the tag matches the one used in the previous screen
+                      .topic
+                      .image, // Ensure the tag matches the one used in the previous screen
               child: Image.network(
-                widget.course.thumbnailUrl,
+                widget.topic.image,
                 height: 230,
                 fit: BoxFit.cover,
               ),
@@ -55,7 +56,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
-                      widget.course.name,
+                      widget.topic.name,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -67,20 +68,20 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                   onPressed: () {
                     final controller = Get.find<ProfileController>();
                     if (controller.bookmarkedCourses.any(
-                      (course) => course.id == widget.course.id,
+                      (course) => course.id == widget.topic.id,
                     )) {
                       controller.bookmarkedCourses.removeWhere(
-                        (course) => course.id == widget.course.id,
+                        (course) => course.id == widget.topic.id,
                       );
                     } else {
-                      controller.addCourseToFav(widget.course);
+                      controller.addCourseToFav(widget.topic);
                     }
                     controller.update();
                   },
                   icon: GetBuilder<ProfileController>(
                     builder: (controller) {
                       bool bookmarked = controller.bookmarkedCourses.any(
-                        (course) => course.id == widget.course.id,
+                        (course) => course.id == widget.topic.id,
                       );
                       return Icon(
                         bookmarked ? Icons.bookmark : Icons.bookmark_outline,
@@ -179,7 +180,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.course.description,
+                        widget.topic.description,
                         style: const TextStyle(fontSize: 16),
                         maxLines: aboutExpand ? null : 2,
                         overflow: aboutExpand ? null : TextOverflow.ellipsis,
@@ -220,7 +221,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 0,
+                    itemCount: widget.topic.courses!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -230,7 +231,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                                 () => WebViewScreen(
                                   url:
                                       "https://www.geeksforgeeks.org/flutter-an-introduction-to-the-open-source-sdk-by-google/",
-                                  title: 'widget.course.content![index].title',
+                                  title: widget.topic.courses![index].name,
                                 ),
                               );
                             },
@@ -254,7 +255,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                             title: Text(
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              'widget.course.content![index].title',
+                              widget.topic.courses![index].name,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -266,7 +267,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                               onChanged: (val) {},
                             ),
                           ),
-                          // if (index != widget.course.content!.length - 1)
+                          // if (index != widget.topic.content!.length - 1)
                           Divider(
                             height: 1,
                             thickness: 1,
@@ -300,16 +301,16 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
         _getAttribute(
           Icons.play_circle_outlined,
           AppColor.labelColor,
-          'widget.course.session',
+          widget.topic.session,
         ),
         const SizedBox(width: 12),
         _getAttribute(
           Icons.schedule_rounded,
           AppColor.labelColor,
-          'widget.course.duration',
+          widget.topic.duration,
         ),
         const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, 'widget.course.review'),
+        _getAttribute(Icons.star, AppColor.yellow, widget.topic.review),
         const SizedBox(width: 12),
       ],
     );

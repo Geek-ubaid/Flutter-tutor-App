@@ -1,3 +1,4 @@
+import 'package:course_clone/models/single_article_model.dart';
 import 'package:course_clone/screens/account.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/constant.dart';
@@ -70,13 +71,13 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Course>>.value(
-        initialData: [],
-        value: DatabaseService().fetchCourses,
-        child: Scaffold(
-          backgroundColor: AppColor.appBgColor,
-          bottomNavigationBar: _buildBottomBar(),
-          body: _buildPage(),
-        )
+      initialData: [],
+      value: DatabaseService().fetchCourses,
+      child: Scaffold(
+        backgroundColor: AppColor.appBgColor,
+        bottomNavigationBar: _buildBottomBar(),
+        body: _buildPage(),
+      ),
     );
   }
 

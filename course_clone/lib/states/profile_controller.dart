@@ -14,9 +14,9 @@ class ProfileController extends GetxController {
   String get name => _profile.name;
   String get image => _profile.image;
   String get email => _profile.email;
-  List<Course> get bookmarkedCourses => _profile.favoriteCourses;
+  List<Topic> get bookmarkedCourses => _profile.favoriteCourses;
 
-  void addCourseToFav(Course course) {
+  void addCourseToFav(Topic course) {
     _profile.favoriteCourses.add(course);
     update();
   }

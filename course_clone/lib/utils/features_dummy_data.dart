@@ -1,9 +1,8 @@
 import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 
-
-List<CourseV2> features = [
-  CourseV2(
+List<Topic> dummyfeatures = [
+  Topic(
     id: 109,
     name: "Flutter – Basics",
     image:
@@ -54,8 +53,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 100,
     name: "UI/UX Design",
     image:
@@ -89,7 +87,7 @@ List<CourseV2> features = [
     ],
   ),
 
-  CourseV2(
+  Topic(
     id: 101,
     name: "Programming",
     image:
@@ -122,8 +120,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 102,
     name: "English Writing",
     image:
@@ -156,8 +153,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 103,
     name: "Photography",
     image:
@@ -190,8 +186,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 104,
     name: "Guitar Class",
     image:

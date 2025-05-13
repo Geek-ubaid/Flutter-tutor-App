@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:course_clone/screens/progress_screen.dart';
+import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/states/make_favorite_controller.dart';
 import 'package:course_clone/states/profile_controller.dart';
+import 'package:course_clone/states/topic_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/custom_image.dart';
@@ -23,6 +25,12 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  @override
+  void initState() {
+    Get.find<TopicController>().fetchTopics();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -62,14 +70,16 @@ class _AccountPageState extends State<AccountPage> {
           _buildSection3(),
           //! This is how to update the UI when the data changes
           GetBuilder<FavoritesController>(
-            builder: (controller) => ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: controller.favoriteCourses.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemBuilder: (_, i) =>
-                  RecommendItem(data: controller.favoriteCourses[i]),
-            ),
+            builder:
+                (controller) => ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.favoriteCourses.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  itemBuilder:
+                      (_, i) =>
+                          RecommendItem(data: controller.favoriteCourses[i]),
+                ),
           ),
         ],
       ),
@@ -78,10 +88,11 @@ class _AccountPageState extends State<AccountPage> {
 
   Widget _buildProfile() {
     return FutureBuilder<DocumentSnapshot>(
-      future: FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser?.uid)
-          .get(),
+      future:
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .get(),
       builder: (context, snapshot) {
         String nickname = "";
         if (snapshot.connectionState == ConnectionState.done &&
@@ -108,13 +119,11 @@ class _AccountPageState extends State<AccountPage> {
     return Row(
       children: const [
         Expanded(
-          child:
-          SettingBox(title: "12 courses", icon: "assets/icons/work.svg"),
+          child: SettingBox(title: "12 courses", icon: "assets/icons/work.svg"),
         ),
         SizedBox(width: 10),
         Expanded(
-          child:
-          SettingBox(title: "55 hours", icon: "assets/icons/time.svg"),
+          child: SettingBox(title: "55 hours", icon: "assets/icons/time.svg"),
         ),
         SizedBox(width: 10),
         Expanded(
@@ -144,7 +153,7 @@ class _AccountPageState extends State<AccountPage> {
                   color: AppColor.shadowColor.withAlpha(20),
                   blurRadius: 2,
                   offset: const Offset(0, 1),
-                )
+                ),
               ],
             ),
             child: Row(
@@ -167,8 +176,11 @@ class _AccountPageState extends State<AccountPage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 const Spacer(),
-                const Icon(Icons.arrow_forward_ios,
-                    color: AppColor.darker, size: 16),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: AppColor.darker,
+                  size: 16,
+                ),
               ],
             ),
           ),
@@ -191,9 +203,10 @@ class _AccountPageState extends State<AccountPage> {
               title: "Bookmark",
               leadingIcon: "assets/icons/bookmark.svg",
               bgIconColor: AppColor.primary,
-              itemCount: controller.bookmarkedCourses.isNotEmpty
-                  ? controller.bookmarkedCourses.length
-                  : null,
+              itemCount:
+                  controller.bookmarkedCourses.isNotEmpty
+                      ? controller.bookmarkedCourses.length
+                      : null,
             );
           },
         ),
@@ -267,5 +280,4 @@ class _AccountPageState extends State<AccountPage> {
       ),
     );
   }
-
 }
