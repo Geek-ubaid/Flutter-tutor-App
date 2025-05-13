@@ -14,6 +14,7 @@ class Course {
   final int lessons;
   final double rating;
   final String readingTime;
+  final String img;
 
   Course({
     required this.id,
@@ -24,6 +25,8 @@ class Course {
     required this.subtopic,
     required this.thumbnailUrl,
     required this.datePublished,
+    this.img = '',
+    // required this.img,
     this.price = 0.0,
     this.lessons = 0,
     this.rating = 0.0,

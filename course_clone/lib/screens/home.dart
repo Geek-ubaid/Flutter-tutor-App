@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage> {
 
   String? nickname;
 
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,12 @@ class _HomePageState extends State<HomePage> {
         });
       }
     }
+    // Stop skeleton loading
+    setState(() {
+      isLoading = false;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,59 +112,119 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody(List<Course> courses) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+  Widget _buildSkeletonScreen() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildCategories(),
-          const SizedBox(height: 15),
-          // Featured carousel
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text("Featured Topics",
-                style: TextStyle(
-                    color: AppColor.textColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600)),
-          ),
-          _buildFeatured(courses),
-          const SizedBox(height: 15),
-          Padding(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Daily Read",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.textColor,
-                  ),
+          // Fake category boxes
+          SizedBox(
+            height: 40,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) => Container(
+                width: 80,
+                margin: const EdgeInsets.only(right: 12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
-                    );
-                  },
-                  child: Text(
-                    "See all",
-                    style: TextStyle(fontSize: 14, color: AppColor.darker),
-                  ),
-                )
-
-              ],
+              ),
             ),
           ),
-          _buildAll(courses),
+          const SizedBox(height: 20),
+          // Fake featured carousel items
+          SizedBox(
+            height: 280,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              itemBuilder: (context, index) => Container(
+                width: 250,
+                margin: const EdgeInsets.only(right: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Fake list items
+          Column(
+            children: List.generate(3, (index) {
+              return Container(
+                height: 120,
+                margin: const EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              );
+            }),
+          )
         ],
       ),
     );
   }
+
+  Widget _buildBody(List<Course> courses) {
+  if (isLoading) {
+    return _buildSkeletonScreen();
+  }
+
+  return SingleChildScrollView(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildCategories(),
+        const SizedBox(height: 15),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Text("Featured Topics",
+              style: TextStyle(
+                  color: AppColor.textColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600)),
+        ),
+        _buildFeatured(courses),
+        const SizedBox(height: 15),
+        Padding(
+          padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Daily Read",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.textColor,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchScreen()),
+                  );
+                },
+                child: Text(
+                  "See all",
+                  style: TextStyle(fontSize: 14, color: AppColor.darker),
+                ),
+              )
+            ],
+          ),
+        ),
+        _buildAll(courses),
+      ],
+    ),
+  );
+}
 
   Widget _buildCategories() {
     return SingleChildScrollView(
@@ -170,7 +237,12 @@ class _HomePageState extends State<HomePage> {
             child: CategoryBox(
               data: cat,
               onTap: () {
-                // TODO: implement filtering
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchScreen(initialFilter: cat['identifier']),
+                  ),
+                );
               },
             ),
           );

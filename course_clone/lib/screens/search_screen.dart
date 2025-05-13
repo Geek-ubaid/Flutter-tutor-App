@@ -1,3 +1,4 @@
+import 'package:course_clone/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,26 +9,33 @@ import 'package:flutter/services.dart';
 
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final Topic? initialFilter;
+
+  const SearchScreen({super.key, this.initialFilter});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
+
 Set<String> savedCourseIds = {};
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> filters = [];
-  String selectedFilter = 'All';
+  List<Topic> filters = [];
+  Topic selectedFilter = Topic.all;
   String searchQuery = "";
 
   @override
   void initState() {
     super.initState();
 
-    // Unique topics + 'All'
-    final allTopics = courses.map((c) => c.topic).toSet().toList();
-    filters = ['All', ...allTopics];
+    filters = Topic.values;
+
+    if (widget.initialFilter != null && filters.contains(widget.initialFilter)) {
+      selectedFilter = widget.initialFilter!;
+    } else {
+      selectedFilter = Topic.all;
+    }
 
     _searchController.addListener(() {
       setState(() {
@@ -35,6 +43,9 @@ class _SearchScreenState extends State<SearchScreen> {
       });
     });
   }
+
+
+
 
 
 
@@ -126,11 +137,11 @@ class _SearchScreenState extends State<SearchScreen> {
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: ChoiceChip(
-              label: Text(filter),
+              label: Text(filter.name), // Show enum name
               selected: isSelected,
               onSelected: (_) {
                 setState(() {
-                  selectedFilter = filter;
+                  selectedFilter = filter; // Use the enum directly
                 });
               },
               selectedColor: AppColor.primary.withOpacity(0.9),
@@ -152,8 +163,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildCourseList() {
     final filteredCourses = courses.where((course) {
-      final matchesFilter = selectedFilter == 'All' ||
-          course.topic.toLowerCase() == selectedFilter.toLowerCase();
+      final matchesFilter =
+          selectedFilter == Topic.all || course.topic == selectedFilter;
 
       final query = searchQuery.toLowerCase();
 
@@ -163,7 +174,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
       return matchesFilter && (searchQuery.isEmpty || matchesQuery);
     }).toList();
-
 
     if (filteredCourses.isEmpty) {
       return const Center(
