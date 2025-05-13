@@ -8,10 +8,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../states/course_controller.dart';
+import '../utils/constant.dart';
 
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+
+  final String? initialFilter;
+  const SearchScreen({super.key, this.initialFilter});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -34,7 +37,11 @@ class _SearchScreenState extends State<SearchScreen> {
     final allTopics = categories.map((c) => c['identifier']).toSet().toList();
     allTopics.remove('all');
     filters = ['All', ...allTopics];
-
+    if (widget.initialFilter != null && filters.contains(widget.initialFilter)) {
+      selectedFilter = widget.initialFilter!;
+    } else {
+      selectedFilter = 'All';
+    }
     _searchController.addListener(() {
       setState(() {
         searchQuery = _searchController.text.toLowerCase();
