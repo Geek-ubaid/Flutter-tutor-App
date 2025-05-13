@@ -1,6 +1,9 @@
 import 'package:course_clone/models/course_content_model.dart';
 
 import '../utils/constant.dart';
+import '../utils/constant.dart';
+
+import 'course_content_model.dart';
 
 class Course {
   final String id;
@@ -105,9 +108,11 @@ class CourseV2 {
       'name': name,
       'image': image,
       'price': price,
-      'lessons': lessons,
-      'rating': rating,
+      'duration': duration,
+      'session': session,
+      'review': review,
+      'is_favorited': isFavorited,
+      'description': description,
     };
   }
-
 }
