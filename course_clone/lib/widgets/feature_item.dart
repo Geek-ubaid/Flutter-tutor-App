@@ -112,18 +112,18 @@ class FeatureItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _getAttribute(
-          Icons.play_circle_outlined,
-          AppColor.labelColor,
-          "234",
+          Icons.favorite,
+          AppColor.red,
+          "23",
         ),
-        // const SizedBox(width: 12),
+        const SizedBox(width: 7),
         _getAttribute(
-          Icons.schedule_rounded,
+          Icons.label,
           AppColor.labelColor,
-          "asd",
+          data.topic,
         ),
-        // const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, "asd"),
+        const SizedBox(width: 4),
+        _getAttribute(Icons.access_time, AppColor.labelColor, data.readingTime),
       ],
     );
   }

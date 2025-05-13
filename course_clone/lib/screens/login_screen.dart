@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/custom_image.dart';
 import 'signup_screen.dart';
 import '../theme/color.dart'; // 确保导入你的 color.dart
 import 'root_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,10 +25,17 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      final uid = userCredential.user?.uid;
+      if (uid != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_uid', uid);
+      }
+
       Navigator.pushReplacement(
         context,
         // MaterialPageRoute(builder: (_) => HomePage()),
@@ -61,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 64),
         child: Column(
           children: [
-            Center(child: Image.asset("assets/logo.png", width: 120)),
+            Center(child: CustomImage(
+              "assets/icons/logo.png", width: 120, isNetwork: false,
+            )),
             const SizedBox(height: 32),
             Text("Welcome Back",
                 style: TextStyle(
