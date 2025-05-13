@@ -1,14 +1,26 @@
+import 'package:course_clone/models/course_model.dart';
+
 class Profile {
   final String name;
   final String image;
   final String email;
+  List<Course> favoriteCourses = [];
 
-  Profile({required this.name, required this.image, required this.email});
+  Profile({
+    required this.name,
+    required this.image,
+    required this.email,
+    required this.favoriteCourses,
+  });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
     name: json["name"] ?? "",
     image: json["image"] ?? "",
     email: json["email"] ?? "",
+    favoriteCourses:
+        (json["favoriteCourses"] ?? [] as List<dynamic>?)
+            ?.map((e) => Course.fromJson(e))
+            .toList(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -21,5 +33,6 @@ class Profile {
     name: "Sangvaleap",
     image: "https://avatars.githubusercontent.com/u/86506519?v=4",
     email: "sangvaleap.vanny@gmail.com",
+    favoriteCourses: [],
   );
 }

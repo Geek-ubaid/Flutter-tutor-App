@@ -1,4 +1,5 @@
 import 'package:course_clone/states/make_favorite_controller.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/custom_image.dart';
@@ -6,7 +7,10 @@ import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:course_clone/widgets/setting_box.dart';
 import 'package:course_clone/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+
+import 'bookmark_screen.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -57,8 +61,8 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 20),
           _buildRecord(),
           const SizedBox(height: 20),
-          // _buildSection1(),
-          // const SizedBox(height: 20),
+          _buildSection1(),
+          const SizedBox(height: 20),
           // _buildSection2(),
           // const SizedBox(height: 20),
           _buildSection3(),
@@ -83,15 +87,19 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Widget _buildProfile() {
-    return Column(
-      children: [
-        CustomImage(profile["image"]!, width: 70, height: 70, radius: 20),
-        const SizedBox(height: 10),
-        Text(
-          profile["name"]!,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-      ],
+    return GetBuilder<ProfileController>(
+      builder: (controller) {
+        return Column(
+          children: [
+            CustomImage(controller.image, width: 100, height: 100, radius: 20),
+            const SizedBox(height: 10),
+            Text(
+              controller.name,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -143,19 +151,30 @@ class _AccountPageState extends State<AccountPage> {
             padding: const EdgeInsets.only(left: 45),
             child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
           ),
-          SettingItem(
-            title: "Payment",
-            leadingIcon: "assets/icons/wallet.svg",
-            bgIconColor: AppColor.green,
-          ),
+          // SettingItem(
+          //   title: "Payment",
+          //   leadingIcon: "assets/icons/wallet.svg",
+          //   bgIconColor: AppColor.green,
+          // ),
           Padding(
             padding: const EdgeInsets.only(left: 45),
             child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
           ),
-          SettingItem(
-            title: "Bookmark",
-            leadingIcon: "assets/icons/bookmark.svg",
-            bgIconColor: AppColor.primary,
+          GetBuilder<ProfileController>(
+            builder: (contrller) {
+              return SettingItem(
+                onTap: () {
+                  Get.to(() => BookmarkScreen());
+                },
+                title: "Bookmark",
+                leadingIcon: "assets/icons/bookmark.svg",
+                bgIconColor: AppColor.primary,
+                itemCount:
+                    contrller.bookmarkedCourses.isNotEmpty
+                        ? contrller.bookmarkedCourses.length
+                        : null,
+              );
+            },
           ),
         ],
       ),

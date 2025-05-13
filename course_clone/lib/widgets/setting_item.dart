@@ -10,6 +10,7 @@ class SettingItem extends StatelessWidget {
     this.leadingIcon,
     this.leadingIconColor = Colors.white,
     this.bgIconColor = AppColor.primary,
+    this.itemCount,
   });
 
   final String? leadingIcon;
@@ -17,6 +18,7 @@ class SettingItem extends StatelessWidget {
   final Color bgIconColor;
   final String title;
   final GestureTapCallback? onTap;
+  final int? itemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,20 @@ class SettingItem extends StatelessWidget {
         _buildPrefixIcon(),
         const SizedBox(width: 10),
         Expanded(child: Text(title, style: TextStyle(fontSize: 16))),
+        if (itemCount != null)
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: bgIconColor,
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              itemCount.toString(),
+              style: TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ),
+        SizedBox(width: 10),
         Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 17),
       ],
     );

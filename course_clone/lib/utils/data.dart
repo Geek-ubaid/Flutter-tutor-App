@@ -1,12 +1,13 @@
 import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/models/profile_model.dart';
 
-var profile = {
-  "name": "Jeno",
-  "image": "https://avatars.githubusercontent.com/u/86506519?v=4",
-  "email": "sangvaleap.vanny@gmail.com",
-};
-
+final profile = Profile(
+  name: "Jeno",
+  image: "https://avatars.githubusercontent.com/u/86506519?v=4",
+  email: "sangvaleap.vanny@gmail.com",
+  favoriteCourses: [],
+);
 List categories = [
   {"name": "All", "icon": "assets/icons/category/all.svg"},
   {"name": "Coding", "icon": "assets/icons/category/coding.svg"},
