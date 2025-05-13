@@ -56,7 +56,7 @@ class RecommendItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          "May 7", // Format: e.g. "May 10, 2025"
+          "May 7", // Consider using formatted date later
           style: TextStyle(fontSize: 12, color: AppColor.labelColor),
         ),
         const SizedBox(height: 4),
@@ -78,4 +78,5 @@ class RecommendItem extends StatelessWidget {
       ],
     );
   }
+
 }

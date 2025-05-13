@@ -67,6 +67,9 @@ List<Course> courses = [
     subtopic: ["icon"],
     thumbnailUrl: thumbnailUrl,
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
+    price: 110.0,
+    lessons: 1,
+    rating: 4.5,
     readingTime: "3 mins"
   ),
   Course(
@@ -78,7 +81,10 @@ List<Course> courses = [
     subtopic: ["font_customization"],
     thumbnailUrl: thumbnailUrl,
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
-      readingTime: "3 mins"
+    price: 95.0,
+    lessons: 3,
+    rating: 4.2,
+    readingTime: "3 mins"
   ),
   Course(
     id: "eOM8s3d09qDqawjKNR9f",
@@ -89,8 +95,10 @@ List<Course> courses = [
     subtopic: ["introduction"],
     thumbnailUrl: thumbnailUrl,
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
-      readingTime: "3 mins"
-
+    price: 80.0,
+    lessons: 3,
+    rating: 3.9,
+    readingTime: "3 mins"
   ),
   Course(
     id: "foGQ5CYuibXWBKDMwPq8",
@@ -101,8 +109,11 @@ List<Course> courses = [
     subtopic: ["introduction"],
     thumbnailUrl: thumbnailUrl,
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
-      readingTime: "3 mins"
-
+    price: 72.0,
+    lessons: 8,
+    duration: '4 hours',
+    rating: 4.9,
+    readingTime: "3 mins"
   ),
 ];
 
