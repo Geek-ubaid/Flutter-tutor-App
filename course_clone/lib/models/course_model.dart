@@ -1,4 +1,5 @@
 import '../utils/constant.dart';
+import 'course_content_model.dart';
 
 class Course {
   final String id;

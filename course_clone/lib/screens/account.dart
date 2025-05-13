@@ -9,10 +9,10 @@ import 'package:course_clone/widgets/custom_image.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:course_clone/widgets/setting_box.dart';
 import 'package:course_clone/widgets/setting_item.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'bookmark_screen.dart';
 
 class AccountPage extends StatefulWidget {
@@ -57,8 +57,6 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 20),
           _buildProgressSection(),
           const SizedBox(height: 20),
-          _buildSection1(),
-          const SizedBox(height: 20),
           // _buildSection2(),
           // const SizedBox(height: 20),
           _buildSection3(),
@@ -79,15 +77,26 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Widget _buildProfile() {
-    return GetBuilder<ProfileController>(
-      builder: (controller) {
+    return FutureBuilder<DocumentSnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get(),
+      builder: (context, snapshot) {
+        String nickname = "";
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null &&
+            snapshot.data!.exists) {
+          nickname = snapshot.data!.get('nickname') ?? '';
+        }
+
         return Column(
           children: [
-            CustomImage(controller.image, width: 100, height: 100, radius: 20),
+            CustomImage(profile.image ?? '', width: 70, height: 70, radius: 20),
             const SizedBox(height: 10),
             Text(
-              controller.name,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              nickname,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           ],
         );
@@ -122,8 +131,7 @@ class _AccountPageState extends State<AccountPage> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (_) => const ProgressScreen()),
+              MaterialPageRoute(builder: (_) => const ProgressScreen()),
             );
           },
           child: Container(
@@ -141,10 +149,9 @@ class _AccountPageState extends State<AccountPage> {
             ),
             child: Row(
               children: [
-                // Circle background + icon
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColor.primary,
                     shape: BoxShape.circle,
                   ),
@@ -165,38 +172,32 @@ class _AccountPageState extends State<AccountPage> {
               ],
             ),
           ),
-          
-          Padding(
-            padding: const EdgeInsets.only(left: 45),
-            child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
-          ),
-          // SettingItem(
-          //   title: "Payment",
-          //   leadingIcon: "assets/icons/wallet.svg",
-          //   bgIconColor: AppColor.green,
-          // ),
-          Padding(
-            padding: const EdgeInsets.only(left: 45),
-            child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
-          ),
-          GetBuilder<ProfileController>(
-            builder: (contrller) {
-              return SettingItem(
-                onTap: () {
-                  Get.to(() => BookmarkScreen());
-                },
-                title: "Bookmark",
-                leadingIcon: "assets/icons/bookmark.svg",
-                bgIconColor: AppColor.primary,
-                itemCount:
-                    contrller.bookmarkedCourses.isNotEmpty
-                        ? contrller.bookmarkedCourses.length
-                        : null,
-              );
-            },
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        // Divider under "My Progress"
+        Padding(
+          padding: const EdgeInsets.only(left: 45),
+          child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
+        ),
+        const SizedBox(height: 10),
+
+        // Bookmark section
+        GetBuilder<ProfileController>(
+          builder: (controller) {
+            return SettingItem(
+              onTap: () {
+                Get.to(() => const BookmarkScreen());
+              },
+              title: "Bookmark",
+              leadingIcon: "assets/icons/bookmark.svg",
+              bgIconColor: AppColor.primary,
+              itemCount: controller.bookmarkedCourses.isNotEmpty
+                  ? controller.bookmarkedCourses.length
+                  : null,
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -247,10 +248,24 @@ class _AccountPageState extends State<AccountPage> {
             color: AppColor.shadowColor.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(0, 1), // changes position of shadow
+            offset: Offset(0, 1),
           ),
-        ),
-      ],
+        ],
+      ),
+      child: SettingItem(
+        title: "Log Out",
+        leadingIcon: "assets/icons/logout.svg",
+        bgIconColor: AppColor.darker,
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          if (!mounted) return;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => LoginScreen()),
+          );
+        },
+      ),
     );
   }
+
 }

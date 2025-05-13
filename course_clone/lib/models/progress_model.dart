@@ -1,4 +1,4 @@
-class Topic {
+class TopicLabels {
   final int id;
   final String name;
   final String image;
@@ -6,7 +6,7 @@ class Topic {
   final List<String> sections;
   List<String> completedSections;
 
-  Topic({
+  TopicLabels({
     required this.id,
     required this.name,
     required this.image,
@@ -15,8 +15,8 @@ class Topic {
     this.completedSections = const [],
   });
 
-  factory Topic.fromMap(Map<String, dynamic> map) {
-    return Topic(
+  factory TopicLabels.fromMap(Map<String, dynamic> map) {
+    return TopicLabels(
       id: map['id'] as int,
       name: map['name'] as String,
       image: map['image'] as String,

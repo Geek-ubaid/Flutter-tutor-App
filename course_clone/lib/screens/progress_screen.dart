@@ -16,7 +16,7 @@ class ProgressScreen extends StatefulWidget {
 class _ProgressScreenState extends State<ProgressScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<Topic> topic = topics;
+    final List<TopicLabels> topic = topics;
     final total = topics.length;
 
     // compute average progress
@@ -181,7 +181,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Widget _buildContinueCard(Topic topic) {
+  Widget _buildContinueCard(TopicLabels topic) {
     return GestureDetector(
       onTap: () async {
         // await Navigator.push(
@@ -239,7 +239,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Widget _buildProgressCard(Topic topic) {
+  Widget _buildProgressCard(TopicLabels topic) {
     final sections = (topic.sections);
     final doneList =
     (topic.completedSections);

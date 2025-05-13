@@ -1,5 +1,4 @@
 import 'package:course_clone/models/course_model.dart';
-import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';

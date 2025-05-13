@@ -1,13 +1,10 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/models/progress_model.dart';
-import 'package:course_clone/models/course_content_model.dart';
-import 'package:course_clone/models/course_model.dart';
 import 'constant.dart';
 import 'package:course_clone/models/profile_model.dart';
 
 
 /// Stub lists for your Course widgets (populate as needed)
-final List<Course> courses   = [];
 final List<Course> features  = [];
 final List<Course> recommends = [];
 
@@ -185,8 +182,8 @@ final List<Map<String, dynamic>> myProgressCourses = [
 ];
 
 
-final List<Topic> topics = [
-  Topic(
+final List<TopicLabels> topics = [
+TopicLabels(
     id: 1,
     name: 'Basics',
     image: 'https://via.placeholder.com/150',
@@ -199,7 +196,7 @@ final List<Topic> topics = [
       'Flutter Development on Ubuntu',
     ],
   ),
-  Topic(
+      TopicLabels(
     id: 2,
     name: 'Widgets',
     image: 'https://via.placeholder.com/150',
@@ -222,7 +219,7 @@ final List<Topic> topics = [
       'Flutter – TextField',
     ],
   ),
-  Topic(
+TopicLabels(
     id: 3,
     name: 'UI Components',
     image: 'https://via.placeholder.com/150',
@@ -246,7 +243,7 @@ final List<Topic> topics = [
       'Flutter – Snackbar',
     ],
   ),
-  Topic(
+    TopicLabels(
     id: 4,
     name: 'Design & Animations',
     image: 'https://via.placeholder.com/150',
@@ -271,7 +268,7 @@ final List<Topic> topics = [
       'Rive animations in Flutter',
     ],
   ),
-  Topic(
+TopicLabels(
     id: 5,
     name: 'Forms & Gestures',
     image: 'https://via.placeholder.com/150',
@@ -282,7 +279,7 @@ final List<Topic> topics = [
       'Flutter – Gestures',
     ],
   ),
-  Topic(
+  TopicLabels(
     id: 6,
     name: 'Navigation & Routing',
     image: 'https://via.placeholder.com/150',
@@ -305,7 +302,7 @@ final List<Topic> topics = [
       'Flutter – Send Data to the Screen using RouteSettings',
     ],
   ),
-  Topic(
+  TopicLabels(
     id: 7,
     name: 'Accessing Device',
     image: 'https://via.placeholder.com/150',
@@ -317,11 +314,11 @@ final List<Topic> topics = [
       'Restrict Landscape Mode in Flutter',
     ],
   ),
-  Topic(
+  TopicLabels(
     id: 8,
     name: 'Advanced Concepts',
     image: 'https://via.placeholder.com/150',
-    description: 'Exploring advanced Flutter and Dart topics.',
+    description: 'Exploring advanced Flutter and Dart TopicLabelss.',
     sections: [
       'Flutter – Read and Write Data on Firebase',
       'Mail and SMS in Flutter',
@@ -332,7 +329,7 @@ final List<Topic> topics = [
       'HTTP GET Response in Flutter',
     ],
   ),
-  Topic(
+  TopicLabels(
     id: 9,
     name: 'App Projects',
     image: 'https://via.placeholder.com/150',
@@ -344,7 +341,9 @@ final List<Topic> topics = [
       'Flutter – Simple PDF-Generating App',
       'Flutter – Dice Roller App',
       'Flutter – Magic 8-Ball App',
-    ],
+    ]
+  ),
+];
 
 
 final profile = Profile(
