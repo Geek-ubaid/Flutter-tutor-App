@@ -8,6 +8,7 @@ final profile = Profile(
   email: "sangvaleap.vanny@gmail.com",
   favoriteCourses: [],
 );
+
 List categories = [
   {
     "name": "All",

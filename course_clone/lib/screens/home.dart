@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                profile["name"]!,
+                profile.name ?? '',
                 style: TextStyle(color: AppColor.labelColor, fontSize: 14),
               ),
               const SizedBox(height: 5),

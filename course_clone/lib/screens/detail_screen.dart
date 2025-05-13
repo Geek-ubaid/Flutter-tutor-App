@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailPageScreen extends StatefulWidget {
-  final CourseV2 course;
+  final Course course;
   const DetailPageScreen({super.key, required this.course});
 
   @override

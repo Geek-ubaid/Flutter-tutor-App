@@ -19,7 +19,7 @@ class Profile {
     email: json["email"] ?? "",
     favoriteCourses:
         (json["favoriteCourses"] ?? [] as List<dynamic>?)
-            ?.map((e) => Course.fromJson(e))
+            ?.map((e) => CourseV2.fromJson(e))
             .toList(),
   );
 
