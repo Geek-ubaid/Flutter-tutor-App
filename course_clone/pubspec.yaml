@@ -40,11 +40,8 @@ dependencies:
   flutter_svg: ^2.1.0
   get: ^4.7.2
   provider: ^6.1.5
-<<<<<<< HEAD
   youtube_player_iframe: ^5.2.1
-=======
-  webview_flutter: ^4.11.0
->>>>>>> d0848cb (webview integration)
+  # webview_flutter: ^4.11.0
   google_sign_in: ^6.2.2
   intl: ^0.20.2
   firebase_auth: ^5.5.3
