@@ -1,8 +1,8 @@
 import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 
-List<Course> features = [
-  Course(
+List<CourseV2> features = [
+  CourseV2(
     id: 109,
     name: "Flutter GetX State Management",
     image:
@@ -35,7 +35,7 @@ List<Course> features = [
       ),
     ],
   ),
-  Course(
+  CourseV2(
     id: 100,
     name: "UI/UX Design",
     image:
@@ -69,7 +69,7 @@ List<Course> features = [
     ],
   ),
 
-  Course(
+  CourseV2(
     id: 101,
     name: "Programming",
     image:
@@ -102,7 +102,7 @@ List<Course> features = [
       ),
     ],
   ),
-  Course(
+  CourseV2(
     id: 102,
     name: "English Writing",
     image:
@@ -135,7 +135,7 @@ List<Course> features = [
       ),
     ],
   ),
-  Course(
+  CourseV2(
     id: 103,
     name: "Photography",
     image:
@@ -168,7 +168,7 @@ List<Course> features = [
       ),
     ],
   ),
-  Course(
+  CourseV2(
     id: 104,
     name: "Guitar Class",
     image:
