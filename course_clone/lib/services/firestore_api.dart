@@ -7,7 +7,7 @@ class DatabaseService {
 
   List<Course> _fromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((DocumentSnapshot document) {
-      return Course.fromJson(document.data()! as Map<String, dynamic>);
+      return Course.fromJson(document.data() as Map<String, dynamic>, document.id);
     }).toList();
   }
 

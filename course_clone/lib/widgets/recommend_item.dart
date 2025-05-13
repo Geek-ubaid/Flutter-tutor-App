@@ -1,6 +1,5 @@
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
-import 'package:course_clone/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -73,7 +72,7 @@ class RecommendItem extends StatelessWidget {
             const Spacer(),
             Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
-            Text("3 min", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+            Text(data.readingTime, style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
           ],
         )
       ],

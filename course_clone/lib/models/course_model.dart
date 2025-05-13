@@ -1,10 +1,12 @@
+import '../utils/constant.dart';
+
 class Course {
   final String id;
   final String name;
   final String description;
   final String url;
   final String topic;
-  final List<String> subtopic;
+  final List<dynamic> subtopic;
   final String thumbnailUrl;
   final DateTime datePublished;
   final String readingTime;
@@ -21,15 +23,15 @@ class Course {
     required this.readingTime
   });
 
-  factory Course.fromJson(Map<String, dynamic> json) {
+  factory Course.fromJson(Map<String, dynamic> json, String id) {
     return Course(
-      id: json['id'],
+      id: id,
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       url: json['url'] ?? '',
-      topic: json['topic'] ?? 'all',
+      topic: TopicExtension.fromString(json['topic'] ?? '').label,
       subtopic: json['subtopic'] ?? [''],
-      thumbnailUrl: json['thumbnail_url'] ?? '',
+      thumbnailUrl: "assets/icons/category/file.svg",
       datePublished: DateTime.parse(json['date_published']),
       readingTime: json['reading_time'] ?? ''
     );

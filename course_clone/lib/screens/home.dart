@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:course_clone/models/course_model.dart';
-import 'package:course_clone/services/firestore_api.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/category_box.dart';
@@ -20,17 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final courses = Provider.of<List<Course>>(context);
-
-    courses.forEach((course) {
-      print("file");
-      print(course.id);
-    });
-
-    return StreamProvider<List<Course>>.value(
-        initialData: [],
-        value: DatabaseService().fetchCourses,
-        child: Scaffold(
+    List<Course> courses = Provider.of<List<Course>>(context);
+    return Scaffold(
       backgroundColor: AppColor.appBgColor,
       body: CustomScrollView(
         slivers: [
@@ -49,7 +39,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    ));
+    );
   }
 
   Widget _buildAppBar() {
