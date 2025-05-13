@@ -11,7 +11,10 @@ import 'package:course_clone/widgets/feature_item.dart';
 import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:course_clone/screens/search_screen.dart';
+
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    List<Course> courses = Provider.of<List<Course>>(context);
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
       body: CustomScrollView(
@@ -36,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _buildBody(),
+              (context, index) => _buildBody(courses),
               childCount: 1,
             ),
           ),
@@ -54,13 +58,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GetBuilder<ProfileController>(
-                builder: (controller) {
-                  return Text(
-                    controller.name,
-                    style: TextStyle(color: AppColor.labelColor, fontSize: 14),
-                  );
-                },
+              Text(
+                profile.name ?? '',
+                style: TextStyle(color: AppColor.labelColor, fontSize: 14),
               ),
               const SizedBox(height: 5),
               Text(
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody() {
+  _buildBody(List<Course> courses) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          _buildFeatured(),
+          _buildFeatured(courses),
           const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -106,21 +106,30 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Recommended",
+                  "Daily Read",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                     color: AppColor.textColor,
                   ),
                 ),
-                Text(
-                  "See all",
-                  style: TextStyle(fontSize: 14, color: AppColor.darker),
-                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                  },
+                  child: Text(
+                    "See all",
+                    style: TextStyle(fontSize: 14, color: AppColor.darker),
+                  ),
+                )
+
               ],
             ),
           ),
-          _buildRecommended(),
+          _buildAll(courses),
         ],
       ),
     );
@@ -146,7 +155,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildFeatured() {
+  _buildFeatured(List<Course> courses) {
     return CarouselSlider(
       options: CarouselOptions(
         height: 290,
@@ -155,28 +164,28 @@ class _HomePageState extends State<HomePage> {
         viewportFraction: .75,
       ),
       items: List.generate(
-        features.length,
+        courses.length,
         (index) => FeatureItem(
-          data: features[index],
+          data: courses[index],
           onTap: () {
             //! This is how to update the state of the controller
-            Get.find<FavoritesController>().addToCart(features[index]);
+            // Get.find<FavoritesController>().addToCart(features[index]);
           },
         ),
       ),
     );
   }
 
-  _buildRecommended() {
+  _buildAll(List<Course> courses){
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-      scrollDirection: Axis.horizontal,
-      child: Row(
+      scrollDirection: Axis.vertical,
+      child: Column(
         children: List.generate(
-          recommends.length,
+          courses.length,
           (index) => Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: RecommendItem(data: recommends[index]),
+            padding: const EdgeInsets.only(bottom: 20),
+            child: RecommendItem(data: courses[index]),
           ),
         ),
       ),

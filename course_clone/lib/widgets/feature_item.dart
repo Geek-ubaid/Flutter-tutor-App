@@ -3,6 +3,7 @@ import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'custom_image.dart';
@@ -31,51 +32,34 @@ class FeatureItem extends StatelessWidget {
         //     builder: (context) => DetailPageScreen(course: data),
         //   ),
         // );
-        Get.to(() => DetailPageScreen(course: data));
+        // Get.to(() => DetailPageScreen(course: data));
       },
-      child: Hero(
-        tag: data.image,
-        child: Container(
-          width: width,
-          height: height,
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: AppColor.shadowColor.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 1,
-                offset: Offset(1, 1), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Stack(
-            children: [
-              CustomImage(
-                data.image,
-                width: double.infinity,
-                height: 190,
-                radius: 15,
-              ),
-              // Positioned(top: 170, right: 15, child: _buildPrice()),
-              Positioned(top: 210, child: _buildInfo()),
-              Positioned(
-                bottom: 10,
-                right: 0,
-                child: IconButton(
-                  onPressed: onTap,
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.green,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
+      child: Container(
+        width: width,
+        height: height,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.symmetric(vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.shadowColor.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(1, 1), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            SvgPicture.asset(
+                data.thumbnailUrl,
+                height: 190, width: double.infinity
+            ),
+            // Positioned(top: 170, right: 15, child: _buildPrice()),
+            Positioned(top: 210, child: _buildInfo()),
+          ],
         ),
       ),
     );
@@ -120,10 +104,7 @@ class FeatureItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        data.price,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-      ),
+      child: Icon(Icons.favorite, size: 20, color: Colors.white)
     );
   }
 
@@ -134,16 +115,16 @@ class FeatureItem extends StatelessWidget {
         _getAttribute(
           Icons.play_circle_outlined,
           AppColor.labelColor,
-          data.session,
+          "234",
         ),
         // const SizedBox(width: 12),
         _getAttribute(
           Icons.schedule_rounded,
           AppColor.labelColor,
-          data.duration,
+          "asd",
         ),
         // const SizedBox(width: 12),
-        _getAttribute(Icons.star, AppColor.yellow, data.review),
+        _getAttribute(Icons.star, AppColor.yellow, "asd"),
       ],
     );
   }
