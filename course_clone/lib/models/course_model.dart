@@ -13,6 +13,7 @@ class Topic {
   final String description;
   final List<CourseContentModel>? content;
   final List<Course>? courses;
+  final String? videoUrl;
 
   Topic({
     this.content,
@@ -26,6 +27,7 @@ class Topic {
     required this.isFavorited,
     required this.description,
     this.courses,
+    this.videoUrl,
   });
 
   factory Topic.fromJson(Map<String, dynamic> json) {

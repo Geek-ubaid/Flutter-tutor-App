@@ -49,12 +49,13 @@ List<Topic> groupIntoTopics({
         description: cfg.description,
         courses: chunk,
         content: [],
-        image: 'assets/icons/category/file.svg',
+        image: cfg.image,
         price: '0',
         duration: '0',
         session: '0',
         review: '0',
         isFavorited: false,
+        videoUrl: cfg.videoUrl,
       ),
     );
     offset = end;

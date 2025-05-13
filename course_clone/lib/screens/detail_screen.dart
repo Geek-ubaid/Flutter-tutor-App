@@ -128,8 +128,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                           // );
                           Get.to(
                             () => VideoPlayerPage(
-                              videoLink:
-                                  'https://www.youtube.com/watch?v=EcnqFasHf18',
+                              videoLink: widget.topic.videoUrl!,
                             ),
                           );
                         },

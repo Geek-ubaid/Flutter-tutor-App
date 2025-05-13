@@ -2,11 +2,15 @@ class Converter {
   final String description;
   final int numOfLessons;
   final String topicName;
+  final String image;
+  final String videoUrl;
 
   Converter({
     required this.description,
     required this.numOfLessons,
     required this.topicName,
+    required this.image,
+    required this.videoUrl,
   });
 }
 
@@ -16,12 +20,18 @@ List<Converter> converter = [
         'Flutter is a toolkit created by Google that lets developers build apps for mobile, web, and desktop using the same code. It uses the Dart programming language and comes with ready-to-use widgets for designing user interfaces. Flutter’s special feature, hot reload, allows developers to see changes instantly as they code, making development faster. Let us check few basic topics about Flutter.',
     numOfLessons: 3,
     topicName: 'Flutter – Basics',
+    image:
+        'https://blog.amaarahmad.com/wp-content/uploads/2024/09/Amaar-Ahmad-3.png',
+    videoUrl: 'https://www.youtube.com/watch?v=1xipg02Wu8s&ab_channel=Fireship',
   ),
   Converter(
     description:
         'In this section, you will explore Flutter widgets, which are pre-built elements used to construct user interfaces in Flutter applications. Widgets in Flutter are versatile and customizable, ranging from basic components like buttons and text fields to complex layouts and animations. Flutter provides a rich library of built-in widgets that developers can use directly or customize to suit specific design requirements.',
     numOfLessons: 2,
     topicName: 'Flutter – Widgets',
+    image:
+        'https://blog.amaarahmad.com/wp-content/uploads/2024/09/Amaar-Ahmad-3.png',
+    videoUrl: 'https://www.youtube.com/watch?v=1xipg02Wu8s&ab_channel=Fireship',
   ),
   /*
   Converter(
