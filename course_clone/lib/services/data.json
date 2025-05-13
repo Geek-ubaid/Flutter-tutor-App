@@ -1,0 +1,986 @@
+[
+  {
+    "name": "Flutter Introduction",
+    "topic": "basics",
+    "url": "https://www.geeksforgeeks.org/flutter-introduction",
+    "date_published": "2025-04-17T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "state",
+      "data"
+    ],
+    "description": "This article explains how to use flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter Architecture Application",
+    "topic": "basics",
+    "url": "https://www.geeksforgeeks.org/flutter-architecture-application",
+    "date_published": "2025-04-28T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "routing",
+      "navigation"
+    ],
+    "description": "This article explains how to use flutter architecture application effectively in your Flutter apps."
+  },
+  {
+    "name": "Android Studio Setup for Flutter Development",
+    "topic": "basics",
+    "url": "https://www.geeksforgeeks.org/android-studio-setup-for-flutter-development",
+    "date_published": "2025-02-04T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "web",
+      "routing"
+    ],
+    "description": "This article explains how to use android studio setup for flutter development effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter Setup for application development",
+    "topic": "basics",
+    "url": "https://www.geeksforgeeks.org/flutter-setup-for-application-development",
+    "date_published": "2025-05-05T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "routing",
+      "web"
+    ],
+    "description": "This article explains how to use flutter setup for application development effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter Development on Ubuntu",
+    "topic": "basics",
+    "url": "https://www.geeksforgeeks.org/flutter-development-on-ubuntu",
+    "date_published": "2025-04-08T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "web",
+      "routing"
+    ],
+    "description": "This article explains how to use flutter development on ubuntu effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – Widgets",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-widgets",
+    "date_published": "2025-02-15T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "ui",
+      "state"
+    ],
+    "description": "This article explains how to use flutter – widgets effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – Stateful vs Stateless Widgets",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-stateful-vs-stateless-widgets",
+    "date_published": "2025-03-10T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "state",
+      "ui"
+    ],
+    "description": "This article explains how to use flutter – stateful vs stateless widgets effectively in your Flutter apps."
+  },
+  {
+    "name": "MaterialApp class in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/materialapp-class-in-flutter",
+    "date_published": "2025-04-01T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "routing",
+      "ui"
+    ],
+    "description": "This article explains how to use materialapp class in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Scaffold class in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/scaffold-class-in-flutter",
+    "date_published": "2025-01-22T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "ui",
+      "layout"
+    ],
+    "description": "This article explains how to use scaffold class in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – AppBar Widget",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-appbar-widget",
+    "date_published": "2025-03-27T00:00:00",
+    "reading_time": "1 min",
+    "subtopic": [
+      "ui",
+      "layout"
+    ],
+    "description": "This article explains how to use flutter – appbar widget effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – FloatingActionButton",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-floatingactionbutton",
+    "date_published": "2025-05-02T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "ui",
+      "interaction"
+    ],
+    "description": "This article explains how to use flutter – floatingactionbutton effectively in your Flutter apps."
+  },
+  {
+    "name": "BottomNavigationBar Widget in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/bottomnavigationbar-widget-in-flutter",
+    "date_published": "2025-02-04T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "ui",
+      "navigation"
+    ],
+    "description": "This article explains how to use bottomnavigationbar widget in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Drawer Widget in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/drawer-widget-in-flutter",
+    "date_published": "2025-01-28T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "ui",
+      "navigation"
+    ],
+    "description": "This article explains how to use drawer widget in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Container class in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/container-class-in-flutter",
+    "date_published": "2025-02-20T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "ui",
+      "layout"
+    ],
+    "description": "This article explains how to use container class in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – SizedBox Widget",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-sizedbox-widget",
+    "date_published": "2025-03-18T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "ui",
+      "spacing"
+    ],
+    "description": "This article explains how to use flutter – sizedbox widget effectively in your Flutter apps."
+  },
+  {
+    "name": "ClipRRect Widget in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/cliprrect-widget-in-flutter",
+    "date_published": "2025-04-14T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "ui",
+      "shapes"
+    ],
+    "description": "This article explains how to use cliprrect widget in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – RichText Widget",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-richtext-widget",
+    "date_published": "2025-03-12T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "text",
+      "formatting"
+    ],
+    "description": "This article explains how to use flutter – richtext widget effectively in your Flutter apps."
+  },
+  {
+    "name": "ListView Class in Flutter",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/listview-class-in-flutter",
+    "date_published": "2025-02-06T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "ui",
+      "scrolling"
+    ],
+    "description": "This article explains how to use listview class in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – GridView",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-gridview",
+    "date_published": "2025-04-05T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "layout",
+      "ui"
+    ],
+    "description": "This article explains how to use flutter – gridview effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter – TextField",
+    "topic": "widgets",
+    "url": "https://www.geeksforgeeks.org/flutter-textfield",
+    "date_published": "2025-01-14T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "forms",
+      "input"
+    ],
+    "description": "This article explains how to use flutter – textfield effectively in your Flutter apps."
+  },
+  {
+    "name": "Icon Class in Flutter",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/icon-class-in-flutter",
+    "date_published": "2025-02-04T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "layout",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Icon Class in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Expanded Class in Flutter",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/expanded-class-in-flutter",
+    "date_published": "2025-02-27T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "effects",
+      "feedback"
+    ],
+    "description": "This article explores the UI component: Expanded Class in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Checkbox Widget",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--checkbox-widget",
+    "date_published": "2025-02-17T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "layout",
+      "interaction"
+    ],
+    "description": "This article explores the UI component: Flutter - Checkbox Widget, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Carousel Slider",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--carousel-slider",
+    "date_published": "2025-04-23T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "content",
+      "structure"
+    ],
+    "description": "This article explores the UI component: Flutter - Carousel Slider, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Staggered Grid View",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--staggered-grid-view",
+    "date_published": "2025-04-17T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "effects",
+      "feedback"
+    ],
+    "description": "This article explores the UI component: Flutter - Staggered Grid View, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Circular & Linear Progress Indicators",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--circular--linear-progress-indicators",
+    "date_published": "2025-04-12T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "feedback",
+      "forms"
+    ],
+    "description": "This article explores the UI component: Flutter - Circular & Linear Progress Indicators, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Alert Dialog box in Flutter",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/alert-dialog-box-in-flutter",
+    "date_published": "2025-01-15T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "layout",
+      "charts"
+    ],
+    "description": "This article explores the UI component: Alert Dialog box in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Dialogs",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--dialogs",
+    "date_published": "2025-03-04T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "structure",
+      "charts"
+    ],
+    "description": "This article explores the UI component: Flutter - Dialogs, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Handling videos",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--handling-videos",
+    "date_published": "2025-02-20T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "feedback",
+      "structure"
+    ],
+    "description": "This article explores the UI component: Flutter - Handling videos, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Expansion Tile Card",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--expansion-tile-card",
+    "date_published": "2025-03-26T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "effects",
+      "content"
+    ],
+    "description": "This article explores the UI component: Flutter - Expansion Tile Card, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Tabs",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--tabs",
+    "date_published": "2025-04-12T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "effects",
+      "layout"
+    ],
+    "description": "This article explores the UI component: Flutter - Tabs, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Horizontal List",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--horizontal-list",
+    "date_published": "2025-04-04T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "layout",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Flutter - Horizontal List, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Working with Charts",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--working-with-charts",
+    "date_published": "2025-03-11T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "charts",
+      "feedback"
+    ],
+    "description": "This article explores the UI component: Flutter - Working with Charts, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Convex Bottombar",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--convex-bottombar",
+    "date_published": "2025-02-22T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "forms",
+      "charts"
+    ],
+    "description": "This article explores the UI component: Flutter - Convex Bottombar, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Slidable",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--slidable",
+    "date_published": "2025-01-27T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "charts",
+      "forms"
+    ],
+    "description": "This article explores the UI component: Flutter - Slidable, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Snackbar",
+    "topic": "ui components",
+    "url": "https://www.geeksforgeeks.org/flutter--snackbar",
+    "date_published": "2025-02-02T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "layout",
+      "forms"
+    ],
+    "description": "This article explores the UI component: Flutter - Snackbar, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Customizing Fonts in Flutter",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/customizing-fonts-in-flutter",
+    "date_published": "2025-03-22T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "transitions",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Customizing Fonts in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Themes",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--themes",
+    "date_published": "2025-02-08T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "text",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Flutter - Themes, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Auto size text",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--auto-size-text",
+    "date_published": "2025-01-04T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "fonts",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Flutter - Auto size text, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Skeleton Text",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--skeleton-text",
+    "date_published": "2025-05-08T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "splash",
+      "design"
+    ],
+    "description": "This article explores the UI component: Flutter - Skeleton Text, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Animation in Route Transition",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--animation-in-route-transition",
+    "date_published": "2025-04-11T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "fonts",
+      "splash"
+    ],
+    "description": "This article explores the UI component: Flutter - Animation in Route Transition, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Ripple Effect",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--ripple-effect",
+    "date_published": "2025-01-14T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "transitions",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Flutter - Ripple Effect, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Lazy Loader",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--lazy-loader",
+    "date_published": "2025-03-28T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "fonts",
+      "design"
+    ],
+    "description": "This article explores the UI component: Flutter - Lazy Loader, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Radial Hero Animation",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--radial-hero-animation",
+    "date_published": "2025-04-16T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "splash",
+      "text"
+    ],
+    "description": "This article explores the UI component: Flutter - Radial Hero Animation, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Hinge Animation",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--hinge-animation",
+    "date_published": "2025-03-18T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "animation",
+      "design"
+    ],
+    "description": "This article explores the UI component: Flutter - Hinge Animation, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Lottie Animation",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--lottie-animation",
+    "date_published": "2025-01-24T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "transitions",
+      "animation"
+    ],
+    "description": "This article explores the UI component: Flutter - Lottie Animation, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "ProgressIndicator in Flutter",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/progressindicator-in-flutter",
+    "date_published": "2025-02-19T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "effects",
+      "splash"
+    ],
+    "description": "This article explores the UI component: ProgressIndicator in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Physics Simulation in Animation",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--physics-simulation-in-animation",
+    "date_published": "2025-01-05T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "splash",
+      "effects"
+    ],
+    "description": "This article explores the UI component: Flutter - Physics Simulation in Animation, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Using Google fonts",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--using-google-fonts",
+    "date_published": "2025-04-15T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "text",
+      "design"
+    ],
+    "description": "This article explores the UI component: Flutter - Using Google fonts, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Rotate Transition",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--rotate-transition",
+    "date_published": "2025-04-01T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "effects",
+      "themes"
+    ],
+    "description": "This article explores the UI component: Flutter - Rotate Transition, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Animated Splash Screen",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--animated-splash-screen",
+    "date_published": "2025-03-04T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "effects",
+      "text"
+    ],
+    "description": "This article explores the UI component: Flutter - Animated Splash Screen, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Shimmer",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/flutter--shimmer",
+    "date_published": "2025-03-11T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "design",
+      "text"
+    ],
+    "description": "This article explores the UI component: Flutter - Shimmer, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Rive animations in Flutter",
+    "topic": "design & animation",
+    "url": "https://www.geeksforgeeks.org/rive-animations-in-flutter",
+    "date_published": "2025-04-18T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "animation",
+      "themes"
+    ],
+    "description": "This article explores the UI component: Rive animations in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Form Validation in Flutter",
+    "topic": "forms & gesture",
+    "url": "https://www.geeksforgeeks.org/form-validation-in-flutter",
+    "date_published": "2025-04-25T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "gestures",
+      "interaction"
+    ],
+    "description": "This article explores the UI component: Form Validation in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Designing a Form Submission Page in Flutter",
+    "topic": "forms & gesture",
+    "url": "https://www.geeksforgeeks.org/designing-a-form-submission-page-in-flutter",
+    "date_published": "2025-02-07T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "interaction",
+      "gestures"
+    ],
+    "description": "This article explores the UI component: Designing a Form Submission Page in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Gestures",
+    "topic": "forms & gesture",
+    "url": "https://www.geeksforgeeks.org/flutter--gestures",
+    "date_published": "2025-04-12T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "input",
+      "gestures"
+    ],
+    "description": "This article explores the UI component: Flutter - Gestures, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Routes and Navigator in Flutter",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/routes-and-navigator-in-flutter",
+    "date_published": "2025-03-06T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "web",
+      "ui"
+    ],
+    "description": "This article explains how to use routes and navigator in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Multi-Page Applications in Flutter",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/multi-page-applications-in-flutter",
+    "date_published": "2025-03-06T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "data",
+      "ui"
+    ],
+    "description": "This article explains how to use multi-page applications in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Named Routes",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-named-routes",
+    "date_published": "2025-03-22T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "ui",
+      "data"
+    ],
+    "description": "This article explains how to use flutter - named routes effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Arguments in Named Routes",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-arguments-in-named-routes",
+    "date_published": "2025-03-07T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "routing",
+      "navigation"
+    ],
+    "description": "This article explains how to use flutter - arguments in named routes effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Return Data from Screen",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-return-data-from-screen",
+    "date_published": "2025-04-17T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "data",
+      "web"
+    ],
+    "description": "This article explains how to use flutter - return data from screen effectively in your Flutter apps."
+  },
+  {
+    "name": "URLs in Flutter",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/urls-in-flutter",
+    "date_published": "2025-02-07T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "data",
+      "ui"
+    ],
+    "description": "This article explains how to use urls in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Retrieve Data From TextFields in Flutter",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter",
+    "date_published": "2025-03-21T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "state",
+      "navigation"
+    ],
+    "description": "This article explains how to use retrieve data from textfields in flutter effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - WebSockets",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-websockets",
+    "date_published": "2025-01-31T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "data",
+      "routing"
+    ],
+    "description": "This article explains how to use flutter - websockets effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Avoiding Jank",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-avoiding-jank",
+    "date_published": "2025-04-05T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "data",
+      "ui"
+    ],
+    "description": "This article explains how to use flutter - avoiding jank effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Updating Data on the Internet",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-updating-data-on-the-internet",
+    "date_published": "2025-05-03T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "data",
+      "web"
+    ],
+    "description": "This article explains how to use flutter - updating data on the internet effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Fetching Data From the Internet",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-fetching-data-from-the-internet",
+    "date_published": "2025-03-27T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "navigation",
+      "web"
+    ],
+    "description": "This article explains how to use flutter - fetching data from the internet effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Deleting Data On The Internet",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-deleting-data-on-the-internet",
+    "date_published": "2025-01-27T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "navigation",
+      "state"
+    ],
+    "description": "This article explains how to use flutter - deleting data on the internet effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Sending Data To The Internet",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-sending-data-to-the-internet",
+    "date_published": "2025-02-10T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "data",
+      "web"
+    ],
+    "description": "This article explains how to use flutter - sending data to the internet effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Send Data to Screen",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-send-data-to-screen",
+    "date_published": "2025-04-21T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "state",
+      "routing"
+    ],
+    "description": "This article explains how to use flutter - send data to screen effectively in your Flutter apps."
+  },
+  {
+    "name": "Flutter - Send Data to the Screen using RouteSettings",
+    "topic": "navigation & routing",
+    "url": "https://www.geeksforgeeks.org/flutter-send-data-to-the-screen-using-routesettings",
+    "date_published": "2025-04-20T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "data",
+      "web"
+    ],
+    "description": "This article explains how to use flutter - send data to the screen using routesettings effectively in your Flutter apps."
+  },
+  {
+    "name": "Gallery Access in Flutter",
+    "topic": "accessing device",
+    "url": "https://www.geeksforgeeks.org/gallery-access-in-flutter",
+    "date_published": "2025-02-16T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "orientation",
+      "camera"
+    ],
+    "description": "This article explores the UI component: Gallery Access in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Camera Access in Flutter",
+    "topic": "accessing device",
+    "url": "https://www.geeksforgeeks.org/camera-access-in-flutter",
+    "date_published": "2025-03-27T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "notifications",
+      "camera"
+    ],
+    "description": "This article explores the UI component: Camera Access in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Background local notifications in Flutter",
+    "topic": "accessing device",
+    "url": "https://www.geeksforgeeks.org/background-local-notifications-in-flutter",
+    "date_published": "2025-03-06T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "camera",
+      "notifications"
+    ],
+    "description": "This article explores the UI component: Background local notifications in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Restrict Landscape Mode in Flutter",
+    "topic": "accessing device",
+    "url": "https://www.geeksforgeeks.org/restrict-landscape-mode-in-flutter",
+    "date_published": "2025-04-01T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "orientation",
+      "gallery"
+    ],
+    "description": "This article explores the UI component: Restrict Landscape Mode in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Read and Write Data on Firebase",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/flutter--read-and-write-data-on-firebase",
+    "date_published": "2025-04-28T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "network",
+      "firebase"
+    ],
+    "description": "This article explores the UI component: Flutter - Read and Write Data on Firebase, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Mail and SMS in Flutter",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/mail-and-sms-in-flutter",
+    "date_published": "2025-01-04T00:00:00",
+    "reading_time": "2 mins",
+    "subtopic": [
+      "api",
+      "firebase"
+    ],
+    "description": "This article explores the UI component: Mail and SMS in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Making Calls in Flutter",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/making-calls-in-flutter",
+    "date_published": "2025-01-24T00:00:00",
+    "reading_time": "5 mins",
+    "subtopic": [
+      "api",
+      "network"
+    ],
+    "description": "This article explores the UI component: Making Calls in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "FAB - Speed Dial in Flutter",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/fab--speed-dial-in-flutter",
+    "date_published": "2025-04-05T00:00:00",
+    "reading_time": "4 mins",
+    "subtopic": [
+      "api",
+      "firebase"
+    ],
+    "description": "This article explores the UI component: FAB - Speed Dial in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Flutter - Wakelock",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/flutter--wakelock",
+    "date_published": "2025-01-28T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "communication",
+      "firebase"
+    ],
+    "description": "This article explores the UI component: Flutter - Wakelock, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "Implementing REST API in Flutter",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/implementing-rest-api-in-flutter",
+    "date_published": "2025-04-24T00:00:00",
+    "reading_time": "3 mins",
+    "subtopic": [
+      "system",
+      "communication"
+    ],
+    "description": "This article explores the UI component: Implementing REST API in Flutter, helping you integrate it effectively in your Flutter app."
+  },
+  {
+    "name": "HTTP GET Response in Flutter",
+    "topic": "advanced concepts",
+    "url": "https://www.geeksforgeeks.org/http-get-response-in-flutter",
+    "date_published": "2025-02-11T00:00:00",
+    "reading_time": "1 mins",
+    "subtopic": [
+      "communication",
+      "api"
+    ],
+    "description": "This article explores the UI component: HTTP GET Response in Flutter, helping you integrate it effectively in your Flutter app."
+  }
+]

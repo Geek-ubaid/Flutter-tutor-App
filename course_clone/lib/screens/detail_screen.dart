@@ -1,182 +1,451 @@
-// lib/screens/detail_screen.dart
 
-import 'package:flutter/material.dart';
+import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/screens/video_screen.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
-import 'package:course_clone/widgets/custom_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DetailScreen extends StatefulWidget {
-  /// Pass in one entry from your `myProgressCourses` list
-  final Map<String, dynamic> topic;
-
-  // use `super.key` instead of manually forwarding `key`
-  const DetailScreen({super.key, required this.topic});
+class DetailPageScreen extends StatefulWidget {
+  final CourseV2 course;
+  const DetailPageScreen({super.key, required this.course});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
-  late List<String> _completed;
-
-  @override
-  void initState() {
-    super.initState();
-    _completed = List<String>.from(
-      widget.topic['completedSections'] as List<dynamic>? ?? <String>[],
-    );
-  }
-
-  void _markDone(String section) {
-    setState(() {
-      if (!_completed.contains(section)) {
-        _completed.add(section);
-      }
-      widget.topic['completedSections'] = _completed;
-    });
-  }
-
+class _DetailPageScreenState extends State<DetailPageScreen> {
+  bool aboutExpand = false;
   @override
   Widget build(BuildContext context) {
-    final name = widget.topic['name'] as String? ?? 'Topic';
-    final desc = widget.topic['description'] as String?;
-    final imageUrl = widget.topic['image'] as String?;
-    final sections =
-    (widget.topic['sections'] as List<dynamic>? ?? <String>[])
-        .cast<String>();
-
-    final doneCount = _completed.length;
-    final totalCount = sections.length;
-    final percent = totalCount > 0 ? doneCount / totalCount : 0.0;
-    final barColor = percent >= .7
-        ? AppColor.green
-        : percent >= .4
-        ? AppColor.orange
-        : AppColor.red;
-
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
       appBar: AppBar(
-        backgroundColor: AppColor.appBarColor,
-        title: Text(name, style: const TextStyle(color: AppColor.textColor)),
+        backgroundColor: AppColor.appBgColor,
+        title: Text('Detail'),
         centerTitle: true,
-        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            // Navigator.pop(context);
+            Get.back();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
       ),
-      body: Column(
-        children: [
-          if (imageUrl != null) ...[
-            CustomImage(
-              imageUrl,
-              width: double.infinity,
-              height: 180,
-              radius: 12,
-              fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Hero(
+              tag:
+                  widget
+                      .course
+                      .image, // Ensure the tag matches the one used in the previous screen
+              child: Image.network(widget.course.image),
             ),
-            const SizedBox(height: 12),
-          ],
-          if (desc != null) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(desc, style: const TextStyle(fontSize: 16)),
-            ),
-            const SizedBox(height: 12),
-          ],
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '$doneCount of $totalCount completed',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: AppColor.labelColor,
-                      ),
-                    ),
-                    Text(
-                      '${(percent * 100).toInt()}%',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    widget.course.name,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                const SizedBox(height: 6),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: LinearProgressIndicator(
-                    value: percent,
-                    minHeight: 8,
-                    backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation(barColor),
+                IconButton(
+                  onPressed: () {
+                    final controller = Get.find<ProfileController>();
+                    if (controller.bookmarkedCourses.any(
+                      (course) => course.id == widget.course.id,
+                    )) {
+                      controller.bookmarkedCourses.removeWhere(
+                        (course) => course.id == widget.course.id,
+                      );
+                    } else {
+                      controller.addCourseToFav(widget.course);
+                    }
+                    controller.update();
+                  },
+                  icon: GetBuilder<ProfileController>(
+                    builder: (controller) {
+                      bool bookmarked = controller.bookmarkedCourses.any(
+                        (course) => course.id == widget.course.id,
+                      );
+                      return Icon(
+                        bookmarked ? Icons.bookmark : Icons.bookmark_outline,
+                        color: AppColor.primary,
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemCount: sections.length,
-              itemBuilder: (context, i) {
-                final section = sections[i];
-                final completed = _completed.contains(section);
-
-                return Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColor.cardColor,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColor.shadowColor.withAlpha(15),
-                        blurRadius: 3,
-                        offset: const Offset(0, 2),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildAttributes(),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _getAttribute(
+                        Icons.timer,
+                        AppColor.primary,
+                        '15 Minutes reading',
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.sky,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(color: AppColor.sky),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder:
+                          //         (context) => VideoPlayerPage(
+                          //           videoLink:
+                          //               'https://www.youtube.com/watch?v=EcnqFasHf18',
+                          //         ),
+                          //   ),
+                          // );
+                          Get.to(
+                            () => VideoPlayerPage(
+                              videoLink:
+                                  'https://www.youtube.com/watch?v=EcnqFasHf18',
+                            ),
+                          );
+                        },
+                        child: const Text('Video'),
                       ),
                     ],
                   ),
-                  child: Column(
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 8),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        section,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColor.textColor,
-                        ),
+                        widget.course.description,
+                        style: const TextStyle(fontSize: 16),
+                        maxLines: aboutExpand ? null : 2,
+                        overflow: aboutExpand ? null : TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                            completed ? Colors.green : AppColor.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed:
-                          completed ? null : () => _markDone(section),
-                          child: Text(
-                            completed ? 'Completed ✅' : 'Mark as Done',
-                            style: const TextStyle(fontSize: 14),
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            aboutExpand = !aboutExpand;
+                          });
+                        },
+                        child: Text(
+                          aboutExpand ? 'Show less' : 'Show more',
+                          style: TextStyle(
+                            color: AppColor.primary,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ],
                   ),
-                );
-              },
+                ],
+              ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Course Content',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.course.content!.length,
+                    itemBuilder: (context, index) {
+                      return ExpansionTile(
+                        title: Text(
+                          widget.course.content![index].title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        children:
+                            widget.course.content![index].subContent
+                                .map(
+                                  (content) => ListTile(
+                                    title: Text(content),
+
+                                    // leading: Icon(Icons.play_circle_outline),
+                                  ),
+                                )
+                                .toList(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Add your action here
+            //   },
+            //   child: const Text('Enroll Now'),
+            // ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildAttributes() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        _getAttribute(
+          Icons.play_circle_outlined,
+          AppColor.labelColor,
+          widget.course.session,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(
+          Icons.schedule_rounded,
+          AppColor.labelColor,
+          widget.course.duration,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(Icons.star, AppColor.yellow, widget.course.review),
+        const SizedBox(width: 12),
+      ],
+    );
+  }
+
+  _getAttribute(IconData icon, Color color, String info) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: color),
+        const SizedBox(width: 3),
+        Text(
+          info,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColor.labelColor, fontSize: 13),
+        ),
+      ],
+    );
+    return Scaffold(
+      backgroundColor: AppColor.appBgColor,
+      appBar: AppBar(
+        title: Text('Detail'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.network(widget.course.image),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    widget.course.name,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // Add your action here
+                  },
+                  icon: Icon(Icons.bookmark, color: AppColor.primary),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildAttributes(),
+                  SizedBox(height: 8),
+                  _getAttribute(
+                    Icons.timer,
+                    AppColor.primary,
+                    '15 Minutes reading',
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.course.description,
+                        style: const TextStyle(fontSize: 16),
+                        maxLines: aboutExpand ? null : 2,
+                        overflow: aboutExpand ? null : TextOverflow.ellipsis,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            aboutExpand = !aboutExpand;
+                          });
+                        },
+                        child: Text(
+                          aboutExpand ? 'Show less' : 'Show more',
+                          style: TextStyle(
+                            color: AppColor.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Course Content',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: widget.course.content!.length,
+                    itemBuilder: (context, index) {
+                      return ExpansionTile(
+                        title: Text(
+                          widget.course.content![index].title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        children:
+                            widget.course.content![index].subContent
+                                .map(
+                                  (content) => ListTile(
+                                    title: Text(content),
+
+                                    // leading: Icon(Icons.play_circle_outline),
+                                  ),
+                                )
+                                .toList(),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Add your action here
+            //   },
+            //   child: const Text('Enroll Now'),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAttributes() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        _getAttribute(
+          Icons.play_circle_outlined,
+          AppColor.labelColor,
+          widget.course.session,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(
+          Icons.schedule_rounded,
+          AppColor.labelColor,
+          widget.course.duration,
+        ),
+        const SizedBox(width: 12),
+        _getAttribute(Icons.star, AppColor.yellow, widget.course.review),
+        const SizedBox(width: 12),
+      ],
+    );
+  }
+
+  _getAttribute(IconData icon, Color color, String info) {
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: color),
+        const SizedBox(width: 3),
+        Text(
+          info,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColor.labelColor, fontSize: 13),
+        ),
+      ],
     );
   }
 }

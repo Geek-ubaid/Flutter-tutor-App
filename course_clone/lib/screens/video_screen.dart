@@ -1,110 +1,214 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
+
 import 'package:course_clone/theme/color.dart';
-import 'package:course_clone/widgets/custom_image.dart';
+import 'package:flutter/material.dart';
 
-class VideoScreen extends StatelessWidget {
-  final Map course;
+import 'package:get/get.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-  const VideoScreen({super.key, required this.course});
+class VideoPlayerPage extends StatefulWidget {
+  const VideoPlayerPage({super.key, required this.videoLink});
+
+  final String videoLink;
+
+  @override
+  State<VideoPlayerPage> createState() => _VideoPlayerPageState();
+}
+
+class _VideoPlayerPageState extends State<VideoPlayerPage> {
+  late YoutubePlayerController _controller;
+
+  late YoutubeMetaData _videoMetaData;
+  bool isPaused = false;
+  late String currentPlayingVideoLink;
+  String videoTitle = '';
+  @override
+  void initState() {
+    super.initState();
+    _videoMetaData = const YoutubeMetaData();
+    currentPlayingVideoLink = widget.videoLink;
+    _controller = YoutubePlayerController(
+      params: const YoutubePlayerParams(
+        showControls: true,
+        mute: false,
+        showFullscreenButton: true,
+        loop: false,
+      ),
+    );
+
+    _controller.setFullScreenListener((isFullScreen) {
+      log('${isFullScreen ? 'Entered' : 'Exited'} Fullscreen.');
+    });
+    final id = YoutubePlayerController.convertUrlToId(widget.videoLink);
+    assert(id != null, 'Invalid YouTube link');
+    _controller.loadVideoById(videoId: id!);
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return YoutubePlayerScaffold(
       backgroundColor: AppColor.appBgColor,
-      appBar: AppBar(
-        backgroundColor: AppColor.appBarColor,
-        elevation: 0,
-        title: Text(
-          course["name"] ?? "Course",
-          style: const TextStyle(
-            color: AppColor.textColor,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            CustomImage(course["image"], width: double.infinity, height: 180, radius: 16),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildInfo("Duration", course["duration"]),
-                _buildInfo("Sessions", course["session"]),
-                _buildInfo("Rating", course["review"]),
-              ],
-            ),
-            const SizedBox(height: 16),
-            LinearProgressIndicator(
-              value: course["complete_percent"] ?? 0.0,
-              minHeight: 8,
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(
-                AppColor.primary,
+      controller: _controller,
+      builder: (context, player) {
+        return Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  player,
+                  Positioned(
+                    top: 40,
+                    left: 10,
+                    child: InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColor.orange,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "${(course["complete_percent"] * 100).toInt()}% Completed",
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColor.labelColor,
+              SizedBox(height: 12),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: YoutubeValueBuilder(
+                  controller: _controller,
+                  builder: (context, value) {
+                    final String title = value.metaData.title;
+                    final String author = value.metaData.author;
+                    final Duration duration = value.metaData.duration;
+
+                    return Column(
+                      children: [
+                        videoInfo(context, title, 'Title'),
+                        SizedBox(height: 8),
+                        videoInfo(context, author, 'Author'),
+                        SizedBox(height: 8),
+
+                        videoInfo(
+                          context,
+                          '${duration.inMinutes.toString()} Minutes',
+                          'Duration',
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              course["description"] ?? "No description provided for this course.",
-              style: const TextStyle(fontSize: 15, color: AppColor.textColor),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Placeholder for future video/lesson screen
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Start Lesson tapped!"),
-                ));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColor.primary,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              const SizedBox(height: 16),
+              Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                color: Colors.black45,
+                margin: EdgeInsets.symmetric(horizontal: 0),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.book, color: AppColor.orange),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          "🔖 Before you continue, please read the GetX State Management section in your tutor guide.",
+                          style: TextStyle(color: Colors.white70, fontSize: 14),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Open"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              icon: const Icon(Icons.play_arrow),
-              label: const Text("Start Lesson"),
-            )
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildInfo(String label, String? value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColor.labelColor,
-              fontWeight: FontWeight.w500,
-            )),
-        const SizedBox(height: 4),
-        Text(value ?? "-",
-            style: const TextStyle(
-              fontSize: 14,
-              color: AppColor.textColor,
-              fontWeight: FontWeight.w600,
-            )),
-      ],
+  Widget videoInfo(BuildContext context, String value, String label) {
+    // pick an icon based on the field
+    IconData icon;
+    switch (label) {
+      case 'Title':
+        icon = Icons.title;
+        break;
+      case 'Author':
+        icon = Icons.person;
+        break;
+      case 'Duration':
+        icon = Icons.schedule;
+        break;
+      default:
+        icon = Icons.info;
+    }
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: const LinearGradient(
+            colors: [AppColor.primary, Color.fromARGB(255, 179, 111, 108)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.white),
+            const SizedBox(width: 12),
+            Text(
+              '$label:',
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                value.isEmpty ? 'Loading…' : value,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

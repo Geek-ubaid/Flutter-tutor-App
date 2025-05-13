@@ -3,14 +3,24 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'package:course_clone/models/profile_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
+import 'package:course_clone/states/make_favorite_controller.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
+import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
 import 'package:course_clone/widgets/notification_box.dart';
-import 'package:course_clone/screens/detail_screen.dart';
 
 /// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
 typedef Pepsi = HomePage;
+import 'package:course_clone/widgets/recommend_item.dart';
+import 'package:flutter/material.dart';
+import 'package:course_clone/screens/search_screen.dart';
+
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,8 +31,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final topics = myProgressCourses;
 
+    List<Course> courses = Provider.of<List<Course>>(context);
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
       body: CustomScrollView(
@@ -35,7 +45,10 @@ class _HomePageState extends State<HomePage> {
             title: _buildAppBar(),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([_buildBody(topics)]),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => _buildBody(courses),
+              childCount: 1,
+            ),
           ),
         ],
       ),
@@ -51,8 +64,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(profile['name']!,
-                  style: TextStyle(color: AppColor.labelColor, fontSize: 14)),
+              Text(
+                profile.name ?? '',
+                style: TextStyle(color: AppColor.labelColor, fontSize: 14),
+              ),
               const SizedBox(height: 5),
               Text("Good Morning!",
                   style: TextStyle(
@@ -67,7 +82,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBody(List<Map<String, dynamic>> topics) {
+
+  _buildBody(List<Course> courses) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -94,30 +110,38 @@ class _HomePageState extends State<HomePage> {
             ),
             items: topics.map(_buildTopicCard).toList(),
           ),
-          const SizedBox(height: 25),
-
-          // Recommended horizontal list
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text("Recommended Topics",
-                style: TextStyle(
-                    color: AppColor.textColor,
+          _buildFeatured(courses),
+          const SizedBox(height: 15),
+          Padding(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Daily Read",
+                  style: TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.w600)),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 140,
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              scrollDirection: Axis.horizontal,
-              itemCount: topics.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 12),
-              itemBuilder: (_, i) => _buildTopicCard(topics[i]),
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.textColor,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                  },
+                  child: Text(
+                    "See all",
+                    style: TextStyle(fontSize: 14, color: AppColor.darker),
+                  ),
+                )
+
+              ],
             ),
           ),
-
-          const SizedBox(height: 30),
+          _buildAll(courses),
         ],
       ),
     );
@@ -143,24 +167,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTopicCard(Map<String, dynamic> topic) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => DetailScreen(topic: topic)),
-        );
-      },
-      child: Container(
-        width: 220,
-        decoration: BoxDecoration(
-          color: AppColor.cardColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-                color: AppColor.shadowColor.withValues(alpha: 0.1),
-                blurRadius: 4)
-          ],
+  _buildFeatured(List<Course> courses) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 290,
+        enlargeCenterPage: true,
+        disableCenter: true,
+        viewportFraction: .75,
+      ),
+      items: List.generate(
+        courses.length,
+        (index) => FeatureItem(
+          data: courses[index],
+          onTap: () {
+            //! This is how to update the state of the controller
+            // Get.find<FavoritesController>().addToCart(features[index]);
+          },
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,32 +199,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const SizedBox(height: 8),
-            // topic title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                topic['name'] as String,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.textColor),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-
-            const SizedBox(height: 6),
-            // section count
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                "${(topic['sections'] as List).length} sections",
-                style: const TextStyle(
-                    fontSize: 12, color: AppColor.labelColor),
-              ),
-            ),
-          ],
+  _buildAll(List<Course> courses){
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: List.generate(
+          courses.length,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: RecommendItem(data: courses[index]),
+          ),
         ),
       ),
     );
