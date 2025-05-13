@@ -1,7 +1,9 @@
+import 'package:course_clone/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import '../theme/color.dart';
 import 'welcome_screen.dart';
@@ -66,6 +68,10 @@ class _SignupScreenState extends State<SignupScreen> {
           "createdAt": FieldValue.serverTimestamp(),
         });
 
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_uid', uid);
+
+
         Navigator.pushReplacement(
           context,
           // MaterialPageRoute(builder: (_) => const HomePage()),
@@ -111,7 +117,9 @@ class _SignupScreenState extends State<SignupScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
         child: Column(
           children: [
-            Center(child: Image.asset("./assets/logo.png", width: 100)),
+            Center(child: CustomImage(
+              "assets/icon/logo.png", width: 100, isNetwork: false,
+            )),
             const SizedBox(height: 24),
             Text("Create Account", style: TextStyle(
                 fontSize: 22, fontWeight: FontWeight.bold, color: AppColor.textColor)),

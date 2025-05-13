@@ -5,6 +5,9 @@ import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/screens/course_detail_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import '../states/course_controller.dart';
 
 
 class SearchScreen extends StatefulWidget {
@@ -17,6 +20,8 @@ Set<String> savedCourseIds = {};
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final controller = Get.find<CourseController>();
+
   List<String> filters = [];
   String selectedFilter = 'All';
   String searchQuery = "";
@@ -26,7 +31,8 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
 
     // Unique topics + 'All'
-    final allTopics = courses.map((c) => c.topic).toSet().toList();
+    final allTopics = categories.map((c) => c['identifier']).toSet().toList();
+    allTopics.remove('all');
     filters = ['All', ...allTopics];
 
     _searchController.addListener(() {
@@ -46,6 +52,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // List<Course> courses = Provider.of<List<Course>>(context);
+
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
       appBar: AppBar(
@@ -66,22 +74,21 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-
-
-
-      body: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSearchBar(),
-            const SizedBox(height: 8),
-            _buildFilters(),
-            const SizedBox(height: 8),
-            Expanded(child: _buildCourseList()),
-          ],
-        ),
-      ),
+      body: Obx(() {
+        return Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSearchBar(),
+              const SizedBox(height: 8),
+              _buildFilters(),
+              const SizedBox(height: 8),
+              Expanded(child: _buildCourseList(controller.courses)),
+            ],
+          ),
+        );
+      })
     );
   }
 
@@ -150,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildCourseList() {
+  Widget _buildCourseList(List<Course> courses) {
     final filteredCourses = courses.where((course) {
       final matchesFilter = selectedFilter == 'All' ||
           course.topic.toLowerCase() == selectedFilter.toLowerCase();
@@ -241,9 +248,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           const SizedBox(height: 9),
                           Row(
                             children: [
-                              _iconText(Icons.play_circle_outline, "${course.lessons} lessons"),
-                              _iconText(Icons.schedule, course.readingTime),
-                              _iconText(Icons.star, course.rating.toString(), iconColor: Colors.amber),
+                              _iconText(Icons.favorite, "2", iconColor: Colors.red),
+                              _iconText(Icons.label, course.topic),
+                              _iconText(Icons.access_time, course.readingTime, iconColor: AppColor.labelColor),
                             ],
                           ),
                         ],

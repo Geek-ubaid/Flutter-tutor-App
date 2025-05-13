@@ -356,47 +356,47 @@ final profile = Profile(
 List categories = [
   {
     "name": "All",
-    "identifier": Topic.all,
+    "identifier": Topic.all.label,
     "icon": "assets/icons/category/all.svg"
   },
   {
     "name": "Basics",
-    "identifier": Topic.basics,
+    "identifier": Topic.basics.label,
     "icon": "assets/icons/category/coding.svg"
   },
   {
     "name": "Widgets",
-    "identifier": Topic.widgets,
+    "identifier": Topic.widgets.label,
     "icon": "assets/icons/category/education.svg"
   },
   {
     "name": "Design",
-    "identifier": Topic.designAndAnimations,
+    "identifier": Topic.designAndAnimations.label,
     "icon": "assets/icons/category/design.svg"
   },
   {
     "name": "UI",
-    "identifier": Topic.uiComponents,
+    "identifier": Topic.uiComponents.label,
     "icon": "assets/icons/category/business.svg"
   },
   {
     "name": "Forms",
-    "identifier": Topic.formAndGestures,
+    "identifier": Topic.formAndGestures.label,
     "icon": "assets/icons/category/all.svg"
   },
   {
     "name": "Routing",
-    "identifier": Topic.navigationAndRouting,
+    "identifier": Topic.navigationAndRouting.label,
     "icon": "assets/icons/category/coding.svg"
   },
   {
     "name": "Access Control",
-    "identifier": Topic.accessingDevice,
+    "identifier": Topic.accessingDevice.label,
     "icon": "assets/icons/category/education.svg"
   },
   {
     "name": "AdvancedConcepts",
-    "identifier": Topic.advancedConcepts,
+    "identifier": Topic.advancedConcepts.label,
     "icon": "assets/icons/category/design.svg"
   },
 ];

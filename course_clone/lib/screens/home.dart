@@ -3,21 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:course_clone/models/profile_model.dart';
-import 'package:course_clone/screens/detail_screen.dart';
-import 'package:course_clone/states/make_favorite_controller.dart';
-import 'package:course_clone/states/profile_controller.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
-import 'package:course_clone/utils/features_dummy_data.dart';
 import 'package:course_clone/widgets/category_box.dart';
 import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
-import 'package:flutter/material.dart';
 import 'package:course_clone/screens/search_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 import '../models/course_model.dart';
+import '../states/course_controller.dart';
 import '../widgets/feature_item.dart';
 
 /// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
@@ -31,6 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final controller = Get.find<CourseController>();
 
   String? nickname;
 
@@ -55,10 +51,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    List<Course> courses = Provider.of<List<Course>>(context);
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
-      body: CustomScrollView(
+      body: Obx(() {
+        if (controller.courses.isEmpty) {
+          return Center(child: Text('No courses available.'));
+        }
+
+        return CustomScrollView(
         slivers: [
           SliverAppBar(
             backgroundColor: AppColor.appBarColor,
@@ -69,12 +69,13 @@ class _HomePageState extends State<HomePage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => _buildBody(courses),
+                  (context, index) => _buildBody(controller.courses),
               childCount: 1,
             ),
           ),
         ],
-      ),
+      );
+      })
     );
   }
 
@@ -204,15 +205,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildAll(List<Course> courses){
+    int itemCount = (courses.length * 0.1).ceil(); // show at least 1 if not empty
+    List<Course> limitedCourses = courses.take(itemCount).toList();
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
       scrollDirection: Axis.vertical,
       child: Column(
         children: List.generate(
-          courses.length,
+          limitedCourses.length,
               (index) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: RecommendItem(data: courses[index]),
+            child: RecommendItem(data: limitedCourses[index]),
           ),
         ),
       ),
