@@ -56,7 +56,6 @@ class Course {
       'date_published': datePublished.toIso8601String(),
       'price': price,
       'lessons': lessons,
-      'duration': duration,
       'rating': rating,
     };
   }

@@ -111,7 +111,6 @@ List<Course> courses = [
     datePublished: DateTime.parse('1969-07-20 20:18:04Z'),
     price: 72.0,
     lessons: 8,
-    duration: '4 hours',
     rating: 4.9,
     readingTime: "3 mins"
   ),

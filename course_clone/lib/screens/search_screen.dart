@@ -242,7 +242,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           Row(
                             children: [
                               _iconText(Icons.play_circle_outline, "${course.lessons} lessons"),
-                              _iconText(Icons.schedule, course.duration),
+                              _iconText(Icons.schedule, course.readingTime),
                               _iconText(Icons.star, course.rating.toString(), iconColor: Colors.amber),
                             ],
                           ),

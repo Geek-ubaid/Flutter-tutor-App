@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: StateHoldersBindings(),
-      title: 'Online Course App',
+      title: 'Flutter tutor App',
       theme: ThemeData(primaryColor: AppColor.primary),
       home: const RootApp(),
     );
