@@ -118,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Column(
           children: [
             Center(child: CustomImage(
-              "assets/icon/logo.png", width: 100, isNetwork: false,
+              "assets/icons/logo.png", width: 100, isNetwork: false,
             )),
             const SizedBox(height: 24),
             Text("Create Account", style: TextStyle(
