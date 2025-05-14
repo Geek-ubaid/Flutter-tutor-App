@@ -90,7 +90,6 @@ class RecommendItem extends StatelessWidget {
             ),
           ],
         ),
-        ),
       ],
     );
   }

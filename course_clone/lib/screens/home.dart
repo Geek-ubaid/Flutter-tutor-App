@@ -60,33 +60,31 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return _buildSkeletonScreen();
-        }
-
-        if (controller.courses.isEmpty) {
-          return Center(child: Text('No courses available.'));
-        }
-
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: AppColor.appBarColor,
-              pinned: true,
-              floating: true,
-              snap: true,
-              title: _buildAppBar(),
+      body:
+      // Obx(() {
+      //   if (controller.isLoading.value) {
+      //     return _buildSkeletonScreen();
+      //   }
+      //   if (controller.courses.isEmpty) {
+      //     return Center(child: Text('No courses available.'));
+      //   }
+      CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: AppColor.appBarColor,
+            pinned: true,
+            floating: true,
+            snap: true,
+            title: _buildAppBar(),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => _buildBody(),
+              childCount: 1,
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => _buildBody(controller.courses),
-                childCount: 1,
-              ),
-            ),
-          ],
-        );
-      }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -120,15 +118,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody(List<Course> courses) {
-    List<Topic> topic = dummyfeatures;
-
+  _buildBody() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildCategories(),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              return _buildCategories(controller.getCourses);
+            },
+          ),
           const SizedBox(height: 15),
           // Featured carousel
           const Padding(
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategories() {
+  Widget _buildCategories(List<Course> crs) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(15, 10, 0, 10),
       scrollDirection: Axis.horizontal,
@@ -216,7 +216,12 @@ class _HomePageState extends State<HomePage> {
                 child: CategoryBox(
                   data: cat,
                   onTap: () {
-                    // TODO: implement filtering
+                    Get.to(
+                      () => SearchScreen(
+                        courses: crs,
+                        initialFilter: cat['identifier'],
+                      ),
+                    );
                   },
                 ),
               );

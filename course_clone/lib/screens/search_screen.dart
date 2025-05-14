@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key, required this.courses});
+  const SearchScreen({super.key, required this.courses, this.initialFilter});
   final List<Course> courses;
+  final String? initialFilter;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -18,7 +19,7 @@ Set<String> savedCourseIds = {};
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final controller = Get.find<CourseController>();
+  // final controller = Get.find<CourseController>();
 
   List<String> filters = [];
   String selectedFilter = 'All';
@@ -28,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
 
-    // Unique topics + 'All'
+    // // Unique topics + 'All'
     final allTopics = widget.courses.map((c) => c.topic).toSet().toList();
     filters = ['All', ...allTopics];
     if (widget.initialFilter != null &&
