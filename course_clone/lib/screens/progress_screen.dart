@@ -1,10 +1,15 @@
 // lib/screens/progress_screen.dart
 
+import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
+import 'package:course_clone/states/progress_tracker_controller.dart';
+import 'package:course_clone/states/topic_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:course_clone/utils/data.dart';
 import 'package:course_clone/widgets/custom_image.dart';
 import 'package:course_clone/models/progress_model.dart';
+import 'package:get/get.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -49,67 +54,58 @@ class _ProgressScreenState extends State<ProgressScreen> {
       ),
       body: Column(
         children: [
-          _buildSummary(avgProgress, total),
+          GetBuilder<ProgressTrackerContoller>(
+            builder: (controller) {
+              return _buildSummary(controller.completedCourses.length, 82);
+            },
+          ),
           const SizedBox(height: 16),
           _buildStreakBanner(),
           const SizedBox(height: 16),
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemBuilder:
-                  (context, index) => Column(
-                    children: [
-                      if (topics.isNotEmpty) _buildContinueCard(topic[index]),
-                      const SizedBox(height: 16),
-                      _buildQuoteCard(),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Course Details',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.textColor,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      // spread without .toList()
-                      _buildProgressCard(topic[index]),
-                    ],
-                  ),
+          Column(
+            children: [
+              if (topics.isNotEmpty) _buildContinueCard(topic[0]),
+              const SizedBox(height: 16),
+              _buildQuoteCard(),
+              const SizedBox(height: 16),
+              const Text(
+                'Course Details',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.textColor,
+                ),
+              ),
+              const SizedBox(height: 12),
+              // spread without .toList()
+            ],
+          ),
+          Expanded(
+            child: GetBuilder<TopicController>(
+              builder: (topicContoller) {
+                return GetBuilder<ProgressTrackerContoller>(
+                  builder: (progressContoller) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: topicContoller.getTopics.length,
+                      separatorBuilder: (context, index) => SizedBox(height: 5),
+                      itemBuilder: (context, index) {
+                        final topic = topicContoller.getTopics[index];
+                        final completed = progressContoller.completedCourses;
+                        return _buildProgressCard(topic, completed);
+                      },
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
       ),
-
-      //   ListView.builder(
-      //     padding: const EdgeInsets.all(16),
-      //     children: [
-      //       _buildSummary(avgProgress, total),
-      //       const SizedBox(height: 16),
-      //       _buildStreakBanner(),
-      //       const SizedBox(height: 16),
-      //       if (topics.isNotEmpty) _buildContinueCard(topic[0]),
-      //       const SizedBox(height: 16),
-      //       _buildQuoteCard(),
-      //       const SizedBox(height: 16),
-      //       const Text(
-      //         'Course Details',
-      //         style: TextStyle(
-      //           fontSize: 18,
-      //           fontWeight: FontWeight.w600,
-      //           color: AppColor.textColor,
-      //         ),
-      //       ),
-      //       const SizedBox(height: 12),
-      //       // spread without .toList()
-      //       ...topics.map(_buildProgressCard),
-      //     ],
-      //   ),
     );
   }
 
-  Widget _buildSummary(double avg, int total) {
+  Widget _buildSummary(int completed, int total) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -149,12 +145,31 @@ class _ProgressScreenState extends State<ProgressScreen> {
               ),
             ],
           ),
+
           // Average %
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                '$completed / $total',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Lessons Completed',
+                style: const TextStyle(fontSize: 14, color: Colors.white70),
+              ),
+            ],
+          ),
           CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white.withValues(alpha: 0.2),
             child: Text(
-              '${(avg * 100).toInt()}%',
+              '${(completed / total * 100).toStringAsFixed(1)}%',
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -176,8 +191,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
       ),
       child: const Row(
         children: [
-          Icon(Icons.local_fire_department, color: AppColor.red),
-          SizedBox(width: 10),
           Text(
             "🔥 You’re on a 4-day streak!",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -187,52 +200,57 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Widget _buildContinueCard(TopicLabels topic) {
-    return GestureDetector(
-      onTap: () async {
-        // await Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => DetailScreen(topic: topic)),
-        // );
-        setState(() {}); // refresh when returning
-      },
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColor.sky.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            CustomImage(topic.image, width: 60, height: 60, radius: 12),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Continue Learning:',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColor.labelColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    topic.name,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.textColor,
-                    ),
-                  ),
-                ],
-              ),
+  Widget _buildContinueCard(TopicLabels t) {
+    return GetBuilder<TopicController>(
+      builder: (controller) {
+        return GestureDetector(
+          onTap: () async {
+            Get.to(() => DetailPageScreen(topic: controller.getTopics[0]));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppColor.sky.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
             ),
-            const Icon(Icons.play_arrow, color: AppColor.primary, size: 30),
-          ],
-        ),
-      ),
+            child: Row(
+              children: [
+                CustomImage(
+                  controller.getTopics[0].image,
+                  width: 60,
+                  height: 60,
+                  radius: 12,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Continue Learning:',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColor.labelColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        controller.getTopics[0].name,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.textColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.play_arrow, color: AppColor.primary, size: 30),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -243,37 +261,40 @@ class _ProgressScreenState extends State<ProgressScreen> {
         color: AppColor.yellow.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Text(
-        '“Learning never exhausts the mind.” – Leonardo da Vinci',
-        style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '“Learning never exhausts the mind.”',
+            style: TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text(
+                '– Leonardo da Vinci',
+                style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildProgressCard(TopicLabels topic) {
-    final sections = (topic.sections);
-    final doneList = (topic.completedSections);
-
-    final doneCount = doneList.length;
-    final totalCount = sections.length;
-    final percent = totalCount > 0 ? doneCount / totalCount : 0.0;
-    final barColor =
-        percent >= 0.7
-            ? AppColor.green
-            : percent >= 0.4
-            ? AppColor.orange
-            : AppColor.red;
-
+  Widget _buildProgressCard(Topic topic, List<String> compltedIds) {
+    int compelted = 0;
+    for (var course in topic.courses!) {
+      if (compltedIds.contains(course.id)) {
+        compelted++;
+      }
+    }
     return GestureDetector(
       onTap: () async {
-        // await Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => DetailScreen(topic: topic)),
-        // );
-        // setState(() {});
+        Get.to(() => DetailPageScreen(topic: topic));
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 14),
+        margin: const EdgeInsets.only(bottom: 3),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: AppColor.cardColor,
@@ -308,7 +329,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '$doneCount of $totalCount completed',
+                        '$compelted of ${topic.courses!.length} completed Lessons',
                         style: const TextStyle(
                           fontSize: 13,
                           color: AppColor.labelColor,
@@ -318,17 +339,18 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6),
                         child: LinearProgressIndicator(
-                          value: percent,
+                          value: (compelted / topic.courses!.length),
                           minHeight: 8,
+                          color: AppColor.primary,
                           backgroundColor: Colors.grey[300],
-                          valueColor: AlwaysStoppedAnimation(barColor),
+                          valueColor: AlwaysStoppedAnimation(AppColor.purple),
                         ),
                       ),
                       const SizedBox(height: 6),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          '${(percent * 100).toInt()}%',
+                          '${(compelted / topic.courses!.length * 100).toStringAsFixed(1)}%',
                           style: const TextStyle(
                             fontSize: 13,
                             color: AppColor.labelColor,
@@ -343,35 +365,35 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
             const SizedBox(height: 12),
             // inline section list
-            ...sections.map((sec) {
-              final done = doneList.contains(sec);
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  children: [
-                    Icon(
-                      done ? Icons.check_circle : Icons.radio_button_unchecked,
-                      size: 16,
-                      color: done ? AppColor.green : AppColor.labelColor,
-                    ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        sec,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color:
-                              done
-                                  ? AppColor.textColor
-                                  : AppColor.labelColor.withValues(alpha: 0.7),
-                          decoration: done ? TextDecoration.lineThrough : null,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+            // ...sections.map((sec) {
+            //   final done = doneList.contains(sec);
+            //   return Padding(
+            //     padding: const EdgeInsets.symmetric(vertical: 2),
+            //     child: Row(
+            //       children: [
+            //         Icon(
+            //           done ? Icons.check_circle : Icons.radio_button_unchecked,
+            //           size: 16,
+            //           color: done ? AppColor.green : AppColor.labelColor,
+            //         ),
+            //         const SizedBox(width: 6),
+            //         Expanded(
+            //           child: Text(
+            //             sec,
+            //             style: TextStyle(
+            //               fontSize: 13,
+            //               color:
+            //                   done
+            //                       ? AppColor.textColor
+            //                       : AppColor.labelColor.withValues(alpha: 0.7),
+            //               decoration: done ? TextDecoration.lineThrough : null,
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // }),
           ],
         ),
       ),

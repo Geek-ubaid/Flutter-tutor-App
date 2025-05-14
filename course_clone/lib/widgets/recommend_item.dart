@@ -64,13 +64,13 @@ class RecommendItem extends StatelessWidget {
         // Meta row
         Row(
           children: [
-            Icon(Icons.favorite, color: Colors.redAccent, size: 14),
-            const SizedBox(width: 4),
-            Text(
-              "3",
-              style: TextStyle(fontSize: 12, color: AppColor.labelColor),
-            ),
-            const SizedBox(width: 16),
+            // Icon(Icons.favorite, color: Colors.redAccent, size: 14),
+            // const SizedBox(width: 4),
+            // Text(
+            //   "3",
+            //   style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+            // ),
+            // const SizedBox(width: 16),
             Icon(Icons.label, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
             Expanded(
@@ -81,7 +81,7 @@ class RecommendItem extends StatelessWidget {
                 style: TextStyle(fontSize: 12, color: AppColor.labelColor),
               ),
             ),
-            const Spacer(),
+
             Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
             Text(

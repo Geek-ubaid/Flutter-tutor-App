@@ -105,11 +105,11 @@ class _AccountPageState extends State<AccountPage> {
     return Row(
       children: const [
         Expanded(
-          child: SettingBox(title: "12 courses", icon: "assets/icons/work.svg"),
+          child: SettingBox(title: "8 Topics", icon: "assets/icons/work.svg"),
         ),
         SizedBox(width: 10),
         Expanded(
-          child: SettingBox(title: "55 hours", icon: "assets/icons/time.svg"),
+          child: SettingBox(title: "20 hours", icon: "assets/icons/time.svg"),
         ),
         SizedBox(width: 10),
         Expanded(
@@ -143,8 +143,8 @@ class _AccountPageState extends State<AccountPage> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: AppColor.primary,
+                  decoration: BoxDecoration(
+                    color: Color(0xff58786a),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -169,28 +169,36 @@ class _AccountPageState extends State<AccountPage> {
           ),
         ),
         const SizedBox(height: 10),
-        // Divider under "My Progress"
-        Padding(
-          padding: const EdgeInsets.only(left: 45),
-          child: Divider(height: 0, color: Colors.grey.withOpacity(0.8)),
-        ),
-
-        const SizedBox(height: 10),
 
         // Bookmark section
         GetBuilder<ProfileController>(
           builder: (controller) {
-            return SettingItem(
-              onTap: () {
-                Get.to(() => const BookmarkScreen());
-              },
-              title: "Bookmark",
-              leadingIcon: "assets/icons/bookmark.svg",
-              bgIconColor: AppColor.primary,
-              itemCount:
-                  controller.bookmarkedCoursesCount > 0
-                      ? controller.bookmarkedCoursesCount
-                      : null,
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: AppColor.cardColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColor.shadowColor.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: SettingItem(
+                onTap: () {
+                  Get.to(() => const BookmarkScreen());
+                },
+                title: "Bookmark",
+                leadingIcon: "assets/icons/bookmark.svg",
+                bgIconColor: AppColor.primary,
+                itemCount:
+                    controller.bookmarkedCoursesCount > 0
+                        ? controller.bookmarkedCoursesCount
+                        : null,
+              ),
             );
           },
         ),
