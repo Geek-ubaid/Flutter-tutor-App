@@ -270,6 +270,7 @@ class _HomePageState extends State<HomePage> {
                   () => WebViewScreen(
                     url: courses[index].url,
                     title: courses[index].name,
+                    id: courses[index].id,
                   ),
                 );
               },

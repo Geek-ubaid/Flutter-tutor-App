@@ -78,32 +78,36 @@ List<Converter> converter = [
         'You’ll learn how to validate user inputs and handle form submissions efficiently. Additionally, Flutter simplifies the implementation of gestures like tapping, swiping, and pinching, enhancing user interaction within your applications.',
     numOfLessons: 3,
     topicName: 'Flutter Forms & Gestures',
-    image: 'assets/images/flutter.png',
-    videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
+    image:
+        'https://strapi.dhiwise.com/uploads/flutter_forms_from_state_management_to_third_party_libraries_1_212c7426a0.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=2u_yH5qJp7U',
   ),
   Converter(
     description:
         'In Flutter, Navigation refers to moving between different screens or pages in your app. Flutter provides a powerful and flexible navigation system that allows you to manage navigation stacks, pass data between screens, and handle transitions smoothly. Let us check how navigation and routing work in Flutter.',
     numOfLessons: 15,
     topicName: 'Flutter – Navigation & Routing',
-    image: 'assets/images/flutter.png',
-    videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
+    image:
+        'https://media.licdn.com/dms/image/v2/D4D12AQE6AVEuCJ0m7Q/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1711027058824?e=2147483647&v=beta&t=2oUBGlkWuMChQyHJQQdh4qAKxhy3BsVNAM1EDBbBEKQ',
+    videoUrl: 'https://www.youtube.com/watch?v=C6nTXjQFVKI',
   ),
   Converter(
     description:
         'Here, you will explore how Flutter enables developers to access device features such as cameras, sensors, and storage. Flutter provides plugins that allow easy integration with device hardware and APIs, making it straightforward to utilize functionalities like taking pictures, accessing location data, or storing files locally.',
     numOfLessons: 4,
     topicName: 'Flutter – Accessing Device',
-    image: 'assets/images/flutter.png',
-    videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
+    image:
+        'https://www.access-company.com/files/sites/3/2024/01/Flutter_PR_2024-01-23.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=DYLFRu5W-Tg',
   ),
   Converter(
     description:
         'In this section, you will explore advanced concepts in Flutter, diving deeper into its capabilities beyond the basics. You’ll learn about state management techniques to handle data and user interface changes efficiently. Discover how to integrate Flutter with backend services and APIs to fetch and display dynamic data in your applications. Explore advanced widget customization and animations to create visually appealing user interfaces.',
     numOfLessons: 7,
     topicName: 'Flutter – Advanced Concepts',
-    image: 'assets/images/flutter.png',
-    videoUrl: 'https://www.youtube.com/watch?v=1gDhl4leEzA',
+    image:
+        'https://www.expertappdevs.com/sitebucket/blog/20230627125558-advanced-flutter-development-technique-for-marketplace-apps.webp',
+    videoUrl: 'https://www.youtube.com/watch?v=sEID7kTP_hE&t=92s',
   ),
   // Converter(
   //   description:

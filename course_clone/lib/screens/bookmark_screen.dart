@@ -59,7 +59,11 @@ class BookmarkScreen extends StatelessWidget {
                 course: course,
                 onTap: () {
                   Get.to(
-                    () => WebViewScreen(url: course.url, title: course.name),
+                    () => WebViewScreen(
+                      url: course.url,
+                      title: course.name,
+                      id: course.id,
+                    ),
                   );
                 },
               );

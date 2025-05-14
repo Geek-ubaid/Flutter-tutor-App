@@ -248,6 +248,7 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
                                   url:
                                       "https://www.geeksforgeeks.org/flutter-an-introduction-to-the-open-source-sdk-by-google/",
                                   title: widget.topic.courses![index].name,
+                                  id: widget.topic.courses![index].id,
                                 ),
                               );
                             },
