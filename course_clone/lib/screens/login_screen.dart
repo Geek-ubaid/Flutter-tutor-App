@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/custom_image.dart';
 import 'signup_screen.dart';
-import '../theme/color.dart'; // 确保导入你的 color.dart
+import '../theme/color.dart';
 import 'root_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool obscurePassword = true;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -25,10 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
       final uid = userCredential.user?.uid;
       if (uid != null) {
@@ -49,16 +50,17 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showDialog(String title, String message) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () => Navigator.of(context).pop(),
+      builder:
+          (context) => AlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: [
+              TextButton(
+                child: const Text("OK"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -70,19 +72,41 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 64),
         child: Column(
           children: [
-            Center(child: CustomImage(
-              "assets/icons/logo.png", width: 120, isNetwork: false,
-            )),
+            Center(
+              child: CustomImage(
+                "assets/icons/logo.png",
+                width: 120,
+                isNetwork: false,
+              ),
+            ),
             const SizedBox(height: 32),
-            Text("Welcome Back",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.textColor)),
+            Text(
+              "Welcome Back",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColor.textColor,
+              ),
+            ),
             const SizedBox(height: 32),
             _buildInputField(emailController, "Email"),
             const SizedBox(height: 16),
-            _buildInputField(passwordController, "Password", isPassword: true),
+            _buildInputField(
+              passwordController,
+              "Password",
+              isPassword: obscurePassword,
+              trailingIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
+                icon:
+                    obscurePassword
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+              ),
+            ),
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
@@ -95,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text("Login", style: TextStyle(fontSize: 16, color: AppColor.sky)),
+                child: const Text(
+                  "Login",
+                  style: TextStyle(fontSize: 16, color: AppColor.sky),
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -106,8 +133,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   MaterialPageRoute(builder: (_) => SignupScreen()),
                 );
               },
-              child: Text("Don't have an account? Register",
-                  style: TextStyle(color: AppColor.textColor)),
+              child: Text(
+                "Don't have an account? Register",
+                style: TextStyle(color: AppColor.textColor),
+              ),
             ),
           ],
         ),
@@ -115,8 +144,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildInputField(TextEditingController controller, String hintText,
-      {bool isPassword = false}) {
+  Widget _buildInputField(
+    TextEditingController controller,
+    String hintText, {
+    bool isPassword = false,
+    Widget? trailingIcon,
+  }) {
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -132,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColor.primary, width: 2),
         ),
+        suffixIcon: trailingIcon,
       ),
     );
   }

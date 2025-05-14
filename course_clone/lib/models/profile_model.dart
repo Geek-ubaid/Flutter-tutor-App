@@ -1,4 +1,5 @@
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 
 class Profile {
   final String name;
@@ -19,7 +20,7 @@ class Profile {
     email: json["email"] ?? "",
     favoriteCourses:
         (json["favoriteCourses"] ?? [] as List<dynamic>?)
-            ?.map((e) => CourseV2.fromJson(e))
+            ?.map((e) => Topic.fromJson(e))
             .toList(),
   );
 

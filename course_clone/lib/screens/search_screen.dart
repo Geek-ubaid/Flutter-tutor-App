@@ -1,29 +1,25 @@
+import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/states/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/theme/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:course_clone/utils/data.dart';
-import 'package:course_clone/models/course_model.dart';
-import 'package:course_clone/screens/course_detail_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../states/course_controller.dart';
-import '../utils/constant.dart';
-
-
 class SearchScreen extends StatefulWidget {
-
+  const SearchScreen({super.key, required this.courses, this.initialFilter});
+  final List<Course> courses;
   final String? initialFilter;
-  const SearchScreen({super.key, this.initialFilter});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
+
 Set<String> savedCourseIds = {};
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-  final controller = Get.find<CourseController>();
+  // final controller = Get.find<CourseController>();
 
   List<String> filters = [];
   String selectedFilter = 'All';
@@ -33,11 +29,11 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
 
-    // Unique topics + 'All'
-    final allTopics = categories.map((c) => c['identifier']).toSet().toList();
-    allTopics.remove('all');
+    // // Unique topics + 'All'
+    final allTopics = widget.courses.map((c) => c.topic).toSet().toList();
     filters = ['All', ...allTopics];
-    if (widget.initialFilter != null && filters.contains(widget.initialFilter)) {
+    if (widget.initialFilter != null &&
+        filters.contains(widget.initialFilter)) {
       selectedFilter = widget.initialFilter!;
     } else {
       selectedFilter = 'All';
@@ -48,8 +44,6 @@ class _SearchScreenState extends State<SearchScreen> {
       });
     });
   }
-
-
 
   @override
   void dispose() {
@@ -81,21 +75,20 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: Obx(() {
-        return Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSearchBar(),
-              const SizedBox(height: 8),
-              _buildFilters(),
-              const SizedBox(height: 8),
-              Expanded(child: _buildCourseList(controller.courses)),
-            ],
-          ),
-        );
-      })
+
+      body: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSearchBar(),
+            const SizedBox(height: 8),
+            _buildFilters(),
+            const SizedBox(height: 8),
+            Expanded(child: _buildCourseList()),
+          ],
+        ),
+      ),
     );
   }
 
@@ -135,77 +128,86 @@ class _SearchScreenState extends State<SearchScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: filters.map((filter) {
-          final isSelected = filter == selectedFilter;
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: ChoiceChip(
-              label: Text(filter),
-              selected: isSelected,
-              onSelected: (_) {
-                setState(() {
-                  selectedFilter = filter;
-                });
-              },
-              selectedColor: AppColor.primary.withOpacity(0.9),
-              backgroundColor: Colors.white,
-              labelStyle: TextStyle(
-                color: isSelected ? Colors.white : AppColor.textColor,
-                fontWeight: FontWeight.w500,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          );
-        }).toList(),
+        children:
+            filters.map((filter) {
+              final isSelected = filter == selectedFilter;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: ChoiceChip(
+                  label: Text(filter),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    setState(() {
+                      selectedFilter = filter;
+                    });
+                  },
+                  selectedColor: AppColor.primary.withOpacity(0.9),
+                  backgroundColor: Colors.white,
+                  labelStyle: TextStyle(
+                    color: isSelected ? Colors.white : AppColor.textColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 9,
+                    vertical: 7,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+            }).toList(),
       ),
     );
   }
 
-  Widget _buildCourseList(List<Course> courses) {
-    final filteredCourses = courses.where((course) {
-      final matchesFilter = selectedFilter == 'All' ||
-          course.topic.toLowerCase() == selectedFilter.toLowerCase();
+  Widget _buildCourseList() {
+    final filteredCourses =
+        widget.courses.where((course) {
+          final matchesFilter =
+              selectedFilter == 'All' ||
+              course.topic.toLowerCase() == selectedFilter.toLowerCase();
 
-      final query = searchQuery.toLowerCase();
+          final query = searchQuery.toLowerCase();
 
-      final matchesQuery = course.name.toLowerCase().contains(query) ||
-          course.topic.toLowerCase().contains(query) ||
-          course.subtopic.any((sub) => sub.toLowerCase().contains(query));
+          final matchesQuery =
+              course.name.toLowerCase().contains(query) ||
+              course.topic.toLowerCase().contains(query) ||
+              course.subtopic.any((sub) => sub.toLowerCase().contains(query));
 
-      return matchesFilter && (searchQuery.isEmpty || matchesQuery);
-    }).toList();
-
+          return matchesFilter && (searchQuery.isEmpty || matchesQuery);
+        }).toList();
 
     if (filteredCourses.isEmpty) {
       return const Center(
-        child: Text("No courses found", style: TextStyle(color: AppColor.labelColor)),
+        child: Text(
+          "No courses found",
+          style: TextStyle(color: AppColor.labelColor),
+        ),
       );
     }
 
     return ListView.builder(
       itemCount: filteredCourses.length,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: _buildCourseCard(filteredCourses[index]),
-      ),
+      itemBuilder:
+          (context, index) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: _buildCourseCard(filteredCourses[index]),
+          ),
     );
   }
-
 
   Widget _buildCourseCard(Course course) {
     final isSaved = savedCourseIds.contains(course.id);
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CourseDetailScreen(course: course),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => CourseDetailScreen(course: course),
+        //   ),
+        // );
       },
       child: Material(
         elevation: 8,
@@ -223,7 +225,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 12),
-                        height: 140,
+                        height: 100,
                         width: 340,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -255,9 +257,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           const SizedBox(height: 9),
                           Row(
                             children: [
-                              _iconText(Icons.favorite, "2", iconColor: Colors.red),
-                              _iconText(Icons.label, course.topic),
-                              _iconText(Icons.access_time, course.readingTime, iconColor: AppColor.labelColor),
+                              _iconText(
+                                Icons.play_circle_outline,
+                                "${course.lessons} lessons",
+                              ),
+                              _iconText(Icons.schedule, course.readingTime),
+                              _iconText(
+                                Icons.star,
+                                course.rating.toString(),
+                                iconColor: Colors.amber,
+                              ),
                             ],
                           ),
                         ],
@@ -268,34 +277,24 @@ class _SearchScreenState extends State<SearchScreen> {
                 Positioned(
                   right: 16,
                   bottom: 16,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (isSaved) {
-                          savedCourseIds.remove(course.id);
-                        } else {
-                          savedCourseIds.add(course.id);
-                        }
-                      });
+                  child: IconButton(
+                    onPressed: () {
+                      final ctrl = Get.find<ProfileController>();
+                      ctrl.toggleBookmark(course);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        isSaved ? Icons.bookmark : Icons.bookmark_border,
-                        color: AppColor.primary,
-                        size: 20,
-                      ),
+                    // tie this builder to the same id you used in update()
+                    // so only this icon rebuilds
+                    icon: GetBuilder<ProfileController>(
+                      id: course.id,
+                      builder: (ctrl) {
+                        final bookmarked = ctrl.bookmarkedCourses.any(
+                          (c) => c.id == course.id,
+                        );
+                        return Icon(
+                          bookmarked ? Icons.bookmark : Icons.bookmark_outline,
+                          color: AppColor.primary,
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -307,19 +306,21 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-
-
-
-
-
-  Widget _iconText(IconData icon, String label, {Color iconColor = AppColor.labelColor}) {
+  Widget _iconText(
+    IconData icon,
+    String label, {
+    Color iconColor = AppColor.labelColor,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Row(
         children: [
           Icon(icon, size: 14, color: iconColor),
           const SizedBox(width: 2),
-          Text(label, style: const TextStyle(fontSize: 12, color: AppColor.labelColor)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: AppColor.labelColor),
+          ),
         ],
       ),
     );

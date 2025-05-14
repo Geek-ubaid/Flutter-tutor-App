@@ -4,7 +4,7 @@ import 'package:course_clone/models/course_model.dart';
 import 'package:course_clone/theme/color.dart';
 
 class CourseDetailScreen extends StatelessWidget {
-  final Course course;
+  final Topic course;
 
   const CourseDetailScreen({super.key, required this.course});
 

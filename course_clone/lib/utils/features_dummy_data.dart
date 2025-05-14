@@ -1,13 +1,12 @@
 import 'package:course_clone/models/course_content_model.dart';
 import 'package:course_clone/models/course_model.dart';
 
-
-List<CourseV2> features = [
-  CourseV2(
+List<Topic> dummyfeatures = [
+  Topic(
     id: 109,
-    name: "Flutter GetX State Management",
+    name: "Flutter – Basics",
     image:
-        "https://miro.medium.com/v2/resize:fit:1058/1*4w4VNIC29JhrI6hEu5GFoQ.png",
+        "https://media.geeksforgeeks.org/wp-content/uploads/20240912113315/Flutter-Tutorial.webp",
     price: "\$85.00",
     duration: "15 hours",
     session: "10 lessons",
@@ -17,7 +16,7 @@ List<CourseV2> features = [
         "Master Flutter state management with GetX. Learn reactive state management, dependency injection, route management, and other powerful features of the GetX library to build efficient and scalable Flutter applications.",
     content: [
       CourseContentModel(
-        title: "GetX Fundamentals",
+        title: "Flutter – Introduction",
         subContent: [
           "Introduction to GetX and its core features. GetX is one of the easiest flutter state management libraries that provides a comprehensive solution for managing application state, navigation, and dependencies.",
           "State management with GetX controllers. Learn how to efficiently manage application state using GetX controllers, which provide a clean and organized way to handle data and UI updates.",
@@ -26,7 +25,25 @@ List<CourseV2> features = [
         ],
       ),
       CourseContentModel(
-        title: "Advanced GetX Concepts",
+        title: "Flutter – Architecture Application",
+        subContent: [
+          "Reactive state management with Obx and GetX. Deep dive into reactive programming using Obx and GetX observables to create responsive and dynamic user interfaces that automatically update when data changes.",
+          "Memory management and bindings. Learn best practices for memory management in GetX and how to use bindings to efficiently manage controller lifecycles and prevent memory leaks.",
+          "GetX middleware and internationalization. Implement middleware for route protection and learn how to easily add multi-language support to your applications using GetX's built-in internationalization features.",
+          "Building complete apps with GetX architecture. Master the complete GetX architecture pattern to build scalable, maintainable, and performant Flutter applications.",
+        ],
+      ),
+      CourseContentModel(
+        title: "Android Studio Setup for Flutter Development",
+        subContent: [
+          "Introduction to GetX and its core features. GetX is one of the easiest flutter state management libraries that provides a comprehensive solution for managing application state, navigation, and dependencies.",
+          "State management with GetX controllers. Learn how to efficiently manage application state using GetX controllers, which provide a clean and organized way to handle data and UI updates.",
+          "Dependency injection and service locator. Master GetX's powerful dependency injection system that helps you manage application dependencies and services with minimal boilerplate code.",
+          "Route management and navigation. Explore GetX's intuitive navigation system that makes routing between screens seamless while maintaining clean architecture.",
+        ],
+      ),
+      CourseContentModel(
+        title: "Flutter – Setup for application development",
         subContent: [
           "Reactive state management with Obx and GetX. Deep dive into reactive programming using Obx and GetX observables to create responsive and dynamic user interfaces that automatically update when data changes.",
           "Memory management and bindings. Learn best practices for memory management in GetX and how to use bindings to efficiently manage controller lifecycles and prevent memory leaks.",
@@ -36,8 +53,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 100,
     name: "UI/UX Design",
     image:
@@ -71,7 +87,7 @@ List<CourseV2> features = [
     ],
   ),
 
-  CourseV2(
+  Topic(
     id: 101,
     name: "Programming",
     image:
@@ -104,8 +120,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 102,
     name: "English Writing",
     image:
@@ -138,8 +153,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 103,
     name: "Photography",
     image:
@@ -172,8 +186,7 @@ List<CourseV2> features = [
       ),
     ],
   ),
-
-  CourseV2(
+  Topic(
     id: 104,
     name: "Guitar Class",
     image:

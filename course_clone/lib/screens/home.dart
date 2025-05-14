@@ -1,5 +1,10 @@
 // lib/screens/home.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
+import 'package:course_clone/screens/web_view_screen.dart';
+import 'package:course_clone/states/topic_controller.dart';
+import 'package:course_clone/widgets/home_screen_shimmers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -10,6 +15,7 @@ import 'package:course_clone/widgets/notification_box.dart';
 import 'package:course_clone/widgets/recommend_item.dart';
 import 'package:course_clone/screens/search_screen.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../models/course_model.dart';
 import '../states/course_controller.dart';
@@ -18,7 +24,6 @@ import '../widgets/feature_item.dart';
 /// Alias so root_app.dart’s reference to `Pepsi()` resolves here.
 typedef Pepsi = HomePage;
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
@@ -26,8 +31,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = Get.find<CourseController>();
-
   String? nickname;
   bool isLoading = true;
 
@@ -40,7 +43,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchNickname() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
-      final doc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      final doc =
+          await FirebaseFirestore.instance.collection("users").doc(uid).get();
       if (doc.exists) {
         setState(() {
           nickname = doc.data()?["nickname"] ?? "";
@@ -54,19 +58,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return _buildSkeletonScreen();
-        }
-
-        if (controller.courses.isEmpty) {
-          return Center(child: Text('No courses available.'));
-        }
-
-        return CustomScrollView(
+      body:
+      // Obx(() {
+      //   if (controller.isLoading.value) {
+      //     return _buildSkeletonScreen();
+      //   }
+      //   if (controller.courses.isEmpty) {
+      //     return Center(child: Text('No courses available.'));
+      //   }
+      CustomScrollView(
         slivers: [
           SliverAppBar(
             backgroundColor: AppColor.appBarColor,
@@ -77,13 +79,12 @@ class _HomePageState extends State<HomePage> {
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-                  (context, index) => _buildBody(controller.courses),
+              (context, index) => _buildBody(),
               childCount: 1,
             ),
           ),
         ],
-      );
-      })
+      ),
     );
   }
 
@@ -101,11 +102,14 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: AppColor.labelColor, fontSize: 14),
               ),
               const SizedBox(height: 5),
-              Text("Good Morning!",
-                  style: TextStyle(
-                      color: AppColor.textColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18)),
+              Text(
+                "Good Morning!",
+                style: TextStyle(
+                  color: AppColor.textColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
+              ),
             ],
           ),
         ),
@@ -114,28 +118,38 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildBody(List<Course> courses) {
-    if (isLoading) {
-      return _buildSkeletonScreen();
-    }
-
+  _buildBody() {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildCategories(),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              return _buildCategories(controller.getCourses);
+            },
+          ),
           const SizedBox(height: 15),
           // Featured carousel
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text("Featured Topics",
-                style: TextStyle(
-                    color: AppColor.textColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600)),
+            child: Text(
+              "Featured Topics",
+              style: TextStyle(
+                color: AppColor.textColor,
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-          _buildFeatured(courses),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              if (controller.loadingState) {
+                return Center(child: featuredShimmer(context));
+              }
+              return _buildFeatured(controller.getTopics.take(4).toList());
+            },
+          ),
           const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -150,55 +164,73 @@ class _HomePageState extends State<HomePage> {
                     color: AppColor.textColor,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                GetBuilder<TopicController>(
+                  builder: (controller) {
+                    return TextButton(
+                      onPressed: () {
+                        if (controller.loadingState) return;
+                        Get.to(
+                          () => SearchScreen(courses: controller.getCourses),
+                        );
+                      },
+                      child: Text(
+                        "See all",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color:
+                              controller.loadingState
+                                  ? Colors.grey
+                                  : AppColor.darker,
+                        ),
+                      ),
                     );
                   },
-                  child: Text(
-                    "See all",
-                    style: TextStyle(fontSize: 14, color: AppColor.darker),
-                  ),
-                )
-
+                ),
               ],
             ),
           ),
-          _buildAll(courses),
+          GetBuilder<TopicController>(
+            builder: (controller) {
+              if (controller.loadingState) {
+                return _buildAllSimmer();
+              }
+              return _buildAll(
+                controller.getCourses.take(3).toList()..shuffle(),
+              );
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildCategories() {
+  Widget _buildCategories(List<Course> crs) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(15, 10, 0, 10),
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: categories.map((cat) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: CategoryBox(
-              data: cat,
-              onTap: () {
-                // TODO: implement filtering
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SearchScreen(initialFilter: cat['identifier']),
-                  ),
-                );
-              },
-            ),
-          );
-        }).toList(),
+        children:
+            categories.map((cat) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: CategoryBox(
+                  data: cat,
+                  onTap: () {
+                    Get.to(
+                      () => SearchScreen(
+                        courses: crs,
+                        initialFilter: cat['identifier'],
+                      ),
+                    );
+                  },
+                ),
+              );
+            }).toList(),
       ),
     );
   }
 
-  Widget _buildFeatured(List<Course> courses) {
+  Widget _buildFeatured(List<Topic> topics) {
     return CarouselSlider(
       options: CarouselOptions(
         height: 290,
@@ -206,34 +238,57 @@ class _HomePageState extends State<HomePage> {
         disableCenter: true,
         viewportFraction: 0.75,
       ),
-      items: courses.map((course) {
-        return Builder(
-          builder: (BuildContext context) {
-            return FeatureItem(
-              data: course,
-              onTap: () {
-                // You can update your controller logic here
-                // Get.find<FavoritesController>().addToCart(course);
+      items:
+          topics.map((topic) {
+            return Builder(
+              builder: (BuildContext context) {
+                return FeatureItem(
+                  data: topic,
+                  onTap: () {
+                    Get.to(() => DetailPageScreen(topic: topic));
+                  },
+                );
               },
             );
-          },
-        );
-      }).toList(),
+          }).toList(),
     );
   }
 
-  _buildAll(List<Course> courses){
-    int itemCount = (courses.length * 0.1).ceil(); // show at least 1 if not empty
-    List<Course> limitedCourses = courses.take(itemCount).toList();
+  _buildAll(List<Course> courses) {
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
       scrollDirection: Axis.vertical,
       child: Column(
         children: List.generate(
-          limitedCourses.length,
-              (index) => Padding(
+          courses.length,
+          (index) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: RecommendItem(data: limitedCourses[index]),
+            child: RecommendItem(
+              course: courses[index],
+              onTap: () {
+                Get.to(
+                  () => WebViewScreen(
+                    url: courses[index].url,
+                    title: courses[index].name,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildAllSimmer() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+      child: Column(
+        children: List.generate(
+          3,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: dailyShimmer(context),
           ),
         ),
       ),
@@ -252,14 +307,15 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 5,
-              itemBuilder: (context, index) => Container(
-                width: 80,
-                margin: const EdgeInsets.only(right: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+              itemBuilder:
+                  (context, index) => Container(
+                    width: 80,
+                    margin: const EdgeInsets.only(right: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
             ),
           ),
           const SizedBox(height: 20),
@@ -269,14 +325,15 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 3,
-              itemBuilder: (context, index) => Container(
-                width: 250,
-                margin: const EdgeInsets.only(right: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
+              itemBuilder:
+                  (context, index) => Container(
+                    width: 250,
+                    margin: const EdgeInsets.only(right: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
             ),
           ),
           const SizedBox(height: 20),
@@ -292,7 +349,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             }),
-          )
+          ),
         ],
       ),
     );

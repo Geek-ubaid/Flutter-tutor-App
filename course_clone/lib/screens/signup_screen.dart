@@ -1,3 +1,4 @@
+import 'package:course_clone/screens/root_app.dart';
 import 'package:course_clone/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import '../theme/color.dart';
-import 'welcome_screen.dart';
+// import 'welcome_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -21,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final nicknameController = TextEditingController();
   String selectedGender = "Male";
   DateTime? birthDate;
+  bool obscurePassword = true;
 
   void register() async {
     final email = emailController.text.trim();
@@ -29,7 +31,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
     final emailRegex = RegExp(r"^[\w\.-]+@[\w\.-]+\.\w+$");
     final passwordRegex = RegExp(
-        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$');
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$',
+    );
 
     if (!emailRegex.hasMatch(email)) {
       _showDialog("Invalid Email", "Please enter a valid email address.");
@@ -37,9 +40,12 @@ class _SignupScreenState extends State<SignupScreen> {
     }
 
     if (!passwordRegex.hasMatch(password)) {
-      _showDialog("Weak Password", "Password must contain:\n"
-          "- 1 uppercase letter\n- 1 lowercase letter\n"
-          "- 1 number\n- 1 special character\n- min 8 characters.");
+      _showDialog(
+        "Weak Password",
+        "Password must contain:\n"
+            "- 1 uppercase letter\n- 1 lowercase letter\n"
+            "- 1 number\n- 1 special character\n- min 8 characters.",
+      );
       return;
     }
 
@@ -71,11 +77,10 @@ class _SignupScreenState extends State<SignupScreen> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_uid', uid);
 
-
         Navigator.pushReplacement(
           context,
           // MaterialPageRoute(builder: (_) => const HomePage()),
-          MaterialPageRoute(builder: (_) => WelcomeScreen()),
+          MaterialPageRoute(builder: (_) => RootApp()),
         );
       }
     } catch (e) {
@@ -86,16 +91,17 @@ class _SignupScreenState extends State<SignupScreen> {
   void _showDialog(String title, String msg) {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text(title),
-        content: Text(msg),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("OK"),
-          )
-        ],
-      ),
+      builder:
+          (_) => AlertDialog(
+            title: Text(title),
+            content: Text(msg),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
     );
   }
 
@@ -117,18 +123,43 @@ class _SignupScreenState extends State<SignupScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
         child: Column(
           children: [
-            Center(child: CustomImage(
-              "assets/icon/logo.png", width: 100, isNetwork: false,
-            )),
+            Center(
+              child: CustomImage(
+                "assets/icons/logo.png",
+                width: 120,
+                isNetwork: false,
+              ),
+            ),
             const SizedBox(height: 24),
-            Text("Create Account", style: TextStyle(
-                fontSize: 22, fontWeight: FontWeight.bold, color: AppColor.textColor)),
+            Text(
+              "Create Account",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: AppColor.textColor,
+              ),
+            ),
             const SizedBox(height: 24),
             _inputField(nicknameController, "Nickname"),
             const SizedBox(height: 12),
             _inputField(emailController, "Email"),
             const SizedBox(height: 12),
-            _inputField(passwordController, "Password", isPassword: true),
+            _inputField(
+              passwordController,
+              "Password",
+              isPassword: obscurePassword,
+              trailingIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
+                icon:
+                    obscurePassword
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+              ),
+            ),
             const SizedBox(height: 12),
             _genderPicker(),
             const SizedBox(height: 12),
@@ -145,24 +176,36 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text("Register", style: TextStyle(fontSize: 16, color: AppColor.sky)),
+                child: const Text(
+                  "Register",
+                  style: TextStyle(fontSize: 16, color: AppColor.sky),
+                ),
               ),
             ),
             const SizedBox(height: 12),
             TextButton(
-              onPressed: () => Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => LoginScreen())),
-              child: Text("Already have an account? Login",
-                  style: TextStyle(color: AppColor.textColor)),
-            )
+              onPressed:
+                  () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
+                  ),
+              child: Text(
+                "Already have an account? Login",
+                style: TextStyle(color: AppColor.textColor),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _inputField(TextEditingController ctrl, String hint,
-      {bool isPassword = false}) {
+  Widget _inputField(
+    TextEditingController ctrl,
+    String hint, {
+    bool isPassword = false,
+    Widget? trailingIcon,
+  }) {
     return TextField(
       controller: ctrl,
       obscureText: isPassword,
@@ -178,6 +221,7 @@ class _SignupScreenState extends State<SignupScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColor.primary, width: 2),
         ),
+        suffixIcon: trailingIcon,
       ),
     );
   }
@@ -190,10 +234,13 @@ class _SignupScreenState extends State<SignupScreen> {
         DropdownButton<String>(
           value: selectedGender,
           onChanged: (val) => setState(() => selectedGender = val!),
-          items: ["Male", "Female", "Other"]
-              .map((g) => DropdownMenuItem(value: g, child: Text(g)))
-              .toList(),
-        )
+          items:
+              [
+                "Male",
+                "Female",
+                "Other",
+              ].map((g) => DropdownMenuItem(value: g, child: Text(g))).toList(),
+        ),
       ],
     );
   }
@@ -207,10 +254,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ? "Select birth date"
               : "Birthday: ${DateFormat('yyyy-MM-dd').format(birthDate!)}",
         ),
-        ElevatedButton(
-          onPressed: pickBirthDate,
-          child: const Text("Pick"),
-        )
+        ElevatedButton(onPressed: pickBirthDate, child: const Text("Pick")),
       ],
     );
   }

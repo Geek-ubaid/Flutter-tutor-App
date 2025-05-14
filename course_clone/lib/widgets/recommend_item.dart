@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 import 'package:course_clone/theme/color.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class RecommendItem extends StatelessWidget {
-  const RecommendItem({super.key, required this.data, this.onTap});
+  const RecommendItem({super.key, required this.course, this.onTap});
 
-  final Course data;
+  final Course course;
   final GestureTapCallback? onTap;
 
   @override
@@ -32,19 +32,9 @@ class RecommendItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thumbnail
-            SvgPicture.asset(
-              data.thumbnailUrl,
-              height: 50,
-              width: 50,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(width: 12),
-
-            // Info section
-            Expanded(
-              child: _buildInfo(context),
-            ),
+            SvgPicture.asset(course.thumbnailUrl, height: 60, width: 60),
+            const SizedBox(width: 10),
+            Expanded(child: _buildInfo(context)),
           ],
         ),
       ),
@@ -57,13 +47,10 @@ class RecommendItem extends StatelessWidget {
       children: [
         // Title
         Text(
-          data.name,
+          course.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 4),
 
@@ -77,25 +64,30 @@ class RecommendItem extends StatelessWidget {
         // Meta row
         Row(
           children: [
-            Icon(Icons.favorite, color: Colors.redAccent, size: 14),
-            const SizedBox(width: 4),
-            Text("3", style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
-
-            const SizedBox(width: 12),
+            // Icon(Icons.favorite, color: Colors.redAccent, size: 14),
+            // const SizedBox(width: 4),
+            // Text(
+            //   "3",
+            //   style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+            // ),
+            // const SizedBox(width: 16),
             Icon(Icons.label, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
-            Flexible(
+            Expanded(
               child: Text(
-                data.topic,
-                style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                course.topic,
+                style: TextStyle(fontSize: 12, color: AppColor.labelColor),
               ),
             ),
 
-            const Spacer(),
             Icon(Icons.access_time, color: AppColor.labelColor, size: 14),
             const SizedBox(width: 4),
-            Text(data.readingTime, style: TextStyle(fontSize: 12, color: AppColor.labelColor)),
+            Text(
+              course.readingTime,
+              style: TextStyle(fontSize: 12, color: AppColor.labelColor),
+            ),
           ],
         ),
       ],

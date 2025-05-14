@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/course_model.dart';
+import 'package:course_clone/models/single_article_model.dart';
 
 class DatabaseService {
-  final CollectionReference blogsCollection = FirebaseFirestore.instance.collection('blogs');
+  final CollectionReference blogsCollection = FirebaseFirestore.instance
+      .collection('blogs');
 
-  List<Course> _fromSnapshot(QuerySnapshot snapshot){
+  List<Course> _fromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((DocumentSnapshot document) {
-      return Course.fromJson(document.data() as Map<String, dynamic>, document.id);
+      return Course.fromJson(
+        document.data() as Map<String, dynamic>,
+        document.id,
+      );
     }).toList();
   }
 
   Stream<List<Course>> get fetchCourses {
-      return blogsCollection.snapshots().map(_fromSnapshot);
+    return blogsCollection.snapshots().map(_fromSnapshot);
   }
 
   // // added to test the db connection

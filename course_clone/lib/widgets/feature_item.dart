@@ -1,11 +1,8 @@
 import 'package:course_clone/models/course_model.dart';
+import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/theme/color.dart';
-import 'package:course_clone/utils/data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
-import 'custom_image.dart';
 
 class FeatureItem extends StatelessWidget {
   const FeatureItem({
@@ -16,7 +13,7 @@ class FeatureItem extends StatelessWidget {
     this.onTap,
   });
 
-  final Course data;
+  final Topic data;
   final double width;
   final double height;
   final GestureTapCallback? onTap;
@@ -25,13 +22,7 @@ class FeatureItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => DetailPageScreen(course: data),
-        //   ),
-        // );
-        // Get.to(() => DetailPageScreen(course: data));
+        Get.to(() => DetailPageScreen(topic: data));
       },
       child: Container(
         width: width,
@@ -52,11 +43,16 @@ class FeatureItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            SvgPicture.asset(
-                data.thumbnailUrl,
-                height: 190, width: double.infinity
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                data.image,
+                fit: BoxFit.cover,
+                height: 200,
+                width: double.infinity,
+              ),
             ),
-            // Positioned(top: 170, right: 15, child: _buildPrice()),
+            Positioned(top: 170, right: 15, child: _buildPrice()),
             Positioned(top: 210, child: _buildInfo()),
           ],
         ),
@@ -103,7 +99,7 @@ class FeatureItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Icon(Icons.favorite, size: 20, color: Colors.white)
+      child: Icon(Icons.favorite, size: 20, color: Colors.white),
     );
   }
 
@@ -111,19 +107,11 @@ class FeatureItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _getAttribute(
-          Icons.favorite,
-          AppColor.red,
-          "23",
-        ),
-        const SizedBox(width: 7),
-        _getAttribute(
-          Icons.label,
-          AppColor.labelColor,
-          data.topic,
-        ),
-        const SizedBox(width: 4),
-        _getAttribute(Icons.access_time, AppColor.labelColor, data.readingTime),
+        _getAttribute(Icons.play_circle_outlined, AppColor.labelColor, "234"),
+        // const SizedBox(width: 12),
+        _getAttribute(Icons.schedule_rounded, AppColor.labelColor, "asd"),
+        // const SizedBox(width: 12),
+        _getAttribute(Icons.star, AppColor.yellow, "asd"),
       ],
     );
   }
