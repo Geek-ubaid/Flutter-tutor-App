@@ -4,6 +4,7 @@ import 'package:course_clone/models/single_article_model.dart';
 import 'package:course_clone/screens/detail_screen.dart';
 import 'package:course_clone/screens/web_view_screen.dart';
 import 'package:course_clone/states/topic_controller.dart';
+import 'package:course_clone/widgets/home_screen_shimmers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -57,8 +58,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Course> courses = Provider.of<List<Course>>(context);
-
     return Scaffold(
       backgroundColor: AppColor.appBgColor,
       body: Obx(() {
@@ -146,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           GetBuilder<TopicController>(
             builder: (controller) {
               if (controller.loadingState) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: featuredShimmer(context));
               }
               return _buildFeatured(controller.getTopics.take(4).toList());
             },
@@ -193,7 +192,7 @@ class _HomePageState extends State<HomePage> {
           GetBuilder<TopicController>(
             builder: (controller) {
               if (controller.loadingState) {
-                return const Center(child: CircularProgressIndicator());
+                return _buildAllSimmer();
               }
               return _buildAll(
                 controller.getCourses.take(3).toList()..shuffle(),
@@ -270,6 +269,21 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildAllSimmer() {
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+      child: Column(
+        children: List.generate(
+          3,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: dailyShimmer(context),
           ),
         ),
       ),

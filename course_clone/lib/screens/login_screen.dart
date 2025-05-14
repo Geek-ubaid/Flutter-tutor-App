@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/custom_image.dart';
 import 'signup_screen.dart';
-import '../theme/color.dart'; // 确保导入你的 color.dart
+import '../theme/color.dart';
 import 'root_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool obscurePassword = true;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -27,10 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
       final uid = userCredential.user?.uid;
       if (uid != null) {
@@ -73,9 +72,13 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 64),
         child: Column(
           children: [
-            Center(child: CustomImage(
-              "assets/icons/logo.png", width: 120, isNetwork: false,
-            )),
+            Center(
+              child: CustomImage(
+                "assets/icons/logo.png",
+                width: 120,
+                isNetwork: false,
+              ),
+            ),
             const SizedBox(height: 32),
             Text(
               "Welcome Back",
@@ -88,7 +91,22 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 32),
             _buildInputField(emailController, "Email"),
             const SizedBox(height: 16),
-            _buildInputField(passwordController, "Password", isPassword: true),
+            _buildInputField(
+              passwordController,
+              "Password",
+              isPassword: obscurePassword,
+              trailingIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
+                icon:
+                    obscurePassword
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+              ),
+            ),
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
@@ -130,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
     TextEditingController controller,
     String hintText, {
     bool isPassword = false,
+    Widget? trailingIcon,
   }) {
     return TextField(
       controller: controller,
@@ -146,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColor.primary, width: 2),
         ),
+        suffixIcon: trailingIcon,
       ),
     );
   }

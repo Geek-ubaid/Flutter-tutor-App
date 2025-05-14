@@ -1,3 +1,4 @@
+import 'package:course_clone/screens/login_screen.dart';
 import 'package:course_clone/state_holeder_bindings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +37,12 @@ class AuthGate extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // 判断是否已登录
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasData) {
-          return const RootApp(); // 已登录跳转主页
+          return const RootApp();
         } else {
-          return RootApp(); // 未登录跳转登录页
+          return LoginScreen();
         }
       },
     );

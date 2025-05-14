@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final nicknameController = TextEditingController();
   String selectedGender = "Male";
   DateTime? birthDate;
+  bool obscurePassword = true;
 
   void register() async {
     final email = emailController.text.trim();
@@ -124,8 +125,8 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             Center(
               child: CustomImage(
-                "assets/icon/logo.png",
-                width: 100,
+                "assets/icons/logo.png",
+                width: 120,
                 isNetwork: false,
               ),
             ),
@@ -143,7 +144,22 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 12),
             _inputField(emailController, "Email"),
             const SizedBox(height: 12),
-            _inputField(passwordController, "Password", isPassword: true),
+            _inputField(
+              passwordController,
+              "Password",
+              isPassword: obscurePassword,
+              trailingIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    obscurePassword = !obscurePassword;
+                  });
+                },
+                icon:
+                    obscurePassword
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+              ),
+            ),
             const SizedBox(height: 12),
             _genderPicker(),
             const SizedBox(height: 12),
@@ -188,6 +204,7 @@ class _SignupScreenState extends State<SignupScreen> {
     TextEditingController ctrl,
     String hint, {
     bool isPassword = false,
+    Widget? trailingIcon,
   }) {
     return TextField(
       controller: ctrl,
@@ -204,6 +221,7 @@ class _SignupScreenState extends State<SignupScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: AppColor.primary, width: 2),
         ),
+        suffixIcon: trailingIcon,
       ),
     );
   }
