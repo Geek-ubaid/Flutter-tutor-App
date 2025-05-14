@@ -23,7 +23,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialBinding: StateHoldersBindings(),
       title: 'Online Flutter Tutoring App',
-      theme: ThemeData(primaryColor: AppColor.primary),
+      theme: ThemeData(
+        primaryColor: AppColor.primary,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xff58786a),
+          foregroundColor: Colors.white,
+        ),
+      ),
       home: AuthGate(),
     );
   }

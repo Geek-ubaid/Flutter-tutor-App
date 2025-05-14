@@ -52,55 +52,61 @@ class _ProgressScreenState extends State<ProgressScreen> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          GetBuilder<ProgressTrackerContoller>(
-            builder: (controller) {
-              return _buildSummary(controller.completedCourses.length, 82);
-            },
-          ),
-          const SizedBox(height: 16),
-          _buildStreakBanner(),
-          const SizedBox(height: 16),
-          Column(
-            children: [
-              if (topics.isNotEmpty) _buildContinueCard(topic[0]),
-              const SizedBox(height: 16),
-              _buildQuoteCard(),
-              const SizedBox(height: 16),
-              const Text(
-                'Course Details',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.textColor,
-                ),
-              ),
-              const SizedBox(height: 12),
-              // spread without .toList()
-            ],
-          ),
-          Expanded(
-            child: GetBuilder<TopicController>(
-              builder: (topicContoller) {
-                return GetBuilder<ProgressTrackerContoller>(
-                  builder: (progressContoller) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: topicContoller.getTopics.length,
-                      separatorBuilder: (context, index) => SizedBox(height: 5),
-                      itemBuilder: (context, index) {
-                        final topic = topicContoller.getTopics[index];
-                        final completed = progressContoller.completedCourses;
-                        return _buildProgressCard(topic, completed);
-                      },
-                    );
-                  },
-                );
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildStreakBanner(),
+            const SizedBox(height: 16),
+            GetBuilder<ProgressTrackerContoller>(
+              builder: (controller) {
+                return _buildSummary(controller.completedCourses.length, 82);
               },
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (topics.isNotEmpty) _buildContinueCard(topic[0]),
+                const SizedBox(height: 16),
+                _buildQuoteCard(),
+                const SizedBox(height: 16),
+                const Text(
+                  'Course Details',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.textColor,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // spread without .toList()
+              ],
+            ),
+            Expanded(
+              child: GetBuilder<TopicController>(
+                builder: (topicContoller) {
+                  return GetBuilder<ProgressTrackerContoller>(
+                    builder: (progressContoller) {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: topicContoller.getTopics.length,
+                        separatorBuilder:
+                            (context, index) => SizedBox(height: 5),
+                        itemBuilder: (context, index) {
+                          final topic = topicContoller.getTopics[index];
+                          final completed = progressContoller.completedCourses;
+                          return _buildProgressCard(topic, completed);
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -302,7 +308,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
           boxShadow: [
             BoxShadow(
               color: AppColor.shadowColor.withValues(alpha: 0.1),
-              blurRadius: 4,
+              blurRadius: 2,
               offset: const Offset(0, 3),
             ),
           ],
@@ -343,7 +349,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           minHeight: 8,
                           color: AppColor.primary,
                           backgroundColor: Colors.grey[300],
-                          valueColor: AlwaysStoppedAnimation(AppColor.purple),
+                          valueColor: AlwaysStoppedAnimation(AppColor.primary),
                         ),
                       ),
                       const SizedBox(height: 6),

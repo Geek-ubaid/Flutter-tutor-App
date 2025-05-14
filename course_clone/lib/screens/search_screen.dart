@@ -1,4 +1,5 @@
 import 'package:course_clone/models/single_article_model.dart';
+import 'package:course_clone/screens/web_view_screen.dart';
 import 'package:course_clone/states/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:course_clone/theme/color.dart';
@@ -198,16 +199,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildCourseCard(Course course) {
-    final isSaved = savedCourseIds.contains(course.id);
-
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => CourseDetailScreen(course: course),
-        //   ),
-        // );
+        Get.to(
+          () =>
+              WebViewScreen(url: course.url, title: course.name, id: course.id),
+        );
       },
       child: Material(
         elevation: 8,
@@ -225,8 +222,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 12),
-                        height: 100,
-                        width: 340,
+                        height: 75,
+                        width: 100,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
@@ -247,11 +244,15 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            course.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                          SizedBox(
+                            width: .8 * MediaQuery.of(context).size.width,
+                            child: Text(
+                              maxLines: 1,
+                              course.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 9),
